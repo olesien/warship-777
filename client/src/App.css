@@ -77,3 +77,11 @@ hr {
 	border: 1px solid white;
 	background-color: #9D0505;
 }
+
+.black-border {
+	border: 1px solid black;
+}
+
+.i {
+	width: 14px;
+}
