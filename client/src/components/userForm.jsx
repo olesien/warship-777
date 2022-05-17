@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import UserInput from './UserInput';
-
-const UserForm = ({ socket }) => {
-  const [playerId, setPlayerId] = useState();
-
-  const handleOnSubmit = () => {
-    console.log(`Emitting new user with user id: ${playerId}`)
-    socket.emit('newPlayer', playerId)
-  }
-
-  useEffect(() => {
-    setPlayerId()
-
-  }, playerId)
+const UserForm = ({ handleSubmit, userInput, setUserInput }) => {
 
   return (
     <div>
-        <form> 
-          <UserInput onSubmit={handleOnSubmit} />
-        </form>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          id="userName" 
+          name="userName" 
+          value={userInput}
+          placeholder="Enter username" 
+          onChange={e => setUserInput(e.target.value)} />
+          {/* <UserInput /> */}
+        <br/>
+        <input type="submit" value="battle" id="fightBtn" />
+      </form>
     </div>
   )
 }

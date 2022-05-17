@@ -1,12 +1,18 @@
-import React from 'react'
+// import React from 'react'
 
-export default function UserInput() {
-  return (
-    <div>
-      {/* An input for your username */}
-      <input type="text" id="userName" name="userName" placeholder="Enter username" />
-      <br/>
-      <input type="submit" value="Fight!" id="fightBtn" />
-    </div>
-  )
-}
+// export default function UserInput() {
+//   return (
+//     <div>
+//       {/* An input for your username */}
+//       <input 
+//         type="text" 
+//         id="userName" 
+//         name="userName" 
+//         value=""
+//         placeholder="Enter username" 
+//         onChange={e => setUsername(e.target.value)} />
+//       <br/>
+//       <input type="submit" value="" id="fightBtn" />
+//     </div>
+//   )
+// }
