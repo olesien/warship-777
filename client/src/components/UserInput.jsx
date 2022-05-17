@@ -6,7 +6,7 @@ export default function UserInput() {
       {/* An input for your username */}
       <input type="text" id="userName" name="userName" placeholder="Enter username" />
       <br/>
-      <input type="submit" value="Battle" />
+      <input type="submit" value="Fight!" id="fightBtn" />
     </div>
   )
 }
