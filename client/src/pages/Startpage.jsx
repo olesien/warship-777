@@ -1,13 +1,11 @@
-
-import UsernameInput from '../components/UsernameInput'
+import UserForm from '../components/userForm'
 import React from 'react'
 
 const Startpage = () => {
   return (
     <div>
-        <UsernameInput />
+        <UserForm />
     </div>
-   
   )
 }
 
