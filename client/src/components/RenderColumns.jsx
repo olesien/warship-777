@@ -5,7 +5,7 @@ export default function RenderColumns({ grid, drop, allowDrop, drag }) {
     return (
         <>
             {grid.map((column, columnIndex) => (
-                <div className="rows">
+                <div className="rows" key={columnIndex}>
                     {column.map((row, rowIndex) => {
                         console.log(column.length, columnIndex, rowIndex);
                         const calculateTotal =
@@ -18,6 +18,7 @@ export default function RenderColumns({ grid, drop, allowDrop, drag }) {
                                 allowDrop={allowDrop}
                                 drag={drag}
                                 totalIndex={calculateTotal}
+                                key={calculateTotal}
                             />
                         );
                     })}

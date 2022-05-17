@@ -4,6 +4,7 @@ import RenderColumns from "./RenderColumns";
 import { useState } from "react";
 
 export default function Grid() {
+    console.log("rerendering");
     const [grid, setGrid] = useState([
         [{ filled: false }, { filled: false }, { filled: false }],
         [{ filled: false }, { filled: false }, { filled: false }],
@@ -30,12 +31,29 @@ export default function Grid() {
 
         console.log(columnCount, rowCount);
 
-        const columnIndex = rowCount % totalIndex;
+        const columnIndex = Math.ceil(totalIndex / columnCount) - 1;
         console.log("col: " + columnIndex);
 
-        const rowIndex = columnCount % totalIndex;
+        const rowIndex = totalIndex - rowCount * columnIndex - 1;
 
         console.log("row: " + rowIndex);
+
+        setGrid((prevGrid) => {
+            const newGrid = prevGrid.map((prevColumn, prevColumnIndex) => {
+                if (prevColumnIndex === columnIndex) {
+                    return prevColumn.map((prevRow, prevRowIndex) => {
+                        if (prevRowIndex === rowIndex) {
+                            return { filled: true };
+                        }
+                        return prevRow;
+                    });
+                }
+                return prevColumn;
+            });
+            //gridRef[columnIndex][rowIndex].filled = true;
+            console.log(newGrid);
+            return newGrid;
+        });
 
         const child = document.getElementById(data);
         child.parentNode.removeChild(child);
@@ -50,7 +68,7 @@ export default function Grid() {
                 {/* Board to play game on */}
                 <div
                     className="bg-secondary container text-center grid-container"
-                    style={{ height: "80px", width: "80px" }}
+                    style={{ height: "120px", width: "120px" }}
                 >
                     <RenderColumns
                         grid={grid}
