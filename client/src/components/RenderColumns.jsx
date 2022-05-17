@@ -6,15 +6,21 @@ export default function RenderColumns({ grid, drop, allowDrop, drag }) {
         <>
             {grid.map((column, columnIndex) => (
                 <div className="rows">
-                    {column.map((row, rowIndex) => (
-                        <RenderRows
-                            row={row}
-                            drop={drop}
-                            allowDrop={allowDrop}
-                            drag={drag}
-                            totalIndex={(columnIndex + 1) * (rowIndex + 1)}
-                        />
-                    ))}
+                    {column.map((row, rowIndex) => {
+                        console.log(column.length, columnIndex, rowIndex);
+                        const calculateTotal =
+                            column.length * columnIndex + (rowIndex + 1);
+                        console.log(calculateTotal);
+                        return (
+                            <RenderRows
+                                row={row}
+                                drop={drop}
+                                allowDrop={allowDrop}
+                                drag={drag}
+                                totalIndex={calculateTotal}
+                            />
+                        );
+                    })}
                 </div>
             ))}
         </>

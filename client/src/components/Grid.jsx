@@ -5,8 +5,9 @@ import { useState } from "react";
 
 export default function Grid() {
     const [grid, setGrid] = useState([
-        [{ filled: true }, { filled: false }],
-        [{ filled: false }, { filled: false }],
+        [{ filled: false }, { filled: false }, { filled: false }],
+        [{ filled: false }, { filled: false }, { filled: false }],
+        [{ filled: false }, { filled: false }, { filled: false }],
     ]);
     function allowDrop(ev) {
         ev.preventDefault();
@@ -19,7 +20,27 @@ export default function Grid() {
     function drop(ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
+        console.log(ev.target.id);
+
+        const totalIndex = Number(ev.target.id.substring(3));
+        console.log(totalIndex);
+
+        const columnCount = grid.length;
+        const rowCount = grid[0].length;
+
+        console.log(columnCount, rowCount);
+
+        const columnIndex = rowCount % totalIndex;
+        console.log("col: " + columnIndex);
+
+        const rowIndex = columnCount % totalIndex;
+
+        console.log("row: " + rowIndex);
+
+        const child = document.getElementById(data);
+        child.parentNode.removeChild(child);
+
+        //ev.target.appendChild(document.getElementById(data));
     }
 
     return (
