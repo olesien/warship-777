@@ -9,6 +9,7 @@ export const useChatContext = () => {
 };
 
 const ChatContextProvider = ({ children }) => {
+    socket.emit("user:hello", "hello");
     const values = {
         socket,
     };
