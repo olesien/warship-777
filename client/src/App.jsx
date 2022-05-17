@@ -1,6 +1,7 @@
 import Startpage from "./pages/Startpage";
 import Game from "./pages/Game";
 import "./App.css";
+import Grid from "./components/Grid";
 
 const App = () => {
     return (
@@ -11,6 +12,7 @@ const App = () => {
                 <Startpage />
             </div>
 
+            <Grid />
             {/* Remove className "d-none" from second div */}
 
             <div className="">
