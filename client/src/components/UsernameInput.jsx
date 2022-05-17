@@ -2,7 +2,7 @@ import React from 'react'
 
 const UsernameInput = () => {
   return (
-    <div>
+    <div style={{ position: "absolute", top: "75%", left: "50%", transform: "translate(-50%, -50%)" }}>
         {/* An input for your username */}
 
         <form className="d-flex flex-column align-items-center"> 
