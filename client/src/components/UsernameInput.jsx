@@ -5,10 +5,10 @@ const UsernameInput = () => {
     <div>
         {/* An input for your username */}
 
-        <form> 
-            <input type="text" id="userName" name="userName" placeholder="Enter username" />
+        <form className="d-flex flex-column align-items-center"> 
+            <input type="text" id="userName" name="userName" placeholder="Enter username..." />
             <br/>
-            <input type="submit" value="Battle" />
+            <input type="submit" value="Fight!" id="fightBtn" />
         </form>
     </div>
   )
