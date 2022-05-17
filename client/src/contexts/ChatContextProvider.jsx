@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import socketio from "socket.io-client";
 
 const ChatContext = createContext();
@@ -9,13 +9,19 @@ export const useChatContext = () => {
 };
 
 const ChatContextProvider = ({ children }) => {
+    const [chatUsername, setChatUsername] = useState();
+    
     socket.emit("user:hello", "hello");
     const values = {
+        chatUsername,
+        setChatUsername,
         socket,
     };
 
     return (
-        <ChatContext.Provider value={values}>{children}</ChatContext.Provider>
+        <ChatContext.Provider value={values}>
+            {children}
+        </ChatContext.Provider>
     );
 };
 

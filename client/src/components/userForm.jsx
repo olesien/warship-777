@@ -1,15 +1,17 @@
-const UserForm = ({ handleSubmit, userInput, setUserInput }) => {
+import React from 'react'
+
+const UserForm = ({ username, setUsername, onSubmit}) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <input 
           type="text" 
           id="userName" 
           name="userName" 
-          value={userInput}
+          value={username}
           placeholder="Enter username" 
-          onChange={e => setUserInput(e.target.value)} />
+          onChange={e => setUsername(e.target.value)} />
           {/* <UserInput /> */}
         <br/>
         <input type="submit" value="battle" id="fightBtn" />
