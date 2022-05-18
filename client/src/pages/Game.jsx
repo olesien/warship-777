@@ -17,7 +17,7 @@ const Game = () => {
             </div>
             
             <div className="d-flex flex-column" style={{ position: "relative", right: "44px" }}>
-                <div className="grid-container justify-content-end" style={{ width: "400px", position: "relative", left: "40px" }}>
+                <div className="grid-container justify-content-end" style={{ width: "400px", position: "relative", left: "44px" }}>
                     <div className="grid-item d-flex justify-content-center align-items-end black-border">1</div>
                     <div className="grid-item d-flex justify-content-center align-items-end black-border">2</div>
                     <div className="grid-item d-flex justify-content-center align-items-end black-border">3</div>
