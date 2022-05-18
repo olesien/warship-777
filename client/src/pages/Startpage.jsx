@@ -23,7 +23,6 @@ const Startpage = ({ onSubmit }) => {
 
   }, [socket, chatUsername])
 
-const Startpage = () => {
   return (
     <div className="d-flex justify-content-end" style={{ background: "url('./images/image 3.png')", backgroundRepeat: "no-repeat", backgroundSize: "cover", height: "100%", width: "100%", position: "fixed" }}>
       <div id="homePageText">
