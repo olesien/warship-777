@@ -6,29 +6,24 @@ import Grid from "../components/Grid";
 
 const Game = () => {
     return (
-        <div className="">
-            <div className="">
+        <div>
+            <div>
                 <Grid />
                 <div
-                    className="d-flex flex-column align-items-center"
-                    style={{ width: "400px" }}
+                    className="d-flex flex-column align-items-center w-400"
                 >
                     <h3>Username</h3>
 
-                    <button className="mb-5 ready-btn">Ready ?</button>
+                    <button className="mb-5 ready-btn">Ready?</button>
                 </div>
 
                 <div
                     className="d-flex flex-column"
-                    style={{ position: "relative", right: "44px" }}
+                    id="playFieldPosition"
                 >
                     <div
-                        className="grid-container justify-content-end"
-                        style={{
-                            width: "400px",
-                            position: "relative",
-                            left: "44px",
-                        }}
+                        className="grid-container justify-content-end w-400"
+                        id="nmrPosition"
                     >
                         <div className="grid-item d-flex justify-content-center align-items-end black-border">
                             1
@@ -65,7 +60,6 @@ const Game = () => {
                     <div className="d-flex">
                         <div
                             className="grid-container d-flex flex-column"
-                            style={{}}
                         >
                             <div className="grid-item d-flex justify-content-end align-items-center black-border me-1">
                                 A
@@ -105,22 +99,19 @@ const Game = () => {
 
                 {/* Your ships, place them out on the board */}
                 <div>
-                    <div className="">
+                    <div>
                         <div
-                            className="d-flex flex-wrap mt-5"
-                            style={{ height: "100px", width: "400px" }}
+                            className="d-flex flex-wrap mt-5 w-400 h-100px"
                         >
                             <div
-                                className="grid-container pe-2"
-                                style={{ width: "90px" }}
+                                className="grid-container pe-2 twoSquareShip"
                             >
                                 <div className="grid-item ship-colors"></div>
                                 <div className="grid-item ship-colors"></div>
                             </div>
 
                             <div
-                                className="grid-container pe-2"
-                                style={{ width: "130px" }}
+                                className="grid-container pe-2 threeSquareShip"
                             >
                                 <div className="grid-item ship-colors"></div>
                                 <div className="grid-item ship-colors"></div>
@@ -128,8 +119,7 @@ const Game = () => {
                             </div>
 
                             <div
-                                className="grid-container pe-2"
-                                style={{ width: "170px" }}
+                                className="grid-container pe-2 fourSquareShip"
                             >
                                 <div className="grid-item ship-colors"></div>
                                 <div className="grid-item ship-colors"></div>
@@ -138,8 +128,7 @@ const Game = () => {
                             </div>
 
                             <div
-                                className="grid-container pe-2"
-                                style={{ width: "90px" }}
+                                className="grid-container pe-2 twoSquareShip"
                             >
                                 <div className="grid-item ship-colors"></div>
                                 <div className="grid-item ship-colors"></div>
@@ -149,7 +138,6 @@ const Game = () => {
                         <div
                             id="rotate-btn"
                             className="d-flex justify-content-center align-items-center"
-                            style={{ height: "20px", width: "20px" }}
                         >
                             <FontAwesomeIcon icon={faArrowRotateRight} />
                         </div>
