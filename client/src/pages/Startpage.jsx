@@ -31,16 +31,15 @@ const Startpage = ({ onSubmit }) => {
           <h1>of</h1>
         </div>
         <h1>Red Line</h1>
-        <div>
-          <UserForm 
-            onSubmit={handleSubmit}
-            username={username}
-            setUsername={setUsername}
-          />
-        </div> 
       </div>
-    </div>
-      
+      <div style={{ position: "absolute", top: "75%", left: "50%", transform: "translate(-50%, -50%)" }}>
+        <UserForm 
+          onSubmit={handleSubmit}
+          username={username}
+          setUsername={setUsername}
+        />
+      </div> 
+    </div>  
   )
 }
 
