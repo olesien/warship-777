@@ -6,7 +6,7 @@ import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import useGameLogic from "../hooks/useGameLogic";
 const Game = () => {
     //Game logic
-    const { drag } = useGameLogic();
+    const { grid, drop, allowDrop, drag } = useGameLogic();
 
     return (
         <div className="">
@@ -101,7 +101,12 @@ const Game = () => {
                             </div>
                         </div>
 
-                        <Gameboard />
+                        <Gameboard
+                            grid={grid}
+                            drop={drop}
+                            allowDrop={allowDrop}
+                            drag={drag}
+                        />
                     </div>
                 </div>
 
@@ -113,11 +118,12 @@ const Game = () => {
                             style={{ height: "100px", width: "400px" }}
                         >
                             <div
-                                id={"drag0"}
+                                id={"boat"}
                                 className="inner-grid-item"
                                 draggable="true"
                                 onDragStart={drag}
                             ></div>
+
                             <div
                                 className="grid-container pe-2"
                                 style={{ width: "90px" }}
