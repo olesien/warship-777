@@ -31,16 +31,16 @@ const Startpage = ({ onSubmit }) => {
           <h1>of</h1>
         </div>
         <h1>Red Line</h1>
+        <div>
+          <UserForm 
+            onSubmit={handleSubmit}
+            username={username}
+            setUsername={setUsername}
+          />
+        </div> 
       </div>
-      
-      <div>
-        <UserForm 
-          onSubmit={handleSubmit}
-          username={username}
-          setUsername={setUsername}
-        />
-      </div> 
     </div>
+      
   )
 }
 
