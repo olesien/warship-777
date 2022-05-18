@@ -2,9 +2,12 @@ import Gameboard from "../components/Gameboard";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
-import Grid from "../components/Grid";
 
+import useGameLogic from "../hooks/useGameLogic";
 const Game = () => {
+    //Game logic
+    const { drag } = useGameLogic();
+
     return (
         <div className="">
             <div className="">
@@ -109,6 +112,12 @@ const Game = () => {
                             className="d-flex flex-wrap mt-5"
                             style={{ height: "100px", width: "400px" }}
                         >
+                            <div
+                                id={"drag0"}
+                                className="inner-grid-item"
+                                draggable="true"
+                                onDragStart={drag}
+                            ></div>
                             <div
                                 className="grid-container pe-2"
                                 style={{ width: "90px" }}
