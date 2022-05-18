@@ -9,13 +9,21 @@ export default function RenderRows({ row, drop, allowDrop, drag, totalIndex }) {
             onDrop={drop}
             onDragOver={allowDrop}
         >
-            {row.filled && (
+            {row.filled ? (
                 <div
                     id={"drag" + totalIndex}
                     className="inner-grid-item"
                     draggable="true"
                     onDragStart={drag}
                 ></div>
+            ) : (
+                row.part && (
+                    <div
+                        id={"drag" + totalIndex}
+                        className="inner-grid-item"
+                        draggable="false"
+                    ></div>
+                )
             )}
         </div>
     );
