@@ -8,7 +8,6 @@ const Game = () => {
     return (
         <div className="">
             <div className="">
-                <Grid />
                 <div
                     className="d-flex flex-column align-items-center"
                     style={{ width: "400px" }}

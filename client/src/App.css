@@ -36,6 +36,14 @@ hr {
     margin: 0;
 }
 
+.inner-grid-item {
+    background-color: #0cf232;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
 #userName {
     border-radius: 10px;
     border: 1px solid black;
