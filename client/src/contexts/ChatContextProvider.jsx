@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import socketio from "socket.io-client";
 
@@ -10,7 +11,14 @@ export const useChatContext = () => {
 
 const ChatContextProvider = ({ children }) => {
     const [chatUsername, setChatUsername] = useState();
-    
+    const [event, setEvent] = useState();
+
+    useEffect(() => {
+        socket.on("game:leave", (user) => {
+            console.log("person left: " + user.username);
+        });
+    }, []);
+
     socket.emit("user:hello", "hello");
     const values = {
         chatUsername,
@@ -19,9 +27,7 @@ const ChatContextProvider = ({ children }) => {
     };
 
     return (
-        <ChatContext.Provider value={values}>
-            {children}
-        </ChatContext.Provider>
+        <ChatContext.Provider value={values}>{children}</ChatContext.Provider>
     );
 };
 
