@@ -43,6 +43,47 @@ hr {
     padding: 0;
     margin: 0;
 }
+
+/* boat direcitons */
+/* horizontal */
+div .double.right,
+div .double.left {
+    width: 80px;
+}
+
+div .triple.right,
+div .triple.left {
+    width: 120px;
+}
+
+div .quadruple.right,
+div .quadruple.left {
+    width: 160px;
+}
+
+/* vertical */
+
+div .double.up,
+div .double.down {
+    height: 80px;
+}
+
+div .triple.up,
+div .triple.down {
+    height: 120px;
+}
+
+div .quadruple.up,
+div .quadruple.down {
+    height: 160px;
+}
+
+#boat1,
+#boat2,
+#boat3 {
+    margin: 10px;
+}
+
 #userFormPosition {
     position: absolute;
     top: 75%;

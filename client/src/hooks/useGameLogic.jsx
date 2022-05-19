@@ -1,5 +1,33 @@
 import { useState } from "react";
 
+const calculateParts = (partCount, direction) => {
+    console.log(partCount, direction);
+    // const directions = ["left", "right", "up", "down"];
+    const parts = [];
+    let col = 0;
+    let row = 0;
+
+    //for loop to get proper part length!
+    for (let i = 0; i < partCount; i++) {
+        if (direction === "left") {
+            col--;
+        } else if (direction === "right") {
+            col++;
+        }
+
+        if (direction === "up") {
+            row--;
+        } else if (direction === "down") {
+            row++;
+        }
+        parts.push({ col, row });
+        console.log("ran part");
+    }
+
+    //subparts: [{ col: 0, row: 1 }]
+    return parts;
+};
+
 export default function useGameLogic() {
     //filled means that it can be interacted with. Part is just for visuals
     const [grid, setGrid] = useState([
@@ -142,12 +170,9 @@ export default function useGameLogic() {
     function drop(ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
-        console.log(ev.target.id);
-
         const child = document.getElementById(data);
         const parentNode = child.parentNode;
         const parentIndex = Number(parentNode.id.substring(3));
-        console.log(parentIndex);
 
         const totalIndex = Number(ev.target.id.substring(3));
 
@@ -164,9 +189,6 @@ export default function useGameLogic() {
         const parentRowIndex = parentIndex - rowCount * parentColumnIndex - 1;
 
         let isNew = parentColumnIndex === -1;
-
-        console.log("--------");
-        console.log(isNew);
         console.log(columnIndex, rowIndex);
         console.log(parentColumnIndex, parentRowIndex);
 
@@ -175,10 +197,30 @@ export default function useGameLogic() {
             return;
         }
 
+        const lengthList = ["single", "double", "triple", "quadruple"];
+        const directions = ["left", "right", "up", "down"];
+
+        let length, direction;
+        if (isNew) {
+            //get index
+            length = lengthList.findIndex(
+                (len) =>
+                    len ===
+                    Array.from(child.classList).find((childClass) =>
+                        lengthList.find((length) => length === childClass)
+                    )
+            );
+            console.log("lengththththhh: " + length);
+            direction = Array.from(child.classList).find((childClass) =>
+                directions.find((direction) => direction === childClass)
+            );
+        }
+
         setGrid((prevGrid) => {
             let oldGridItem = {};
             if (isNew) {
-                oldGridItem.subparts = [];
+                oldGridItem.subparts = calculateParts(length, direction);
+                console.log(oldGridItem.subparts);
             } else {
                 oldGridItem = prevGrid[parentColumnIndex][parentRowIndex];
             }
@@ -188,6 +230,30 @@ export default function useGameLogic() {
             //check if
             let children;
             if (isNew) {
+                children = oldGridItem.subparts.map((subpart) => {
+                    const newColumn = columnIndex + subpart.col;
+
+                    const newRow = rowIndex + subpart.row;
+
+                    //x axis will cause overflow
+                    if (!prevGrid[newColumn]) {
+                        obfuscated = true;
+                        return {};
+                    }
+
+                    const newGridItem = prevGrid[newColumn][newRow];
+                    console.log(newGridItem);
+                    //y axis will cause overflow, or those parts are already filled.
+                    if (
+                        newGridItem === undefined ||
+                        newGridItem.filled ||
+                        newGridItem.part
+                    ) {
+                        obfuscated = true;
+                    }
+
+                    return { newColumn, newRow };
+                });
             } else {
                 children = oldGridItem.subparts.map((subpart) => {
                     const newColumn = columnIndex + subpart.col;
@@ -196,8 +262,20 @@ export default function useGameLogic() {
                     const newRow = rowIndex + subpart.row;
                     const oldRow = parentRowIndex + subpart.row;
 
+                    //x axis will cause overflow
+                    if (!prevGrid[newColumn]) {
+                        obfuscated = true;
+                        return {};
+                    }
+
                     const newGridItem = prevGrid[newColumn][newRow];
-                    if (newGridItem.filled || newGridItem.part) {
+                    console.log(newGridItem);
+                    //y axis will cause overflow, or those parts are already filled.
+                    if (
+                        newGridItem === undefined ||
+                        newGridItem.filled ||
+                        newGridItem.part
+                    ) {
                         obfuscated = true;
                     }
 
@@ -248,18 +326,19 @@ export default function useGameLogic() {
                     }
 
                     //loop through the smaller component parts to add or remove.
-                    if (!isNew) {
-                        const rightTile = children.find(
-                            (child) =>
-                                child.newColumn === prevColumnIndex &&
-                                child.newRow === prevRowIndex
-                        );
-                        if (rightTile) {
-                            //add this tile!
-                            console.log("adding component tile");
-                            return { filled: false, part: true };
-                        }
 
+                    const rightTile = children.find(
+                        (child) =>
+                            child.newColumn === prevColumnIndex &&
+                            child.newRow === prevRowIndex
+                    );
+                    if (rightTile) {
+                        //add this tile!
+                        console.log("adding component tile");
+                        return { filled: false, part: true };
+                    }
+
+                    if (!isNew) {
                         const deleteTile = children.find(
                             (child) =>
                                 child.oldColumn === prevColumnIndex &&
