@@ -5,8 +5,7 @@ import { useChatContext } from '../contexts/ChatContextProvider'
 
 const Startpage = ({ onSubmit }) => {
   const [username, setUsername] = useState('')
-  // const [loading, setLoading] = useState(false)
-  // const [players, setPlayers] = useState(0)
+  const [loading, setLoading] = useState(false)
   // const [disconnect, setDisconnect] = useState(false)
   const { socket, setChatUsername, chatUsername } = useChatContext()
   const navigate = useNavigate()
@@ -14,15 +13,23 @@ const Startpage = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
+    setLoading(true)
     console.log(username)
     setChatUsername(username)
-    // setPlayers(prevPlayer => prevPlayer + 1)
+  }
+
+
+  const startGame = () => {
+    setLoading(false)
+    console.log("Start game")
+    navigate("/game")
   }
   
-
+  
   useEffect(() => {
     setUsername('')
-
+    console.log("UseEffect runs")
+    
     if (!username.length) {
       return
     }
@@ -31,9 +38,12 @@ const Startpage = ({ onSubmit }) => {
     socket.on("user:joined", (msg) => {
       console.log(msg)
     })
-    socket.on("user:disconnect", (msg) => {
-      console.log(msg)
+    socket.on("players", (msg) => {
+      startGame()
     })
+    // socket.on("user:disconnect", (msg) => {
+    //   console.log(msg)
+    // })
 
   }, [socket, chatUsername])
 
@@ -45,6 +55,7 @@ const Startpage = ({ onSubmit }) => {
           <h1>of</h1>
         </div>
         <h1>Red Line</h1>
+        {loading && <p>loading...</p>}
       </div>
       <div style={{ position: "absolute", top: "75%", left: "50%", transform: "translate(-50%, -50%)" }}>
         <UserForm 
