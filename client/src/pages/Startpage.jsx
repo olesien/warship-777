@@ -1,4 +1,5 @@
 import UserForm from '../components/userForm'
+import WaitingPlayer from '../components/WaitingPlayer'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useChatContext } from '../contexts/ChatContextProvider'
@@ -69,6 +70,13 @@ const Startpage = ({ onSubmit }) => {
                     <h1>of</h1>
                 </div>
                 <h1>Red Line</h1>
+
+              {loading && 
+                <div style={{ position: "absolute", top: "35%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                      <WaitingPlayer />
+                </div>
+              }
+
             </div>
             <div style={{ position: "absolute", top: "75%", left: "50%", transform: "translate(-50%, -50%)" }}>
               <UserForm 
@@ -119,8 +127,6 @@ const Startpage = ({ onSubmit }) => {
                   <label htmlFor="" className="avatarLabel" />
                 </label>
               </form>
-
-            {loading && <p>loading...</p>}
     </div>  
   )
 }

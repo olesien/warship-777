@@ -121,39 +121,39 @@ hr {
 }
 
 #one {
-    background: url("../public/images/onepieceavatars-modified\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ 1.png");
 }
 
 #two {
-    background: url("../public/images/onepieceavatars-modified\ \(1\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(1\)\ 1.png");
 }
 
 #three {
-    background: url("../public/images/onepieceavatars-modified\ \(2\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(2\)\ 1.png");
 }
 
 #four {
-    background: url("../public/images/onepieceavatars-modified\ \(3\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(3\)\ 1.png");
 }
 
 #five {
-    background: url("../public/images/onepieceavatars-modified\ \(5\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(5\)\ 1.png");
 }
 
 #six {
-    background: url("../public/images/onepieceavatars-modified\ \(6\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(6\)\ 1.png");
 }
 
 #seven {
-    background: url("../public/images/onepieceavatars-modified\ \(4\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(4\)\ 1.png");
 }
 
 #eight {
-    background: url("../public/images/onepieceavatars-modified\ \(7\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(7\)\ 1.png");
 }
 
 #homePage {
-    background: url("../public/images/image 3.png");
+    background: url("../src/assets/images/image 3.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 70%;
@@ -258,4 +258,11 @@ hr {
 
 .twoSquareShip {
     width: 90px;
+}
+
+.waiting h4 {
+    padding-left: 20px;
+    font-family: "IM Fell English", serif;
+    font-weight: bold;
+    color: #000000db;
 }
