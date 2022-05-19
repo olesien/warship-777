@@ -1,16 +1,16 @@
 import { createContext, useContext, useState } from "react";
 import socketio from "socket.io-client";
 
-const ChatContext = createContext();
+const GameContext = createContext();
 const socket = socketio.connect(process.env.REACT_APP_SOCKET_URL);
 
-export const useChatContext = () => {
-    return useContext(ChatContext);
+export const useGameContext = () => {
+    return useContext(GameContext);
 };
 
-const ChatContextProvider = ({ children }) => {
+const GameContextProvider = ({ children }) => {
     const [chatUsername, setChatUsername] = useState();
-    
+
     socket.emit("user:hello", "hello");
     const values = {
         chatUsername,
@@ -19,10 +19,8 @@ const ChatContextProvider = ({ children }) => {
     };
 
     return (
-        <ChatContext.Provider value={values}>
-            {children}
-        </ChatContext.Provider>
+        <GameContext.Provider value={values}>{children}</GameContext.Provider>
     );
 };
 
-export default ChatContextProvider;
+export default GameContextProvider;
