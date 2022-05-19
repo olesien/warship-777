@@ -6,7 +6,6 @@ import { useChatContext } from '../contexts/ChatContextProvider'
 const Startpage = ({ onSubmit }) => {
   const [username, setUsername] = useState('')
   const [loading, setLoading] = useState(false)
-  // const [disconnect, setDisconnect] = useState(false)
   const { socket, setChatUsername, chatUsername } = useChatContext()
   const navigate = useNavigate()
 
