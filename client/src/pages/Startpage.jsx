@@ -1,5 +1,5 @@
 import UserForm from '../components/userForm'
-import WaitingPlayer from '../components/WaitingPlayer'
+import WaitingPlayer from '../components/waitingplayer'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useChatContext } from '../contexts/ChatContextProvider'
