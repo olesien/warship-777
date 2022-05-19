@@ -1,25 +1,39 @@
 import UserForm from '../components/userForm'
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useChatContext } from '../contexts/ChatContextProvider'
 
 const Startpage = ({ onSubmit }) => {
   const [username, setUsername] = useState('')
+  // const [loading, setLoading] = useState(false)
+  // const [players, setPlayers] = useState(0)
+  // const [disconnect, setDisconnect] = useState(false)
   const { socket, setChatUsername, chatUsername } = useChatContext()
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
     console.log(username)
     setChatUsername(username)
+    // setPlayers(prevPlayer => prevPlayer + 1)
   }
+  
 
   useEffect(() => {
-    if (username === '') {
+    setUsername('')
+
+    if (!username.length) {
       return
     }
     // emits that username value
-    socket.emit("newPlayer", chatUsername)
     socket.emit("user:joined", chatUsername)
+    socket.on("user:joined", (msg) => {
+      console.log(msg)
+    })
+    socket.on("user:disconnect", (msg) => {
+      console.log(msg)
+    })
 
   }, [socket, chatUsername])
 
