@@ -14,13 +14,17 @@ const Startpage = ({ onSubmit }) => {
   }
 
   useEffect(() => {
-    if (username === '') {
+    setUsername('')
+
+    if (!username.length) {
       return
     }
     // emits that username value
-    socket.emit("newPlayer", chatUsername)
     socket.emit("user:joined", chatUsername)
-
+    socket.on("user:joined", (msg) => {
+      console.log(msg)
+    })
+    
   }, [socket, chatUsername])
 
   return (
