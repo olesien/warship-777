@@ -95,20 +95,20 @@ div .quadruple.down {
     border-radius: 10px;
     border: 1px solid black;
     padding: 15px;
-    margin-bottom: 32px;
-    height: 69px;
-    font-size: 32px;
-    width: 310px;
+    margin-bottom: 15px;
+    height: 40px;
+    font-size: 20px;
+    width: 200px;
 }
 
 #fightBtn {
-    width: 90%;
+    width: 80%;
     border: 1px solid black;
     background-color: #9d0505;
     border-radius: 10px;
     color: white;
-    height: 66px;
-    font-size: 36px;
+    height: 40px;
+    font-size: 20px;
     line-height: initial;
     font-weight: bold;
     padding: 5px;
@@ -123,51 +123,78 @@ div .quadruple.down {
     padding: 0;
 }
 
+#avatarSelect > label:hover {
+    cursor: pointer;
+}
+
 .avatar {
     height: 145px;
     width: 145px;
-    margin: 5px;
     margin-left: 25px;
     margin-right: 25px;
-    margin-bottom: 1;
+    margin-bottom: 20px;
     border-radius: 100px;
-    border: 2px solid #ff0000;
+}
+
+.avatar > input {
+    display: none;
+}
+
+.avatar > input[type=radio]:not(:checked) + .avatarLabel {
+    position: relative;
+    border: 3px solid #ff0000;
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.avatar > input[type=radio]:checked + .avatarLabel {
+    position: relative;
+    border: 2px solid greenyellow;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    z-index: +100;
 }
 
 #one {
-    background: url("../public/images/onepieceavatars-modified\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ 1.png");
 }
 
 #two {
-    background: url("../public/images/onepieceavatars-modified\ \(1\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(1\)\ 1.png");
 }
 
 #three {
-    background: url("../public/images/onepieceavatars-modified\ \(2\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(2\)\ 1.png");
 }
 
 #four {
-    background: url("../public/images/onepieceavatars-modified\ \(3\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(3\)\ 1.png");
 }
 
 #five {
-    background: url("../public/images/onepieceavatars-modified\ \(5\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(5\)\ 1.png");
 }
 
 #six {
-    background: url("../public/images/onepieceavatars-modified\ \(6\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(6\)\ 1.png");
 }
 
 #seven {
-    background: url("../public/images/onepieceavatars-modified\ \(4\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(4\)\ 1.png");
 }
 
 #eight {
-    background: url("../public/images/onepieceavatars-modified\ \(7\)\ 1.png");
+    background: url("../src/assets/images/onepieceavatars-modified\ \(7\)\ 1.png");
 }
 
 #homePage {
-    background: url("../public/images/image 3.png");
+    background: url("../src/assets/images/image 3.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 70%;
@@ -177,7 +204,8 @@ div .quadruple.down {
 }
 
 #homePageText {
-    padding: 80px;
+    padding-top: 20px;
+    padding-right: 120px;
 }
 
 #of {
@@ -186,7 +214,7 @@ div .quadruple.down {
 }
 
 #homePageText h1 {
-    font-size: 100px;
+    font-size: 70px;
     color: #9d0505;
     margin: 0;
     font-family: "IM Fell English", serif;
@@ -271,4 +299,11 @@ div .quadruple.down {
 
 .twoSquareShip {
     width: 90px;
+}
+
+.waiting h4 {
+    padding-left: 20px;
+    font-family: "IM Fell English", serif;
+    font-weight: bold;
+    color: #000000db;
 }
