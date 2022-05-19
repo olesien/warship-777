@@ -83,6 +83,7 @@ const Startpage = ({ onSubmit }) => {
                 onSubmit={handleSubmit}
                 username={username}
                 setUsername={setUsername}
+                loading={loading}
               />
             </div> 
 
