@@ -7,10 +7,10 @@ export default function RenderColumns({ grid, drop, allowDrop, drag }) {
             {grid.map((column, columnIndex) => (
                 <div className="rows" key={columnIndex}>
                     {column.map((row, rowIndex) => {
-                        console.log(column.length, columnIndex, rowIndex);
+                        //console.log(column.length, columnIndex, rowIndex);
                         const calculateTotal =
                             column.length * columnIndex + (rowIndex + 1);
-                        console.log(calculateTotal);
+                        //console.log(calculateTotal);
                         return (
                             <RenderRows
                                 row={row}
