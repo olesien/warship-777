@@ -24,7 +24,7 @@ const calculateParts = (partCount, direction) => {
         console.log("ran part");
     }
 
-    //subparts: [{ col: 0, row: 1 }]
+    //subparts: [{ col: 0, row: 1 }] for example
     return parts;
 };
 
@@ -32,8 +32,20 @@ export default function useGameLogic() {
     //filled means that it can be interacted with. Part is just for visuals
     const [grid, setGrid] = useState([
         [
-            { filled: true, part: true, subparts: [{ col: 0, row: 1 }] },
-            { filled: false, part: true },
+            { filled: false, part: false },
+            { filled: false, part: false },
+            { filled: false, part: false },
+            { filled: false, part: false },
+            { filled: false, part: false },
+            { filled: false, part: false },
+            { filled: false, part: false },
+            { filled: false, part: false },
+            { filled: false, part: false },
+            { filled: false, part: false },
+        ],
+        [
+            { filled: false, part: false },
+            { filled: false, part: false },
             { filled: false, part: false },
             { filled: false, part: false },
             { filled: false, part: false },
@@ -59,19 +71,7 @@ export default function useGameLogic() {
             { filled: false, part: false },
             { filled: false, part: false },
             { filled: false, part: false },
-            { filled: true, part: true, subparts: [{ col: 1, row: 0 }] },
             { filled: false, part: false },
-            { filled: false, part: false },
-            { filled: false, part: false },
-            { filled: false, part: false },
-            { filled: false, part: false },
-            { filled: false, part: false },
-        ],
-        [
-            { filled: false, part: false },
-            { filled: false, part: false },
-            { filled: false, part: false },
-            { filled: false, part: true },
             { filled: false, part: false },
             { filled: false, part: false },
             { filled: false, part: false },
@@ -117,15 +117,11 @@ export default function useGameLogic() {
         ],
         [
             {
-                filled: true,
-                part: true,
-                subparts: [
-                    { col: 0, row: 1 },
-                    { col: 0, row: 2 },
-                ],
+                filled: false,
+                part: false,
             },
-            { filled: false, part: true },
-            { filled: false, part: true },
+            { filled: false, part: false },
+            { filled: false, part: false },
             { filled: false, part: false },
             { filled: false, part: false },
             { filled: false, part: false },
@@ -169,40 +165,44 @@ export default function useGameLogic() {
 
     function drop(ev) {
         ev.preventDefault();
+        //extract the element by its id
         var data = ev.dataTransfer.getData("text");
+        //get the element
         const child = document.getElementById(data);
+        //Get the parents & their indexes.
         const parentNode = child.parentNode;
         const parentIndex = Number(parentNode.id.substring(3));
-
         const totalIndex = Number(ev.target.id.substring(3));
 
-        console.log("totalIndex: " + totalIndex);
-
+        //Calculate how many rows/columns there are. This assumes that it is a square!!!!
         const columnCount = grid.length;
         const rowCount = grid[0].length;
 
+        //Get the column index of the new and old position
         const columnIndex = Math.ceil(totalIndex / columnCount) - 1;
         const parentColumnIndex = Math.ceil(parentIndex / columnCount) - 1;
 
+        //Reverse engineer to get the index for the rows as well
         const rowIndex = totalIndex - rowCount * columnIndex - 1;
 
         const parentRowIndex = parentIndex - rowCount * parentColumnIndex - 1;
 
+        //Is it a new ship (dragged from outside the grid)
         let isNew = parentColumnIndex === -1;
-        console.log(columnIndex, rowIndex);
-        console.log(parentColumnIndex, parentRowIndex);
 
-        //is a part!
+        //is a part of the ship!
         if (grid[columnIndex][rowIndex].part) {
             return;
         }
 
+        //Which class names should be expected?
         const lengthList = ["single", "double", "triple", "quadruple"];
         const directions = ["left", "right", "up", "down"];
 
         let length, direction;
+        //Only run this if it's new
         if (isNew) {
-            //get index
+            //get index to determine if it's a single/double/triple/quadruple sized boat
             length = lengthList.findIndex(
                 (len) =>
                     len ===
@@ -210,25 +210,30 @@ export default function useGameLogic() {
                         lengthList.find((length) => length === childClass)
                     )
             );
-            console.log("lengththththhh: " + length);
+
+            //What direction is it?
             direction = Array.from(child.classList).find((childClass) =>
                 directions.find((direction) => direction === childClass)
             );
         }
 
+        //Update the grid
         setGrid((prevGrid) => {
             let oldGridItem = {};
             if (isNew) {
+                //Using what we got from the if statement above, calculate what the relative directions of the tile "children" should be
                 oldGridItem.subparts = calculateParts(length, direction);
-                console.log(oldGridItem.subparts);
             } else {
+                //Not new, this boat exists on the grid already. Grab reference to it
                 oldGridItem = prevGrid[parentColumnIndex][parentRowIndex];
             }
             //const oldGridItem = prevGrid[parentColumnIndex][parentRowIndex];
 
+            //Can you even place the boat?
             let obfuscated = false;
-            //check if
+
             let children;
+            //Get the children new positions and then also check if those tiles can be placed within the grid (and they are not already taken)
             if (isNew) {
                 children = oldGridItem.subparts.map((subpart) => {
                     const newColumn = columnIndex + subpart.col;
@@ -255,6 +260,7 @@ export default function useGameLogic() {
                     return { newColumn, newRow };
                 });
             } else {
+                //Calculate the positions of the old and new positions for the children. Will they cause overflow?
                 children = oldGridItem.subparts.map((subpart) => {
                     const newColumn = columnIndex + subpart.col;
                     const oldColumn = parentColumnIndex + subpart.col;
@@ -283,18 +289,13 @@ export default function useGameLogic() {
                 });
             }
 
-            console.log("childrne");
-            console.log(children);
-
+            //If obfuscated, just return!
             if (obfuscated) {
-                console.log(obfuscated);
                 return prevGrid;
             }
 
             //new grid
             const newGrid = prevGrid.map((prevColumn, prevColumnIndex) => {
-                console.log(prevColumnIndex, parentColumnIndex, columnIndex);
-
                 //Map through the columns
                 return prevColumn.map((prevRow, prevRowIndex) => {
                     //add "main" boat tile
@@ -338,6 +339,7 @@ export default function useGameLogic() {
                         return { filled: false, part: true };
                     }
 
+                    //If it's new we can't delete the old tile in the traditional sense!
                     if (!isNew) {
                         const deleteTile = children.find(
                             (child) =>
@@ -357,6 +359,7 @@ export default function useGameLogic() {
                     return prevRow;
                 });
             });
+            //Is new. Delete the old one
             if (isNew) {
                 try {
                     child.parentNode.removeChild(child);

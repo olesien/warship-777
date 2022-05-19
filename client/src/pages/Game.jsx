@@ -108,6 +108,12 @@ const Game = () => {
                                 onDragStart={drag}
                             ></div>
                             <div
+                                id={"boat1"}
+                                className="inner-grid-item double right"
+                                draggable="true"
+                                onDragStart={drag}
+                            ></div>
+                            <div
                                 id={"boat2"}
                                 className="inner-grid-item triple left"
                                 draggable="true"
@@ -121,7 +127,7 @@ const Game = () => {
                                 onDragStart={drag}
                             ></div>
 
-                            <div className="grid-container pe-2 twoSquareShip">
+                            {/* <div className="grid-container pe-2 twoSquareShip">
                                 <div className="grid-item ship-colors"></div>
                                 <div className="grid-item ship-colors"></div>
                             </div>
@@ -142,7 +148,7 @@ const Game = () => {
                             <div className="grid-container pe-2 twoSquareShip">
                                 <div className="grid-item ship-colors"></div>
                                 <div className="grid-item ship-colors"></div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div
