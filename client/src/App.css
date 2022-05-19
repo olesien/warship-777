@@ -36,23 +36,112 @@ hr {
     margin: 0;
 }
 
+.inner-grid-item {
+    background-color: #0cf232;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+#userFormPosition {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 #userName {
     border-radius: 10px;
     border: 1px solid black;
-    padding: 5px;
-    margin-bottom: 5px;
+    padding: 15px;
+    margin-bottom: 32px;
+    height: 69px;
+    font-size: 32px;
+    width: 310px;
 }
 
 #fightBtn {
-    width: 80%;
+    width: 90%;
     border: 1px solid black;
     background-color: #9d0505;
     border-radius: 10px;
     color: white;
+    height: 66px;
+    font-size: 36px;
+    line-height: initial;
+    font-weight: bold;
+    padding: 5px;
+}
+
+#avatarSelect {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0;
+}
+
+.avatar {
+    height: 145px;
+    width: 145px;
+    margin: 5px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 1;
+    border-radius: 100px;
+    border: 2px solid #ff0000;
+}
+
+#one {
+    background: url("../public/images/onepieceavatars-modified\ 1.png");
+}
+
+#two {
+    background: url("../public/images/onepieceavatars-modified\ \(1\)\ 1.png");
+}
+
+#three {
+    background: url("../public/images/onepieceavatars-modified\ \(2\)\ 1.png");
+}
+
+#four {
+    background: url("../public/images/onepieceavatars-modified\ \(3\)\ 1.png");
+}
+
+#five {
+    background: url("../public/images/onepieceavatars-modified\ \(5\)\ 1.png");
+}
+
+#six {
+    background: url("../public/images/onepieceavatars-modified\ \(6\)\ 1.png");
+}
+
+#seven {
+    background: url("../public/images/onepieceavatars-modified\ \(4\)\ 1.png");
+}
+
+#eight {
+    background: url("../public/images/onepieceavatars-modified\ \(7\)\ 1.png");
+}
+
+#homePage {
+    background: url("../public/images/image 3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 70%;
+    height: 100%;
+    width: 100%;
+    position: fixed;
 }
 
 #homePageText {
     padding: 80px;
+}
+
+#of {
+    position: relative;
+    left: 110px;
 }
 
 #homePageText h1 {
@@ -60,6 +149,19 @@ hr {
     color: #9d0505;
     margin: 0;
     font-family: "IM Fell English", serif;
+}
+
+#waitingText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #9d0505;
+    font-family: "IM Fell English", serif;
+}
+
+#waitingText h1 {
+    font-size: 50px;
 }
 
 .ship-colors {
@@ -76,11 +178,15 @@ hr {
     border: 1px solid white;
     color: white;
     border-radius: 5px;
+    padding: 10px;
+    width: 100px;
 }
 
 #rotate-btn {
     border: 1px solid white;
     background-color: #9d0505;
+    height: 20px;
+    width: 20px;
 }
 
 .black-border {
@@ -89,4 +195,39 @@ hr {
 
 .i {
     width: 14px;
+}
+
+#gameboardSize {
+    height: 400px;
+    width: 400px;
+}
+
+.w-400 {
+    width: 400px;
+}
+
+.h-100px {
+    height: 100px;
+}
+
+#playFieldPosition {
+    position: relative;
+    right: 44px;
+}
+
+#nmrPosition {
+    position: relative;
+    left: 44px;
+}
+
+.fourSquareShip {
+    width: 170px;
+}
+
+.threeSquareShip {
+    width: 130px;
+}
+
+.twoSquareShip {
+    width: 90px;
 }
