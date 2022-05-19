@@ -358,7 +358,11 @@ export default function useGameLogic() {
                 });
             });
             if (isNew) {
-                child.parentNode.removeChild(child);
+                try {
+                    child.parentNode.removeChild(child);
+                } catch (err) {
+                    console.log(err);
+                }
             }
             //Return the new grid
             return newGrid;
