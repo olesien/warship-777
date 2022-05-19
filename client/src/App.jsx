@@ -1,21 +1,29 @@
 import Startpage from "./pages/Startpage";
 import Game from "./pages/Game";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import "./App.css";
-import { useEffect } from "react";
 import { useGameContext } from "./contexts/GameContextProvider";
 
 const App = () => {
     //listen to game state
-    const { socket, changeRoom } = useGameContext();
-    useEffect(() => {
-        socket.on("game:changeRoom", changeRoom);
-    }, [socket, changeRoom]);
+    const { room } = useGameContext();
     return (
         <>
             <Routes>
-                <Route path="/" element={<Startpage />} />
-                <Route path="/game" element={<Game />} />
+                {room ? (
+                    <>
+                        <Route path="/game" element={<Game />} />
+                        <Route
+                            path="*"
+                            element={<Navigate to="/game" replace />}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <Route path="/" element={<Startpage />} />
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </>
+                )}
             </Routes>
         </>
     );

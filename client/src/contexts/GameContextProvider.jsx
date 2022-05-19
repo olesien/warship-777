@@ -11,18 +11,18 @@ export const useGameContext = () => {
 const GameContextProvider = ({ children }) => {
     const [chatUsername, setChatUsername] = useState();
     const [room, setRoom] = useState();
-
     const changeRoom = (newRoom) => {
-        console.log(newRoom);
+        console.log("changin room");
         setRoom(newRoom);
     };
+
     socket.emit("user:hello", "hello");
     const values = {
         chatUsername,
         setChatUsername,
         socket,
         room,
-        changeRoom: changeRoom,
+        changeRoom,
     };
 
     return (

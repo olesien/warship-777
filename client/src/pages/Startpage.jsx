@@ -1,14 +1,13 @@
 import UserForm from "../components/userForm";
 import WaitingPlayer from "../components/WaitingPlayer";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useGameContext } from "../contexts/GameContextProvider";
 
 const Startpage = ({ onSubmit }) => {
     const [username, setUsername] = useState("");
     const [loading, setLoading] = useState(false);
-    const { socket, setChatUsername, chatUsername } = useGameContext();
-    const navigate = useNavigate();
+    const { socket, setChatUsername, chatUsername, changeRoom } =
+        useGameContext();
 
     const one = "Monkey D. Luffy";
     const two = "Roronoa Zoro";
@@ -34,7 +33,7 @@ const Startpage = ({ onSubmit }) => {
     const startGame = () => {
         setLoading(false);
         console.log("Start game");
-        navigate("/game");
+        //navigate("/game");
     };
 
     useEffect(() => {
@@ -49,12 +48,25 @@ const Startpage = ({ onSubmit }) => {
         socket.on("user:joined", (msg) => {
             console.log(msg);
         });
-        socket.on("players", (msg) => {
+        socket.on("players", (game) => {
+            console.log(socket, setChatUsername, chatUsername, changeRoom);
+            changeRoom(game.id);
             startGame();
         });
         // socket.on("user:disconnect", (msg) => {
         //   console.log(msg)
         // })
+
+        return () => {
+            console.log("cleaning up");
+            socket.off("user:joined", (msg) => {
+                console.log(msg);
+            });
+            socket.on("players", (game) => {
+                changeRoom(game.id);
+                startGame();
+            });
+        };
     }, [socket, chatUsername]);
 
     return (
