@@ -163,7 +163,8 @@ hr {
 }
 
 #homePageText {
-    padding: 80px;
+    padding-top: 20px;
+    padding-right: 120px;
 }
 
 #of {
@@ -172,7 +173,7 @@ hr {
 }
 
 #homePageText h1 {
-    font-size: 100px;
+    font-size: 80px;
     color: #9d0505;
     margin: 0;
     font-family: "IM Fell English", serif;
