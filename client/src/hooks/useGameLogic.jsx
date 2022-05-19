@@ -357,11 +357,12 @@ export default function useGameLogic() {
                     return prevRow;
                 });
             });
+            if (isNew) {
+                child.parentNode.removeChild(child);
+            }
             //Return the new grid
             return newGrid;
         });
-
-        //child.parentNode.removeChild(child);
 
         //ev.target.appendChild(document.getElementById(data));
     }
