@@ -12,7 +12,7 @@ export default function RenderRows({ row, drop, allowDrop, drag, totalIndex }) {
             {row.filled ? (
                 <div
                     id={"drag" + totalIndex}
-                    className="inner-grid-item"
+                    className="inner-grid-item draggable"
                     draggable="true"
                     onDragStart={drag}
                 ></div>
