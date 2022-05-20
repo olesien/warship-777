@@ -5,6 +5,7 @@ import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
 
 import useGameLogic from "../hooks/useGameLogic";
+import { useEffect } from "react";
 const Game = () => {
     //Game logic
     const { grid, drop, allowDrop, drag } = useGameLogic();
@@ -13,6 +14,37 @@ const Game = () => {
     const readyBtnPressed = () => {
         socket.emit("user:ready", room);
     };
+
+    useEffect(() => {
+        //One person has readied up!
+        const peopleReady = (players) => {
+            //define who player and opponent is
+            console.log(socket.id);
+            const player = players.find((player) => player.id === socket.id);
+            const opponent = players.find((player) => player.id !== socket.id);
+            console.log(player);
+            console.log(opponent);
+            console.log(players);
+
+            //Add logic to change the ready element here! player is left side, and opponent is right side.
+            //Use player.ready which is true or false to display whether or not they are ready.
+        };
+
+        //Both are ready, start game
+        const start = (game) => {
+            console.log(game);
+        };
+
+        //Listen for these!
+        socket.on("game:peopleready", peopleReady);
+        socket.on("game:start", start);
+
+        return () => {
+            console.log("cleaning up");
+            socket.off("game:peopleready", peopleReady);
+            socket.off("game:start", start);
+        };
+    }, [socket]);
 
     return (
         <div className="">
@@ -119,20 +151,20 @@ const Game = () => {
                                 onDragStart={drag}
                             ></div>
                             <div
-                                id={"boat1"}
+                                id={"boat2"}
                                 className="inner-grid-item double right"
                                 draggable="true"
                                 onDragStart={drag}
                             ></div>
                             <div
-                                id={"boat2"}
+                                id={"boat3"}
                                 className="inner-grid-item triple left"
                                 draggable="true"
                                 onDragStart={drag}
                             ></div>
 
                             <div
-                                id={"boat3"}
+                                id={"boat4"}
                                 className="inner-grid-item quadruple down"
                                 draggable="true"
                                 onDragStart={drag}

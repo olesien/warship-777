@@ -46,7 +46,7 @@ export default function useGameLogic() {
     });
     // const [grid, setGrid] = useState([
     //     [
-    //         { filled: false, part: false },
+    //         { filled: false, part: false, hit: false },
     //         { filled: false, part: false },
     //         { filled: false, part: false },
     //         { filled: false, part: false },
@@ -131,8 +131,9 @@ export default function useGameLogic() {
     //     ],
     //     [
     //         {
-    //             filled: false,
-    //             part: false,
+    //             filled: true,
+    //             part: true,
+    //             subparts: [{col: 1, row: 0}]
     //         },
     //         { filled: false, part: false },
     //         { filled: false, part: false },
@@ -309,6 +310,7 @@ export default function useGameLogic() {
             }
 
             //new grid
+
             const newGrid = prevGrid.map((prevColumn, prevColumnIndex) => {
                 //Map through the columns
                 return prevColumn.map((prevRow, prevRowIndex) => {
