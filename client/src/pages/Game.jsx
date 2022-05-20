@@ -2,11 +2,17 @@ import Gameboard from "../components/Gameboard";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { useGameContext } from "../contexts/GameContextProvider";
 
 import useGameLogic from "../hooks/useGameLogic";
 const Game = () => {
     //Game logic
     const { grid, drop, allowDrop, drag } = useGameLogic();
+    const { room, socket } = useGameContext();
+
+    const readyBtnPressed = () => {
+        socket.emit("user:ready", room);
+    };
 
     return (
         <div className="">
@@ -14,7 +20,12 @@ const Game = () => {
                 <div className="d-flex flex-column align-items-center w-400">
                     <h3>Username</h3>
 
-                    <button className="mb-5 ready-btn">Ready?</button>
+                    <button
+                        onClick={readyBtnPressed}
+                        className="mb-5 ready-btn"
+                    >
+                        Ready?
+                    </button>
                 </div>
 
                 <div className="d-flex flex-column" id="playFieldPosition">

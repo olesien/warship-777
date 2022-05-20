@@ -116,10 +116,7 @@ export default function useGameLogic() {
             { filled: false, part: false },
         ],
         [
-            {
-                filled: false,
-                part: false,
-            },
+            { filled: false, part: false },
             { filled: false, part: false },
             { filled: false, part: false },
             { filled: false, part: false },
