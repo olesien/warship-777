@@ -12,6 +12,7 @@ const UserForm = ({ username, setUsername, onSubmit, loading}) => {
           value={username}
           placeholder="Enter name..." 
           onChange={e => setUsername(e.target.value)} 
+          disabled={loading}
         />
           {/* <UserInput /> */}
         {/* <br/> */}

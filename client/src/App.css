@@ -43,6 +43,51 @@ hr {
     padding: 0;
     margin: 0;
 }
+
+.inner-grid-item.draggable {
+    background-color: #0db328;
+}
+
+/* boat direcitons */
+/* horizontal */
+div .double.right,
+div .double.left {
+    width: 80px;
+}
+
+div .triple.right,
+div .triple.left {
+    width: 120px;
+}
+
+div .quadruple.right,
+div .quadruple.left {
+    width: 160px;
+}
+
+/* vertical */
+
+div .double.up,
+div .double.down {
+    height: 80px;
+}
+
+div .triple.up,
+div .triple.down {
+    height: 120px;
+}
+
+div .quadruple.up,
+div .quadruple.down {
+    height: 160px;
+}
+
+#boat1,
+#boat2,
+#boat3 {
+    margin: 10px;
+}
+
 #userFormPosition {
     position: absolute;
     top: 75%;
@@ -105,7 +150,7 @@ hr {
     display: none;
 }
 
-.avatar > input[type=radio]:not(:checked) + .avatarLabel {
+.avatar > input[type="radio"]:not(:checked) + .avatarLabel {
     position: relative;
     border: 3px solid #ff0000;
     width: 150px;
@@ -117,7 +162,7 @@ hr {
     transform: translate(-50%, -50%);
 }
 
-.avatar > input[type=radio]:checked + .avatarLabel {
+.avatar > input[type="radio"]:checked + .avatarLabel {
     position: relative;
     border: 2px solid greenyellow;
     width: 100%;
