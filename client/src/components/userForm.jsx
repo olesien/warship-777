@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserForm = ({ username, setUsername, onSubmit}) => {
+const UserForm = ({ username, setUsername, onSubmit, loading}) => {
 
   return (
     <div>
@@ -11,10 +11,17 @@ const UserForm = ({ username, setUsername, onSubmit}) => {
           name="userName" 
           value={username}
           placeholder="Enter name..." 
-          onChange={e => setUsername(e.target.value)} />
+          onChange={e => setUsername(e.target.value)} 
+          disabled={loading}
+        />
           {/* <UserInput /> */}
         {/* <br/> */}
-        <input type="submit" value="Fight!" id="fightBtn"/>
+        <input 
+          type="submit" 
+          value="Fight!" 
+          id="fightBtn"
+          disabled={loading}
+        />
       </form>
     </div>
   )

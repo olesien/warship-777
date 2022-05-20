@@ -116,6 +116,12 @@ div .quadruple.down {
     line-height: initial;
     font-weight: bold;
     padding: 5px;
+    cursor: pointer;
+}
+
+#fightBtn:disabled {
+    background-color: #5d0303;
+    color: rgba(255, 255, 255, 0.63);
 }
 
 #avatarSelect {
