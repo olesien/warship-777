@@ -1,20 +1,50 @@
 import Gameboard from "../components/Gameboard";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { useGameContext } from "../contexts/GameContextProvider";
 
 import useGameLogic from "../hooks/useGameLogic";
+
 const Game = () => {
     //Game logic
+    const [ready, setReady] = useState(false)
     const { grid, drop, allowDrop, drag } = useGameLogic();
+    const { socket, chatUsername, room } =
+        useGameContext();
+    
+    const handleReady = () => {
+        setReady(true)
+        socket.emit("user:ready", room)
+    }
+
+    const initialMove = () => {
+
+    }
+
+    useEffect(() => {
+        socket.on("game:start", (msg) => {
+            console.log(msg);
+            // Need to create another page, and what's below goes in there
+        })
+
+        socket.on("player:start", (data) => {
+            if (data.player === chatUsername) {
+                initialMove()
+            }
+            console.log(data.msg)
+            console.log(data.player)
+        })
+        
+    }, [socket, ready, chatUsername])
 
     return (
         <div className="">
             <div className="">
                 <div className="d-flex flex-column align-items-center w-400">
-                    <h3>Username</h3>
+                    <h3>{chatUsername}</h3>
 
-                    <button className="mb-5 ready-btn">Ready?</button>
+                    <button className="mb-5 ready-btn" onClick={() => handleReady()}>{ready ? "Ready!" : "Ready?"}</button>
                 </div>
 
                 <div className="d-flex flex-column" id="playFieldPosition">
