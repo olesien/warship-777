@@ -31,11 +31,13 @@ const Startpage = ({ onSubmit }) => {
 
     const avatarName = (name) => {
         
-        // if (avatarNameArr.includes(name, 0)) {
-        //     setUsername(name)
-        // } else if (username === !avatarNameArr.includes(name, 0)) {
-        //     return
-        // }
+        if (username === "") {
+            setUsername(name)
+        } else if (avatarNameArr.includes(username, 0)) {
+            setUsername(name)
+        } else if (!avatarNameArr.includes(username, 0)) {
+            return
+        }
 
         // if (username) {
         //     return
@@ -43,7 +45,7 @@ const Startpage = ({ onSubmit }) => {
         //     setUsername(name);
         // }
 
-        setUsername(name);
+        // setUsername(name);
 
     };
 
