@@ -6,12 +6,34 @@ import { useGameContext } from "../contexts/GameContextProvider";
 
 import useGameLogic from "../hooks/useGameLogic";
 import { useEffect } from "react";
+
+const countParts = (grid) => {
+    const partCount = grid.reduce((prevCount, col) => {
+        const colPartCount = col.reduce((prevCount, row) => {
+            if (row.part) {
+                return prevCount + 1;
+            }
+            return prevCount;
+        }, 0);
+        return prevCount + colPartCount;
+    }, 0);
+
+    console.log(partCount);
+    return partCount;
+};
 const Game = () => {
     //Game logic
     const { drop, allowDrop, drag } = useGameLogic();
     const { grid, room, socket } = useGameContext();
 
     const readyBtnPressed = () => {
+        //This is how many parts we have
+        const totalParts = 11;
+        const partsPlaced = countParts(grid);
+        if (partsPlaced < totalParts) {
+            alert("Not enough parts placed MATE");
+            return;
+        }
         socket.emit("user:ready", room, grid);
     };
 
