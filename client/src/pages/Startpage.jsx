@@ -39,14 +39,6 @@ const Startpage = ({ onSubmit }) => {
             return
         }
 
-        // if (username) {
-        //     return
-        // } else if (avatarNameArr.includes(name, 0)) {
-        //     setUsername(name);
-        // }
-
-        // setUsername(name);
-
     };
 
     const handleSubmit = (e) => {
