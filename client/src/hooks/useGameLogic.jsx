@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useGameContext } from "../contexts/GameContextProvider";
 
 const calculateParts = (partCount, direction) => {
-    console.log(partCount, direction);
     // const directions = ["left", "right", "up", "down"];
     const parts = [];
     let col = 0;
@@ -29,21 +28,9 @@ const calculateParts = (partCount, direction) => {
 };
 
 export default function useGameLogic() {
+    const { grid, setGrid } = useGameContext();
     //filled means that it can be interacted with. Part is just for visuals
-    const [grid, setGrid] = useState(() => {
-        const columns = 10;
-        const rows = 10;
-        const innerGrid = [];
-        for (let colI = 0; colI < columns; colI++) {
-            const row = [];
-            for (let rowI = 0; rowI < rows; rowI++) {
-                row.push({ filled: false, part: false });
-            }
-            //columns
-            innerGrid.push(row);
-        }
-        return innerGrid;
-    });
+
     // const [grid, setGrid] = useState([
     //     [
     //         { filled: false, part: false, hit: false },

@@ -8,11 +8,11 @@ import useGameLogic from "../hooks/useGameLogic";
 import { useEffect } from "react";
 const Game = () => {
     //Game logic
-    const { grid, drop, allowDrop, drag } = useGameLogic();
-    const { room, socket } = useGameContext();
+    const { drop, allowDrop, drag } = useGameLogic();
+    const { grid, room, socket } = useGameContext();
 
     const readyBtnPressed = () => {
-        socket.emit("user:ready", room);
+        socket.emit("user:ready", room, grid);
     };
 
     useEffect(() => {

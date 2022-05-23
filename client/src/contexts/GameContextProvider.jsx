@@ -16,6 +16,21 @@ const GameContextProvider = ({ children }) => {
         setRoom(newRoom);
     };
 
+    const [grid, setGrid] = useState(() => {
+        const columns = 10;
+        const rows = 10;
+        const innerGrid = [];
+        for (let colI = 0; colI < columns; colI++) {
+            const row = [];
+            for (let rowI = 0; rowI < rows; rowI++) {
+                row.push({ filled: false, part: false });
+            }
+            //columns
+            innerGrid.push(row);
+        }
+        return innerGrid;
+    });
+
     socket.emit("user:hello", "hello");
     const values = {
         chatUsername,
@@ -23,6 +38,8 @@ const GameContextProvider = ({ children }) => {
         socket,
         room,
         changeRoom,
+        grid,
+        setGrid,
     };
 
     return (
