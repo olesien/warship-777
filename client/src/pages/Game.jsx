@@ -8,6 +8,7 @@ import useGameLogic from "../hooks/useGameLogic";
 const Game = () => {
     //Game logic
     const [ready, setReady] = useState(false);
+    const [gameStarted, setGameStarted] = useState(false);
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -73,6 +74,15 @@ const Game = () => {
         };
     }, [socket, setPlayer, setOpponent, chatUsername]);
 
+    //game started?
+    useEffect(() => {
+        if (player.ready && opponent.ready) {
+            setGameStarted(true);
+        } else {
+            setGameStarted(false);
+        }
+    }, [player, opponent]);
+
     return (
         <div className="">
             <div className="">
@@ -94,9 +104,11 @@ const Game = () => {
                 </div>
 
                 <div className="d-flex align-items-center">
-                    {player.ready 
-                        ? (opponent.ready 
-                            ? <div className="d-flex flex-column" id="playFieldPosition">
+                {gameStarted && (
+                        <div
+                            className="d-flex flex-column"
+                            id="playFieldPosition"
+                        >
                             <div
                                 className="grid-container justify-content-end w-400"
                                 id="nmrPosition"
@@ -132,7 +144,7 @@ const Game = () => {
                                     10
                                 </div>
                             </div>
-    
+
                             <div className="d-flex">
                                 <div className="grid-container d-flex flex-column">
                                     <div className="grid-item d-flex justify-content-end align-items-center black-border me-1">
@@ -166,7 +178,7 @@ const Game = () => {
                                         J
                                     </div>
                                 </div>
-    
+
                                 <Gameboard
                                     grid={grid}
                                     drop={drop}
@@ -174,10 +186,8 @@ const Game = () => {
                                     drag={drag}
                                 />
                             </div>
-                        </div> 
-                            : "") 
-                        : ""}
-                
+                        </div>
+                    )}
 
                     <div className="d-flex flex-column" id="playFieldPosition">
                         <div
