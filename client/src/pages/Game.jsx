@@ -1,15 +1,18 @@
 import Gameboard from "../components/Gameboard";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRotateRight, faGreaterThanEqual } from "@fortawesome/free-solid-svg-icons";
+import {
+    faArrowRotateRight,
+    faGreaterThanEqual,
+} from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
 import useGameLogic from "../hooks/useGameLogic";
 
 const Game = () => {
     //Game logic
     const [playerReady, setPlayerReady] = useState(false);
-    const [btnStyle, setBtnStyle] = useState("ready-btn")
-    const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn")
+    const [btnStyle, setBtnStyle] = useState("ready-btn");
+    const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn");
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -25,10 +28,10 @@ const Game = () => {
 
     const readyBtnPressed = () => {
         setPlayerReady(!playerReady);
-        playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green")
+        playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
         socket.emit("user:ready", room, grid);
     };
-  
+
     useEffect(() => {
         //One person has readied up!
         const peopleReady = (players) => {
@@ -40,16 +43,15 @@ const Game = () => {
             setOpponent(opponent);
             console.log(player);
             console.log(opponent);
-            
+
             //Add logic to change the ready element here! player is left side, and opponent is right side.
             //Use player.ready which is true or false to display whether or not they are ready.
         };
 
-
         if (!opponent.ready) {
-            setOpponentBtnStyle("ready-btn")
+            setOpponentBtnStyle("ready-btn");
         } else {
-            setOpponentBtnStyle("ready-btn-green")
+            setOpponentBtnStyle("ready-btn-green");
         }
 
         //Both are ready, start game
@@ -81,7 +83,7 @@ const Game = () => {
             console.log("cleaning up");
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
-            socket.off("player:start")
+            socket.off("player:start");
         };
     }, [socket, setPlayer, setOpponent, chatUsername, opponent.ready]);
 
@@ -90,16 +92,20 @@ const Game = () => {
             <div className="game-setup">
                 <div className="players">
                     <div className="player">
-                        <p>{player.ready ? "You are ready" : "You are not ready"}</p>
-                            <img src={playerAvatar} alt="" />
-                            <h3>{chatUsername}</h3>
+                        <p>
+                            {player.ready
+                                ? "You are ready"
+                                : "You are not ready"}
+                        </p>
+                        <img src={playerAvatar} alt="" />
+                        <h3>{chatUsername}</h3>
 
-                            <button
-                                onClick={readyBtnPressed}
-                                className={"mb-5 " + btnStyle}
-                            >
-                                {playerReady ? "Ready!" : "Ready?"}
-                            </button>
+                        <button
+                            onClick={readyBtnPressed}
+                            className={"mb-5 " + btnStyle}
+                        >
+                            {playerReady ? "Ready!" : "Ready?"}
+                        </button>
                     </div>
                     <div className="opponent">
                         <p>
@@ -107,14 +113,12 @@ const Game = () => {
                                 ? "Opponent is ready"
                                 : "Opponent is not ready"}
                         </p>
-                            <img src={opponent.avatar} alt="" />
-                            <h3>{opponent.username}</h3>
+                        <img src={opponent.avatar} alt="" />
+                        <h3>{opponent.username}</h3>
 
-                            <button
-                                className={"mb-5 " + opponentBtnStyle}
-                            >
-                                {opponent.ready ? "Ready!" : "Waiting..."}
-                            </button>
+                        <button className={"mb-5 " + opponentBtnStyle}>
+                            {opponent.ready ? "Ready!" : "Waiting..."}
+                        </button>
                     </div>
                 </div>
                 <div className="d-flex flex-column" id="playFieldPosition">
