@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
 import useGameLogic from "../hooks/useGameLogic";
+import RenderGridDesc from "../components/RenderGridDesc";
 
 const Game = () => {
     //Game logic
@@ -113,70 +114,12 @@ const Game = () => {
                                 className="grid-container justify-content-end w-400"
                                 id="nmrPosition"
                             >
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    1
-                                </div>
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    2
-                                </div>
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    3
-                                </div>
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    4
-                                </div>
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    5
-                                </div>
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    6
-                                </div>
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    7
-                                </div>
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    8
-                                </div>
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    9
-                                </div>
-                                <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                    10
-                                </div>
+                                <RenderGridDesc alfabet={false} />
                             </div>
 
                             <div className="d-flex">
                                 <div className="grid-container d-flex flex-column">
-                                    <div className="grid-item d-flex justify-content-end align-items-center black-border me-1">
-                                        A
-                                    </div>
-                                    <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                        B
-                                    </div>
-                                    <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                        C
-                                    </div>
-                                    <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                        D
-                                    </div>
-                                    <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                        E
-                                    </div>
-                                    <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                        F
-                                    </div>
-                                    <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                        G
-                                    </div>
-                                    <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                        H
-                                    </div>
-                                    <div className="grid-item d-flex align-items-center black-border align-self-end i">
-                                        I
-                                    </div>
-                                    <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                        J
-                                    </div>
+                                    <RenderGridDesc isAlfabet={true} />
                                 </div>
 
                                 <Gameboard
@@ -194,70 +137,12 @@ const Game = () => {
                             className="grid-container justify-content-end w-400"
                             id="nmrPosition"
                         >
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                1
-                            </div>
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                2
-                            </div>
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                3
-                            </div>
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                4
-                            </div>
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                5
-                            </div>
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                6
-                            </div>
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                7
-                            </div>
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                8
-                            </div>
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                9
-                            </div>
-                            <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                                10
-                            </div>
+                            <RenderGridDesc alfabet={false} />
                         </div>
 
                         <div className="d-flex">
                             <div className="grid-container d-flex flex-column">
-                                <div className="grid-item d-flex justify-content-end align-items-center black-border me-1">
-                                    A
-                                </div>
-                                <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                    B
-                                </div>
-                                <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                    C
-                                </div>
-                                <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                    D
-                                </div>
-                                <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                    E
-                                </div>
-                                <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                    F
-                                </div>
-                                <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                    G
-                                </div>
-                                <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                    H
-                                </div>
-                                <div className="grid-item d-flex align-items-center black-border align-self-end i">
-                                    I
-                                </div>
-                                <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                    J
-                                </div>
+                                <RenderGridDesc isAlfabet={true} />
                             </div>
 
                             <Gameboard
