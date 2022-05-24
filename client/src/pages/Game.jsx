@@ -128,7 +128,12 @@ const Game = () => {
                         </p>
                         <img src={opponent.avatar} alt="" />
                         <h3>{opponent.username}</h3>
+                        
+                        <button className={"mb-5 " + opponentBtnStyle}>
+                            {opponent.ready ? "Ready!" : "Waiting..."}
+                        </button>
                     </div>
+                </div>
                 <div className="d-flex align-items-center">
                     {gameStarted ? (
                         //Game started
@@ -193,7 +198,7 @@ const Game = () => {
                                 className="inner-grid-item quadruple down"
                                 draggable="true"
                                 onDragStart={drag}
-                            ></div>
+                                ></div>
 
                             {/* <div className="grid-container pe-2 twoSquareShip">
                                 <div className="grid-item ship-colors"></div>
@@ -227,7 +232,6 @@ const Game = () => {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
     )
