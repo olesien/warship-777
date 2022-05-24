@@ -1,18 +1,27 @@
 import Gameboard from "../components/Gameboard";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
-
 import useGameLogic from "../hooks/useGameLogic";
-import { useEffect } from "react";
+
 const Game = () => {
     //Game logic
+    const [ready, setReady] = useState(false);
     const { drop, allowDrop, drag } = useGameLogic();
-    const { grid, room, socket, setPlayer, setOpponent, player, opponent } =
-        useGameContext();
+    const {
+        grid,
+        room,
+        socket,
+        setPlayer,
+        setOpponent,
+        player,
+        opponent,
+        chatUsername,
+    } = useGameContext();
 
     const readyBtnPressed = () => {
+        setReady(true);
         socket.emit("user:ready", room, grid);
     };
 
@@ -52,13 +61,17 @@ const Game = () => {
         //Listen for these!
         socket.on("game:peopleready", peopleReady);
         socket.on("game:start", start);
+        socket.on("player:start", (data) => {
+            if (data.player === chatUsername) console.log(data.msg);
+            console.log(data.player);
+        });
 
         return () => {
             console.log("cleaning up");
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
         };
-    }, [socket, setPlayer, setOpponent]);
+    }, [socket, setPlayer, setOpponent, chatUsername]);
 
     return (
         <div className="">
@@ -70,13 +83,13 @@ const Game = () => {
                         : "Opponent is not ready"}
                 </p>
                 <div className="d-flex flex-column align-items-center w-400">
-                    <h3>Username</h3>
+                    <h3>{chatUsername}</h3>
 
                     <button
                         onClick={readyBtnPressed}
                         className="mb-5 ready-btn"
                     >
-                        Ready?
+                        {ready ? "Ready!" : "Ready?"}
                     </button>
                 </div>
 
