@@ -49,6 +49,7 @@ const Game = () => {
             console.log("cleaning up");
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
+            socket.off("player:start")
         };
     }, [socket, ready, chatUsername]);
 
