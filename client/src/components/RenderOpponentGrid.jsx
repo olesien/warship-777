@@ -3,7 +3,7 @@ import RenderColumns from "./RenderColumns";
 import { useGameContext } from "../contexts/GameContextProvider";
 
 export default function RenderOpponentGrid() {
-    const { grid } = useGameContext();
+    const { opponent } = useGameContext();
     return (
         <div className="d-flex flex-column" id="playFieldPosition">
             <div
@@ -22,7 +22,7 @@ export default function RenderOpponentGrid() {
                     className="bg-gameboard container text-center grid-container"
                     style={{ height: "400px", width: "400px" }}
                 >
-                    <RenderColumns grid={grid} />
+                    <RenderColumns grid={opponent.gameboard} />
                 </div>
             </div>
         </div>
