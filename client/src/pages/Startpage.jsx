@@ -14,8 +14,9 @@ import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png"
 
 const Startpage = ({ onSubmit }) => {
     const [username, setUsername] = useState("");
+    // const [avatar, setAvatar] = useState("");
     const [loading, setLoading] = useState(false);
-    const { socket, setChatUsername, chatUsername, changeRoom } =
+    const { socket, setChatUsername, chatUsername, changeRoom, playerAvatar, setPlayerAvatar } =
         useGameContext();
 
     const one = "Monkey D. Luffy";
@@ -38,7 +39,6 @@ const Startpage = ({ onSubmit }) => {
         } else if (!avatarNameArr.includes(username, 0)) {
             return
         }
-
     };
 
     const handleSubmit = (e) => {
@@ -63,7 +63,10 @@ const Startpage = ({ onSubmit }) => {
             return;
         }
         // emits that username value
-        socket.emit("user:joined", chatUsername);
+        socket.emit("user:joined", {
+            username: chatUsername,
+            avatar: playerAvatar,
+        });
         socket.on("user:joined", (msg) => {
             console.log(msg);
         });
@@ -131,7 +134,10 @@ const Startpage = ({ onSubmit }) => {
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(one)}
+                        onClick={() => {
+                            avatarName(one)
+                            setPlayerAvatar(MonkeyImg)
+                        }}
                     />
                     <img src={ MonkeyImg }  alt="" className="avatarImg" />
                 </label>
@@ -140,7 +146,10 @@ const Startpage = ({ onSubmit }) => {
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(two)}
+                        onClick={() => {
+                            avatarName(two)
+                            setPlayerAvatar(RoronoaImg)
+                        }}
                     />
                     <img src={ RoronoaImg }  alt="" className="avatarImg" />
                 </label>
@@ -149,7 +158,10 @@ const Startpage = ({ onSubmit }) => {
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(three)}
+                        onClick={() => {
+                            avatarName(three)
+                            setPlayerAvatar(ShanksImg)
+                        }}
                     />
                     <img src={ ShanksImg }  alt="" className="avatarImg" />
                 </label>
@@ -158,7 +170,10 @@ const Startpage = ({ onSubmit }) => {
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(four)}
+                        onClick={() => {
+                            avatarName(four)
+                            setPlayerAvatar(NamiImg)
+                        }}
                     />
                     <img src={ NamiImg }  alt="" className="avatarImg" />
                 </label>
@@ -167,7 +182,10 @@ const Startpage = ({ onSubmit }) => {
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(five)}
+                        onClick={() => {
+                            avatarName(five)
+                            setPlayerAvatar(DraculeImg)
+                        }}
                     />
                     <img src={ DraculeImg }  alt="" className="avatarImg" />
                 </label>
@@ -176,7 +194,10 @@ const Startpage = ({ onSubmit }) => {
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(six)}
+                        onClick={() => {
+                            avatarName(six)
+                            setPlayerAvatar(KarasuImg)
+                        }}
                     />
                     <img src={ KarasuImg }  alt="" className="avatarImg" />
                 </label>
@@ -185,7 +206,10 @@ const Startpage = ({ onSubmit }) => {
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(seven)}
+                        onClick={() => {
+                            avatarName(seven)
+                            setPlayerAvatar(NeferatiImg)
+                        }}
                     />
                     <img src={ NeferatiImg }  alt="" className="avatarImg" />
                 </label>
@@ -194,7 +218,10 @@ const Startpage = ({ onSubmit }) => {
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(eight)}
+                        onClick={() => {
+                            avatarName(eight)
+                            setPlayerAvatar(ArlongImg)
+                        }}
                     />
                     <img src={ ArlongImg }  alt="" className="avatarImg" />
                 </label>

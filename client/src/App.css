@@ -261,7 +261,17 @@ div .quadruple.down {
     width: 100px;
 }
 
+.ready-btn-green {
+    background-color: black;
+    border: 1px solid green;
+    color: green;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100px;
+}
+
 #rotate-btn {
+    margin: auto;
     border: 1px solid white;
     background-color: #9d0505;
     height: 20px;
@@ -290,13 +300,15 @@ div .quadruple.down {
 }
 
 #playFieldPosition {
-    position: relative;
-    right: 44px;
+    /* position: relative;
+    right: 44px; */
+    margin: auto auto;
 }
 
 #nmrPosition {
-    position: relative;
-    left: 44px;
+    /* position: relative;
+    left: 44px; */
+    margin: auto;
 }
 
 .fourSquareShip {
@@ -316,4 +328,37 @@ div .quadruple.down {
     font-family: "IM Fell English", serif;
     font-weight: bold;
     color: #000000db;
+}
+
+.game-wrapper {
+    width: 100%;
+}
+
+.players {
+    display: flex;
+    justify-content: space-around;
+}
+
+.players img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 120px;
+}
+
+.player, .opponent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* .game-setup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
+.boat-setup {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
