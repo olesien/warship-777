@@ -1,10 +1,12 @@
-import Gameboard from "../components/Gameboard";
+import Grid from "../components/Grid";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
 import useGameLogic from "../hooks/useGameLogic";
 import RenderGridDesc from "../components/RenderGridDesc";
+import RenderPlayerGrid from "../components/RenderPlayerGrid";
+import RenderOpponentGrid from "../components/RenderOpponentGrid";
 
 const Game = () => {
     //Game logic
@@ -105,7 +107,14 @@ const Game = () => {
                 </div>
 
                 <div className="d-flex align-items-center">
-                    {gameStarted && (
+                    {gameStarted ? (
+                        //Game started
+                        <>
+                            <RenderPlayerGrid />
+                            <RenderOpponentGrid />
+                        </>
+                    ) : (
+                        // Input the battleships <- Game has not started
                         <div
                             className="d-flex flex-column"
                             id="playFieldPosition"
@@ -122,7 +131,7 @@ const Game = () => {
                                     <RenderGridDesc isAlfabet={true} />
                                 </div>
 
-                                <Gameboard
+                                <Grid
                                     grid={grid}
                                     drop={drop}
                                     allowDrop={allowDrop}
@@ -131,28 +140,6 @@ const Game = () => {
                             </div>
                         </div>
                     )}
-
-                    <div className="d-flex flex-column" id="playFieldPosition">
-                        <div
-                            className="grid-container justify-content-end w-400"
-                            id="nmrPosition"
-                        >
-                            <RenderGridDesc alfabet={false} />
-                        </div>
-
-                        <div className="d-flex">
-                            <div className="grid-container d-flex flex-column">
-                                <RenderGridDesc isAlfabet={true} />
-                            </div>
-
-                            <Gameboard
-                                grid={grid}
-                                drop={drop}
-                                allowDrop={allowDrop}
-                                drag={drag}
-                            />
-                        </div>
-                    </div>
                 </div>
 
                 {/* Your ships, place them out on the board */}
