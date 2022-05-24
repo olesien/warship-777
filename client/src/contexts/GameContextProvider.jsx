@@ -11,6 +11,8 @@ export const useGameContext = () => {
 const GameContextProvider = ({ children }) => {
     const [chatUsername, setChatUsername] = useState();
     const [room, setRoom] = useState();
+    const [player, setPlayer] = useState({});
+    const [opponent, setOpponent] = useState({});
     const changeRoom = (newRoom) => {
         console.log("changin room");
         setRoom(newRoom);
@@ -40,6 +42,10 @@ const GameContextProvider = ({ children }) => {
         changeRoom,
         grid,
         setGrid,
+        player,
+        opponent,
+        setPlayer,
+        setOpponent,
     };
 
     return (
