@@ -150,7 +150,7 @@ div .quadruple.down {
     display: none;
 }
 
-.avatar > input[type="radio"]:not(:checked) + .avatarLabel {
+.avatar > input[type="radio"]:not(:checked) + .avatarImg {
     position: relative;
     border: 3px solid #ff0000;
     width: 150px;
@@ -162,7 +162,7 @@ div .quadruple.down {
     transform: translate(-50%, -50%);
 }
 
-.avatar > input[type="radio"]:checked + .avatarLabel {
+.avatar > input[type="radio"]:checked + .avatarImg {
     position: relative;
     border: 2px solid greenyellow;
     width: 100%;

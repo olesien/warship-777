@@ -3,40 +3,54 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
-
 import useGameLogic from "../hooks/useGameLogic";
 
 const Game = () => {
     //Game logic
     const [ready, setReady] = useState(false)
-    const { grid, drop, allowDrop, drag } = useGameLogic();
-    const { socket, chatUsername, room } =
-        useGameContext();
-    
-    const handleReady = () => {
+    const { drop, allowDrop, drag } = useGameLogic();
+    const { grid, room, socket, chatUsername } = useGameContext();
+
+    const readyBtnPressed = () => {
         setReady(true)
-        socket.emit("user:ready", room)
-    }
-
-    const initialMove = () => {
-
-    }
+        socket.emit("user:ready", room, grid);
+    };
 
     useEffect(() => {
-        socket.on("game:start", (msg) => {
-            console.log(msg);
-            // Need to create another page, and what's below goes in there
-        })
+        //One person has readied up!
+        const peopleReady = (players) => {
+            //define who player and opponent is
+            console.log(socket.id);
+            const player = players.find((player) => player.id === socket.id);
+            const opponent = players.find((player) => player.id !== socket.id);
+            console.log(player);
+            console.log(opponent);
+            console.log(players);
 
+            //Add logic to change the ready element here! player is left side, and opponent is right side.
+            //Use player.ready which is true or false to display whether or not they are ready.
+        };
+
+        //Both are ready, start game
+        const start = (game) => {
+            console.log(game);
+        };
+
+        //Listen for these!
+        socket.on("game:peopleready", peopleReady);
+        socket.on("game:start", start);
         socket.on("player:start", (data) => {
-            if (data.player === chatUsername) {
-                initialMove()
-            }
+            if (data.player === chatUsername) 
             console.log(data.msg)
             console.log(data.player)
         })
-        
-    }, [socket, ready, chatUsername])
+
+        return () => {
+            console.log("cleaning up");
+            socket.off("game:peopleready", peopleReady);
+            socket.off("game:start", start);
+        };
+    }, [socket, ready, chatUsername]);
 
     return (
         <div className="">
@@ -44,7 +58,12 @@ const Game = () => {
                 <div className="d-flex flex-column align-items-center w-400">
                     <h3>{chatUsername}</h3>
 
-                    <button className="mb-5 ready-btn" onClick={() => handleReady()}>{ready ? "Ready!" : "Ready?"}</button>
+                    <button
+                        onClick={readyBtnPressed}
+                        className="mb-5 ready-btn"
+                    >
+                        {ready ? "Ready!" : "Ready?"}
+                    </button>
                 </div>
 
                 <div className="d-flex flex-column" id="playFieldPosition">
@@ -138,20 +157,20 @@ const Game = () => {
                                 onDragStart={drag}
                             ></div>
                             <div
-                                id={"boat1"}
+                                id={"boat2"}
                                 className="inner-grid-item double right"
                                 draggable="true"
                                 onDragStart={drag}
                             ></div>
                             <div
-                                id={"boat2"}
+                                id={"boat3"}
                                 className="inner-grid-item triple left"
                                 draggable="true"
                                 onDragStart={drag}
                             ></div>
 
                             <div
-                                id={"boat3"}
+                                id={"boat4"}
                                 className="inner-grid-item quadruple down"
                                 draggable="true"
                                 onDragStart={drag}

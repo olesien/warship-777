@@ -2,6 +2,15 @@ import UserForm from "../components/userForm";
 import WaitingPlayer from "../components/WaitingPlayer";
 import React, { useState, useEffect } from "react";
 import { useGameContext } from "../contexts/GameContextProvider";
+import MonkeyImg from "../assets/images/onepieceavatars-modified 1.png"
+import RoronoaImg from "../assets/images/onepieceavatars-modified (1) 1.png"
+import ShanksImg from "../assets/images/onepieceavatars-modified (2) 1.png"
+import NamiImg from "../assets/images/onepieceavatars-modified (3) 1.png"
+import DraculeImg from "../assets/images/onepieceavatars-modified (5) 1.png"
+import KarasuImg from "../assets/images/onepieceavatars-modified (6) 1.png"
+import NeferatiImg from "../assets/images/onepieceavatars-modified (4) 1.png"
+import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png"
+
 
 const Startpage = ({ onSubmit }) => {
     const [username, setUsername] = useState("");
@@ -18,8 +27,18 @@ const Startpage = ({ onSubmit }) => {
     const seven = "Nefertari Vivi";
     const eight = "Arlong";
 
+    const avatarNameArr = [one, two, three, four, five, six, seven, eight]
+
     const avatarName = (name) => {
-        setUsername(name);
+        
+        if (username === "") {
+            setUsername(name)
+        } else if (avatarNameArr.includes(username, 0)) {
+            setUsername(name)
+        } else if (!avatarNameArr.includes(username, 0)) {
+            return
+        }
+
     };
 
     const handleSubmit = (e) => {
@@ -103,95 +122,81 @@ const Startpage = ({ onSubmit }) => {
                     onSubmit={handleSubmit}
                     username={username}
                     setUsername={setUsername}
-                />
-            </div>
-            <div
-                style={{
-                    position: "absolute",
-                    top: "75%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                }}
-            >
-                <UserForm
-                    onSubmit={handleSubmit}
-                    username={username}
-                    setUsername={setUsername}
                     loading={loading}
                 />
             </div>
 
             <form action="" id="avatarSelect">
-                <label className="avatar" id="one">
+                <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
                         onClick={() => avatarName(one)}
                     />
-                    <label htmlFor="" className="avatarLabel" />
+                    <img src={ MonkeyImg }  alt="" className="avatarImg" />
                 </label>
 
-                <label className="avatar" id="two">
+                <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
                         onClick={() => avatarName(two)}
                     />
-                    <label htmlFor="" className="avatarLabel" />
+                    <img src={ RoronoaImg }  alt="" className="avatarImg" />
                 </label>
 
-                <label className="avatar" id="three">
+                <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
                         onClick={() => avatarName(three)}
                     />
-                    <label htmlFor="" className="avatarLabel" />
+                    <img src={ ShanksImg }  alt="" className="avatarImg" />
                 </label>
 
-                <label className="avatar" id="four">
+                <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
                         onClick={() => avatarName(four)}
                     />
-                    <label htmlFor="" className="avatarLabel" />
+                    <img src={ NamiImg }  alt="" className="avatarImg" />
                 </label>
 
-                <label className="avatar" id="five">
+                <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
                         onClick={() => avatarName(five)}
                     />
-                    <label htmlFor="" className="avatarLabel" />
+                    <img src={ DraculeImg }  alt="" className="avatarImg" />
                 </label>
 
-                <label className="avatar" id="six">
+                <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
                         onClick={() => avatarName(six)}
                     />
-                    <label htmlFor="" className="avatarLabel" />
+                    <img src={ KarasuImg }  alt="" className="avatarImg" />
                 </label>
 
-                <label className="avatar" id="seven">
+                <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
                         onClick={() => avatarName(seven)}
                     />
-                    <label htmlFor="" className="avatarLabel" />
+                    <img src={ NeferatiImg }  alt="" className="avatarImg" />
                 </label>
 
-                <label className="avatar" id="eight">
+                <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
                         onClick={() => avatarName(eight)}
                     />
-                    <label htmlFor="" className="avatarLabel" />
+                    <img src={ ArlongImg }  alt="" className="avatarImg" />
                 </label>
             </form>
         </div>
