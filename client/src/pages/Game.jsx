@@ -17,6 +17,7 @@ const Game = () => {
     const [btnStyle, setBtnStyle] = useState("ready-btn");
     const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn");
     const [gameStarted, setGameStarted] = useState(false);
+    const [startingPlayer, setStartingPlayer] = useState("");
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -81,6 +82,8 @@ const Game = () => {
         socket.on("player:start", (data) => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
+
+            setStartingPlayer(data.msg)
         });
 
         return () => {
@@ -98,6 +101,9 @@ const Game = () => {
         } else {
             setGameStarted(false);
         }
+
+        console.log(player)
+        console.log(startingPlayer)
     }, [player, opponent]);
 
     return (
