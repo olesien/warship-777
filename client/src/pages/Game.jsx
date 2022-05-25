@@ -10,6 +10,7 @@ import useGameLogic from "../hooks/useGameLogic";
 import RenderGridDesc from "../components/RenderGridDesc";
 import RenderPlayerGrid from "../components/RenderPlayerGrid";
 import RenderOpponentGrid from "../components/RenderOpponentGrid";
+import EndGame from "../components/EndGame";
 
 const Game = () => {
     //Game logic
@@ -18,6 +19,7 @@ const Game = () => {
     const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn");
     const [gameStarted, setGameStarted] = useState(false);
     const [startingPlayer, setStartingPlayer] = useState("");
+    const [winner, setWinner] = useState(true)
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -177,69 +179,69 @@ const Game = () => {
                 </div>
 
                 {/* Your ships, place them out on the board */}
-                <div>
-                    <div>
-                        <div className="boat-setup">
-                            <div
-                                id={"boat1"}
-                                className="inner-grid-item double right"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-                            <div
-                                id={"boat2"}
-                                className="inner-grid-item double right"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-                            <div
-                                id={"boat3"}
-                                className="inner-grid-item triple left"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
 
-                            <div
-                                id={"boat4"}
-                                className="inner-grid-item quadruple down"
-                                draggable="true"
-                                onDragStart={drag}
-                                ></div>
+                <div className="boat-setup">
+                    <div
+                        id={"boat1"}
+                        className="inner-grid-item double right"
+                        draggable="true"
+                        onDragStart={drag}
+                    ></div>
+                    <div
+                        id={"boat2"}
+                        className="inner-grid-item double right"
+                        draggable="true"
+                        onDragStart={drag}
+                    ></div>
+                    <div
+                        id={"boat3"}
+                        className="inner-grid-item triple left"
+                        draggable="true"
+                        onDragStart={drag}
+                    ></div>
 
-                            {/* <div className="grid-container pe-2 twoSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
+                    <div
+                        id={"boat4"}
+                        className="inner-grid-item quadruple down"
+                        draggable="true"
+                        onDragStart={drag}
+                        ></div>
 
-                            <div className="grid-container pe-2 threeSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-
-                            <div className="grid-container pe-2 fourSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-
-                            <div className="grid-container pe-2 twoSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div> */}
-                        </div>
-
-                        <div
-                            id="rotate-btn"
-                            className="d-flex justify-content-center align-items-center"
-                        >
-                            <FontAwesomeIcon icon={faArrowRotateRight} />
-                        </div>
+                    {/* <div className="grid-container pe-2 twoSquareShip">
+                        <div className="grid-item ship-colors"></div>
+                        <div className="grid-item ship-colors"></div>
                     </div>
+
+                    <div className="grid-container pe-2 threeSquareShip">
+                        <div className="grid-item ship-colors"></div>
+                        <div className="grid-item ship-colors"></div>
+                        <div className="grid-item ship-colors"></div>
+                    </div>
+
+                    <div className="grid-container pe-2 fourSquareShip">
+                        <div className="grid-item ship-colors"></div>
+                        <div className="grid-item ship-colors"></div>
+                        <div className="grid-item ship-colors"></div>
+                        <div className="grid-item ship-colors"></div>
+                    </div>
+
+                    <div className="grid-container pe-2 twoSquareShip">
+                        <div className="grid-item ship-colors"></div>
+                        <div className="grid-item ship-colors"></div>
+                    </div> */}
                 </div>
+
+                <div
+                    id="rotate-btn"
+                    className="d-flex justify-content-center align-items-center"
+                >
+                    <FontAwesomeIcon icon={faArrowRotateRight} />
+                </div>
+            </div>
+            {winner && (
+                <EndGame />
+            )}
         </div>
-    </div>
     )
 }
 
