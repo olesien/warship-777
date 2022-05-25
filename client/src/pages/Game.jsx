@@ -18,6 +18,7 @@ const Game = () => {
     const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn");
     const [gameStarted, setGameStarted] = useState(false);
     const [startingPlayer, setStartingPlayer] = useState("");
+    const [playerRound, setPlayerRound] = useState();
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -88,7 +89,8 @@ const Game = () => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
 
-            setStartingPlayer(data.msg);
+            setPlayerRound(data.player)
+            setStartingPlayer(data.msg)
         });
 
         return () => {
@@ -110,6 +112,16 @@ const Game = () => {
         console.log(player);
         console.log(startingPlayer);
     }, [player, opponent]);
+
+    useEffect(() => {
+
+        const removeStartingPlayer = () => {
+            setStartingPlayer("")
+        }
+
+        setTimeout(removeStartingPlayer, 5000)
+
+    }, [startingPlayer, setStartingPlayer])
 
     return (
         <div className="game-wrapper">
@@ -145,12 +157,21 @@ const Game = () => {
                         </button>
                     </div>
                 </div>
+
+                {startingPlayer ? (<p style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%, -50%)" }}>{ startingPlayer }</p>) : null}
+
                 <div className="d-flex align-items-center">
                     {gameStarted ? (
                         //Game started
-                        <>
-                            <RenderPlayerGrid />
-                            <RenderOpponentGrid />
+                        <> 
+                                {playerRound === player.username 
+                                    ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }} className="text-success">{ `${playerRound}'s turn` }</p>) 
+                                    : (playerRound === opponent.username 
+                                        ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }} className="text-danger">{ `${playerRound}'s turn` }</p>) 
+                                        : null )}
+
+                                <RenderPlayerGrid />  
+                                <RenderOpponentGrid />   
                         </>
                     ) : (
                         // Input the battleships <- Game has not started
