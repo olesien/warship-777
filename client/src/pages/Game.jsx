@@ -1,4 +1,4 @@
-import Gameboard from "../components/Gameboard";
+import Grid from "../components/Grid";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,12 +7,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
 import useGameLogic from "../hooks/useGameLogic";
+import RenderGridDesc from "../components/RenderGridDesc";
+import RenderPlayerGrid from "../components/RenderPlayerGrid";
+import RenderOpponentGrid from "../components/RenderOpponentGrid";
 
 const Game = () => {
     //Game logic
     const [playerReady, setPlayerReady] = useState(false);
     const [btnStyle, setBtnStyle] = useState("ready-btn");
     const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn");
+    const [gameStarted, setGameStarted] = useState(false);
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -87,6 +91,15 @@ const Game = () => {
         };
     }, [socket, setPlayer, setOpponent, chatUsername, opponent.ready]);
 
+    //game started?
+    useEffect(() => {
+        if (player.ready && opponent.ready) {
+            setGameStarted(true);
+        } else {
+            setGameStarted(false);
+        }
+    }, [player, opponent]);
+
     return (
         <div className="game-wrapper">
             <div className="game-setup">
@@ -115,90 +128,46 @@ const Game = () => {
                         </p>
                         <img src={opponent.avatar} alt="" />
                         <h3>{opponent.username}</h3>
-
+                        
                         <button className={"mb-5 " + opponentBtnStyle}>
                             {opponent.ready ? "Ready!" : "Waiting..."}
                         </button>
                     </div>
                 </div>
-                <div className="d-flex flex-column" id="playFieldPosition">
-                    <div
-                        className="grid-container justify-content-end w-400"
-                        id="nmrPosition"
-                    >
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            1
-                        </div>
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            2
-                        </div>
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            3
-                        </div>
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            4
-                        </div>
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            5
-                        </div>
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            6
-                        </div>
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            7
-                        </div>
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            8
-                        </div>
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            9
-                        </div>
-                        <div className="grid-item d-flex justify-content-center align-items-end black-border">
-                            10
-                        </div>
-                    </div>
+                <div className="d-flex align-items-center">
+                    {gameStarted ? (
+                        //Game started
+                        <>
+                            <RenderPlayerGrid />
+                            <RenderOpponentGrid />
+                        </>
+                    ) : (
+                        // Input the battleships <- Game has not started
+                        <div
+                            className="d-flex flex-column"
+                            id="playFieldPosition"
+                        >
+                            <div
+                                className="grid-container justify-content-end w-400"
+                                id="nmrPosition"
+                            >
+                                <RenderGridDesc alfabet={false} />
+                            </div>
 
-                    <div className="d-flex justify-content-center">
-                        <div className="grid-container d-flex flex-column">
-                            <div className="grid-item d-flex justify-content-end align-items-center black-border me-1">
-                                A
-                            </div>
-                            <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                B
-                            </div>
-                            <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                C
-                            </div>
-                            <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                D
-                            </div>
-                            <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                E
-                            </div>
-                            <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                F
-                            </div>
-                            <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                G
-                            </div>
-                            <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                H
-                            </div>
-                            <div className="grid-item d-flex align-items-center black-border align-self-end i">
-                                I
-                            </div>
-                            <div className="grid-item d-flex justify-content-end align-items-center black-border">
-                                J
+                            <div className="d-flex">
+                                <div className="grid-container d-flex flex-column">
+                                    <RenderGridDesc isAlfabet={true} />
+                                </div>
+
+                                <Grid
+                                    grid={grid}
+                                    drop={drop}
+                                    allowDrop={allowDrop}
+                                    drag={drag}
+                                />
                             </div>
                         </div>
-
-                        <Gameboard
-                            grid={grid}
-                            drop={drop}
-                            allowDrop={allowDrop}
-                            drag={drag}
-                        />
-                    </div>
+                    )}
                 </div>
 
                 {/* Your ships, place them out on the board */}
@@ -229,7 +198,7 @@ const Game = () => {
                                 className="inner-grid-item quadruple down"
                                 draggable="true"
                                 onDragStart={drag}
-                            ></div>
+                                ></div>
 
                             {/* <div className="grid-container pe-2 twoSquareShip">
                                 <div className="grid-item ship-colors"></div>
@@ -263,9 +232,9 @@ const Game = () => {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
-    );
-};
+    </div>
+    )
+}
 
 export default Game;

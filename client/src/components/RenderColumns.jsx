@@ -1,7 +1,13 @@
 import React from "react";
+import RenderGameRows from "./RenderGameRows";
 import RenderRows from "./RenderRows";
 
-export default function RenderColumns({ grid, drop, allowDrop, drag }) {
+export default function RenderColumns({
+    grid,
+    drop = false,
+    allowDrop = false,
+    drag = false,
+}) {
     return (
         <>
             {grid.map((column, columnIndex) => (
@@ -10,7 +16,18 @@ export default function RenderColumns({ grid, drop, allowDrop, drag }) {
                         //console.log(column.length, columnIndex, rowIndex);
                         const calculateTotal =
                             column.length * columnIndex + (rowIndex + 1);
-                        //console.log(calculateTotal);
+                        //Already in game!
+                        if (!drop) {
+                            return (
+                                <RenderGameRows
+                                    row={row}
+                                    totalIndex={calculateTotal}
+                                    key={calculateTotal}
+                                />
+                            );
+                        }
+
+                        //Placement grid
                         return (
                             <RenderRows
                                 row={row}
