@@ -39,27 +39,39 @@ export default function RenderGameRows({
                 {row.hit ? (
                     <div
                         id={"hititem-" + totalIndex}
-                        className="inner-grid-item-hit"
+                        className="inner-grid-opponent-hit"
                     ></div>
                 ) : (
                     row.missed && (
                         <div
                             id={"hititem-" + totalIndex}
-                            className="inner-grid-item-missed"
+                            className="inner-grid-opponent-missed"
                         ></div>
                     )
                 )}
             </div>
         );
     }
-    //console.log(totalIndex);
+    //player
     return (
         <div id={"div" + totalIndex} className="grid-item">
-            {row.part && (
+            {row.hit ? (
                 <div
-                    id={"boatitem-" + totalIndex}
-                    className="inner-grid-item"
+                    id={"hititem-" + totalIndex}
+                    className="inner-grid-player-hit"
                 ></div>
+            ) : row.missed ? (
+                <div
+                    id={"hititem-" + totalIndex}
+                    className="inner-grid-player-missed"
+                ></div>
+            ) : (
+                row.part && (
+                    <div
+                        id={"boatitem-" + totalIndex}
+                        className="inner-grid-item"
+                    ></div>
+                )
             )}
         </div>
     );

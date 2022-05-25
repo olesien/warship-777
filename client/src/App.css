@@ -44,7 +44,7 @@ hr {
     margin: 0;
 }
 
-.inner-grid-item-hit {
+.inner-grid-opponent-hit {
     background-color: #d21919;
     height: 40px;
     width: 40px;
@@ -52,8 +52,24 @@ hr {
     margin: 0;
 }
 
-.inner-grid-item-missed {
+.inner-grid-opponent-missed {
     background-color: #f96f6f;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.inner-grid-player-hit {
+    background-color: #7c0000;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.inner-grid-player-missed {
+    background-color: #676767;
     height: 40px;
     width: 40px;
     padding: 0;
