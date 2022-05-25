@@ -7,10 +7,11 @@ export default function RenderColumns({
     drop = false,
     allowDrop = false,
     drag = false,
+    type = "none",
 }) {
     return (
         <>
-            {grid.map((column, columnIndex, type) => (
+            {grid.map((column, columnIndex) => (
                 <div className="rows" key={columnIndex}>
                     {column.map((row, rowIndex) => {
                         //console.log(column.length, columnIndex, rowIndex);
@@ -24,6 +25,8 @@ export default function RenderColumns({
                                     totalIndex={calculateTotal}
                                     key={calculateTotal}
                                     type={type}
+                                    columnIndex={columnIndex}
+                                    rowIndex={rowIndex}
                                 />
                             );
                         }
