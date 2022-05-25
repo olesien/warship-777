@@ -19,7 +19,7 @@ const Game = () => {
     const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn");
     const [gameStarted, setGameStarted] = useState(false);
     const [startingPlayer, setStartingPlayer] = useState("");
-    const [winner, setWinner] = useState(true)
+    const [winner, setWinner] = useState({})
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -50,6 +50,7 @@ const Game = () => {
             setOpponent(opponent);
             console.log(player);
             console.log(opponent);
+
 
             //Add logic to change the ready element here! player is left side, and opponent is right side.
             //Use player.ready which is true or false to display whether or not they are ready.
@@ -104,12 +105,16 @@ const Game = () => {
             setGameStarted(false);
         }
 
+
+
         console.log(player)
         console.log(startingPlayer)
     }, [player, opponent]);
 
     return (
         <div className="game-wrapper">
+            {winner === false && (
+
             <div className="game-setup">
                 <div className="players">
                     <div className="player">
@@ -238,8 +243,13 @@ const Game = () => {
                     <FontAwesomeIcon icon={faArrowRotateRight} />
                 </div>
             </div>
+            )}
             {winner && (
-                <EndGame />
+                <EndGame 
+                    player={player}
+                    opponent={opponent}
+                    chatUsername={chatUsername}
+                />
             )}
         </div>
     )
