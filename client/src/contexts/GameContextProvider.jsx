@@ -13,7 +13,7 @@ const GameContextProvider = ({ children }) => {
     const [room, setRoom] = useState();
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
-    const [playerAvatar, setPlayerAvatar] = useState("")
+    const [playerAvatar, setPlayerAvatar] = useState("");
     const changeRoom = (newRoom) => {
         console.log("changin room");
         setRoom(newRoom);

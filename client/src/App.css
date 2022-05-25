@@ -44,6 +44,14 @@ hr {
     margin: 0;
 }
 
+.inner-grid-hit {
+    background-color: #d21919;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
 .inner-grid-item.draggable {
     background-color: #0db328;
 }
@@ -345,7 +353,8 @@ div .quadruple.down {
     width: 120px;
 }
 
-.player, .opponent {
+.player,
+.opponent {
     display: flex;
     flex-direction: column;
     align-items: center;
