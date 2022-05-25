@@ -7,8 +7,12 @@ export default function RenderGameRows({
     rowIndex,
     columnIndex,
 }) {
-    const { socket, room, updateGrid } = useGameContext();
+    const { socket, room, updateGrid, idsTurn } = useGameContext();
     const makehit = () => {
+        if (idsTurn !== socket.id) {
+            console.log("not our turn!");
+            return;
+        }
         //temporary
         if (row.hit) {
             console.log("been hit already");
@@ -23,17 +27,20 @@ export default function RenderGameRows({
 
         if (!row.part) {
             console.log("is not a part of anything!");
-            updateGrid(columnIndex, rowIndex, "missed");
             return;
         }
         console.log("hit at " + totalIndex);
-        updateGrid(columnIndex, rowIndex, "hit");
     };
     if (type === "opponent") {
         return (
             <div
                 id={"div" + totalIndex}
-                className="grid-item"
+                className={
+                    "grid-item " +
+                    (idsTurn === socket.id && !row.hit && !row.missed
+                        ? "clickable"
+                        : "not-clickable")
+                }
                 onClick={makehit}
             >
                 {row.hit ? (

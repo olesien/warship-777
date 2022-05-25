@@ -80,6 +80,11 @@ hr {
     background-color: #0db328;
 }
 
+.clickable:hover {
+    cursor: pointer;
+    background-color: #1c1e22;
+}
+
 /* boat direcitons */
 /* horizontal */
 div .double.right,

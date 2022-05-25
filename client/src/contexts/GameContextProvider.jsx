@@ -14,6 +14,7 @@ const GameContextProvider = ({ children }) => {
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
     const [playerAvatar, setPlayerAvatar] = useState("");
+    const [idsTurn, setIdsTurn] = useState(null);
     const changeRoom = (newRoom) => {
         console.log("changin room");
         setRoom(newRoom);
@@ -71,6 +72,8 @@ const GameContextProvider = ({ children }) => {
         playerAvatar,
         setPlayerAvatar,
         updateGrid,
+        idsTurn,
+        setIdsTurn,
     };
 
     return (

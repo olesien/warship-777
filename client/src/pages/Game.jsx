@@ -29,6 +29,7 @@ const Game = () => {
         opponent,
         chatUsername,
         playerAvatar,
+        setIdsTurn,
     } = useGameContext();
 
     const readyBtnPressed = () => {
@@ -65,13 +66,16 @@ const Game = () => {
 
         //Both are ready, start game
         const start = (game) => {
+            console.log(game);
             updatePlayers(game.players);
+            setIdsTurn(game.idsTurn);
 
             //Start render of the grids!
         };
 
         const handleHit = (game) => {
             updatePlayers(game.players);
+            setIdsTurn(game.idsTurn);
 
             //Start render of the grids!
         };
@@ -79,8 +83,8 @@ const Game = () => {
         //Listen for these!
         socket.on("game:peopleready", peopleReady);
         socket.on("game:start", start);
-        socket.on("game:start", handleHit);
-        socket.on("game:handleHit", (data) => {
+        socket.on("game:handleHit", handleHit);
+        socket.on("player:start", (data) => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
 
