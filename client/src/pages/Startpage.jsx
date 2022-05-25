@@ -104,7 +104,16 @@ const Startpage = ({ onSubmit }) => {
                 startGame();
             });
         };
-    }, [socket, chatUsername]);
+    }, [
+        socket,
+        chatUsername,
+        username.length,
+        playerAvatar,
+        setChatUsername,
+        changeRoom,
+        setPlayer,
+        setOpponent,
+    ]);
 
     return (
         <div className="d-flex justify-content-end" id="homePage">
