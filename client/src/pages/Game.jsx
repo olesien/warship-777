@@ -89,8 +89,17 @@ const Game = () => {
         }
 
         console.log(player)
-        console.log(startingPlayer)
     }, [player, opponent]);
+
+    useEffect(() => {
+
+        const removeStartingPlayer = () => {
+            setStartingPlayer("")
+        }
+
+        setTimeout(removeStartingPlayer, 5000)
+
+    }, [startingPlayer, setStartingPlayer])
 
     return (
         <div className="">
@@ -111,6 +120,8 @@ const Game = () => {
                         {ready ? "Ready!" : "Ready?"}
                     </button>
                 </div>
+
+                {startingPlayer ? (<p style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%, -50%)" }}>{ startingPlayer }</p>) : null}
 
                 <div className="d-flex align-items-center">
                     {gameStarted ? (
