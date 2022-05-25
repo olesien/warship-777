@@ -130,9 +130,9 @@ const Game = () => {
                         //Game started
                         <> 
                                 {playerRound === player.username 
-                                    ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }}>{ `${playerRound}'s turn` }</p>) 
+                                    ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }} className="text-success">{ `${playerRound}'s turn` }</p>) 
                                     : (playerRound === opponent.username 
-                                        ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }}>{ `${playerRound}'s turn` }</p>) 
+                                        ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }} className="text-danger">{ `${playerRound}'s turn` }</p>) 
                                         : null )}
 
                                 <RenderPlayerGrid />  
