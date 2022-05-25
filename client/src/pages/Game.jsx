@@ -9,6 +9,7 @@ const Game = () => {
     //Game logic
     const [ready, setReady] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
+    const [startingPlayer, setStartingPlayer] = useState("");
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -65,6 +66,8 @@ const Game = () => {
         socket.on("player:start", (data) => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
+
+            setStartingPlayer(data.msg)
         });
 
         return () => {
@@ -81,6 +84,9 @@ const Game = () => {
         } else {
             setGameStarted(false);
         }
+
+        console.log(player)
+        console.log(startingPlayer)
     }, [player, opponent]);
 
     return (
@@ -180,7 +186,7 @@ const Game = () => {
                                 </div>
 
                                 <Gameboard
-                                    grid={grid}
+                                    grid={opponent.gameboard}
                                     drop={drop}
                                     allowDrop={allowDrop}
                                     drag={drag}
