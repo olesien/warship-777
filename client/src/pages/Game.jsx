@@ -78,6 +78,12 @@ const Game = () => {
             updatePlayers(game.players);
             setIdsTurn(game.idsTurn);
 
+            if (game.idsTurn === game.players[0].id) {
+                setPlayerRound(game.players[0].username)
+            } else if (game.idsTurn === game.players[1].id) {
+                setPlayerRound(game.players[1].username)
+            }
+
             //Start render of the grids!
         };
 
@@ -110,7 +116,6 @@ const Game = () => {
         }
 
         console.log(player);
-        console.log(startingPlayer);
     }, [player, opponent]);
 
     useEffect(() => {
