@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserForm = ({ username, setUsername, onSubmit, loading}) => {
+const UserForm = ({ username, setUsername, onSubmit, loading }) => {
 
   return (
     <div>

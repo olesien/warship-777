@@ -2,21 +2,29 @@ import UserForm from "../components/userForm";
 import WaitingPlayer from "../components/WaitingPlayer";
 import React, { useState, useEffect } from "react";
 import { useGameContext } from "../contexts/GameContextProvider";
-import MonkeyImg from "../assets/images/onepieceavatars-modified 1.png"
-import RoronoaImg from "../assets/images/onepieceavatars-modified (1) 1.png"
-import ShanksImg from "../assets/images/onepieceavatars-modified (2) 1.png"
-import NamiImg from "../assets/images/onepieceavatars-modified (3) 1.png"
-import DraculeImg from "../assets/images/onepieceavatars-modified (5) 1.png"
-import KarasuImg from "../assets/images/onepieceavatars-modified (6) 1.png"
-import NeferatiImg from "../assets/images/onepieceavatars-modified (4) 1.png"
-import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png"
-
+import MonkeyImg from "../assets/images/onepieceavatars-modified 1.png";
+import RoronoaImg from "../assets/images/onepieceavatars-modified (1) 1.png";
+import ShanksImg from "../assets/images/onepieceavatars-modified (2) 1.png";
+import NamiImg from "../assets/images/onepieceavatars-modified (3) 1.png";
+import DraculeImg from "../assets/images/onepieceavatars-modified (5) 1.png";
+import KarasuImg from "../assets/images/onepieceavatars-modified (6) 1.png";
+import NeferatiImg from "../assets/images/onepieceavatars-modified (4) 1.png";
+import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png";
 
 const Startpage = ({ onSubmit }) => {
     const [username, setUsername] = useState("");
+    // const [avatar, setAvatar] = useState("");
     const [loading, setLoading] = useState(false);
-    const { socket, setChatUsername, chatUsername, changeRoom } =
-        useGameContext();
+    const {
+        socket,
+        setChatUsername,
+        chatUsername,
+        changeRoom,
+        playerAvatar,
+        setPlayerAvatar,
+        setPlayer,
+        setOpponent,
+    } = useGameContext();
 
     const one = "Monkey D. Luffy";
     const two = "Roronoa Zoro";
@@ -27,18 +35,16 @@ const Startpage = ({ onSubmit }) => {
     const seven = "Nefertari Vivi";
     const eight = "Arlong";
 
-    const avatarNameArr = [one, two, three, four, five, six, seven, eight]
+    const avatarNameArr = [one, two, three, four, five, six, seven, eight];
 
     const avatarName = (name) => {
-        
         if (username === "") {
-            setUsername(name)
+            setUsername(name);
         } else if (avatarNameArr.includes(username, 0)) {
-            setUsername(name)
+            setUsername(name);
         } else if (!avatarNameArr.includes(username, 0)) {
-            return
+            return;
         }
-
     };
 
     const handleSubmit = (e) => {
@@ -63,13 +69,25 @@ const Startpage = ({ onSubmit }) => {
             return;
         }
         // emits that username value
-        socket.emit("user:joined", chatUsername);
+        socket.emit("user:joined", {
+            username: chatUsername,
+            avatar: playerAvatar,
+        });
         socket.on("user:joined", (msg) => {
             console.log(msg);
         });
         socket.on("players", (game) => {
             console.log(socket, setChatUsername, chatUsername, changeRoom);
-            changeRoom(game.id);
+            console.log(game);
+            const player = game.players.find(
+                (player) => player.id === socket.id
+            );
+            const opponent = game.players.find(
+                (player) => player.id !== socket.id
+            );
+            setPlayer(player);
+            setOpponent(opponent);
+            changeRoom(game.room);
             startGame();
         });
         // socket.on("user:disconnect", (msg) => {
@@ -131,72 +149,96 @@ const Startpage = ({ onSubmit }) => {
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(one)}
+                        onClick={() => {
+                            avatarName(one);
+                            setPlayerAvatar(MonkeyImg);
+                        }}
                     />
-                    <img src={ MonkeyImg }  alt="" className="avatarImg" />
+                    <img src={MonkeyImg} alt="" className="avatarImg" />
                 </label>
 
                 <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(two)}
+                        onClick={() => {
+                            avatarName(two);
+                            setPlayerAvatar(RoronoaImg);
+                        }}
                     />
-                    <img src={ RoronoaImg }  alt="" className="avatarImg" />
+                    <img src={RoronoaImg} alt="" className="avatarImg" />
                 </label>
 
                 <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(three)}
+                        onClick={() => {
+                            avatarName(three);
+                            setPlayerAvatar(ShanksImg);
+                        }}
                     />
-                    <img src={ ShanksImg }  alt="" className="avatarImg" />
+                    <img src={ShanksImg} alt="" className="avatarImg" />
                 </label>
 
                 <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(four)}
+                        onClick={() => {
+                            avatarName(four);
+                            setPlayerAvatar(NamiImg);
+                        }}
                     />
-                    <img src={ NamiImg }  alt="" className="avatarImg" />
+                    <img src={NamiImg} alt="" className="avatarImg" />
                 </label>
 
                 <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(five)}
+                        onClick={() => {
+                            avatarName(five);
+                            setPlayerAvatar(DraculeImg);
+                        }}
                     />
-                    <img src={ DraculeImg }  alt="" className="avatarImg" />
+                    <img src={DraculeImg} alt="" className="avatarImg" />
                 </label>
 
                 <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(six)}
+                        onClick={() => {
+                            avatarName(six);
+                            setPlayerAvatar(KarasuImg);
+                        }}
                     />
-                    <img src={ KarasuImg }  alt="" className="avatarImg" />
+                    <img src={KarasuImg} alt="" className="avatarImg" />
                 </label>
 
                 <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(seven)}
+                        onClick={() => {
+                            avatarName(seven);
+                            setPlayerAvatar(NeferatiImg);
+                        }}
                     />
-                    <img src={ NeferatiImg }  alt="" className="avatarImg" />
+                    <img src={NeferatiImg} alt="" className="avatarImg" />
                 </label>
 
                 <label className="avatar">
                     <input
                         type="radio"
                         name="avatar"
-                        onClick={() => avatarName(eight)}
+                        onClick={() => {
+                            avatarName(eight);
+                            setPlayerAvatar(ArlongImg);
+                        }}
                     />
-                    <img src={ ArlongImg }  alt="" className="avatarImg" />
+                    <img src={ArlongImg} alt="" className="avatarImg" />
                 </label>
             </form>
         </div>
