@@ -22,7 +22,7 @@ export default function RenderPlayerGrid() {
                     className="bg-gameboard container text-center grid-container"
                     style={{ height: "400px", width: "400px" }}
                 >
-                    <RenderColumns grid={player.gameboard} />
+                    <RenderColumns grid={player.gameboard} type="player" />
                 </div>
             </div>
         </div>

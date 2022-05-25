@@ -7,6 +7,7 @@ export default function RenderColumns({
     drop = false,
     allowDrop = false,
     drag = false,
+    type = "none",
 }) {
     return (
         <>
@@ -23,6 +24,9 @@ export default function RenderColumns({
                                     row={row}
                                     totalIndex={calculateTotal}
                                     key={calculateTotal}
+                                    type={type}
+                                    columnIndex={columnIndex}
+                                    rowIndex={rowIndex}
                                 />
                             );
                         }

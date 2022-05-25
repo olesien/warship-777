@@ -313,6 +313,8 @@ export default function useGameLogic() {
                             filled: true,
                             part: true,
                             subparts: oldGridItem.subparts,
+                            hit: false,
+                            missed: false,
                         };
                     }
                     //remove the "main" boat tile
@@ -326,7 +328,12 @@ export default function useGameLogic() {
                                 " " +
                                 prevRowIndex
                         );
-                        return { filled: false, part: false };
+                        return {
+                            filled: false,
+                            part: false,
+                            hit: false,
+                            missed: false,
+                        };
                     }
 
                     //loop through the smaller component parts to add or remove.
@@ -339,7 +346,12 @@ export default function useGameLogic() {
                     if (rightTile) {
                         //add this tile!
                         console.log("adding component tile");
-                        return { filled: false, part: true };
+                        return {
+                            filled: false,
+                            part: true,
+                            hit: false,
+                            missed: false,
+                        };
                     }
 
                     //If it's new we can't delete the old tile in the traditional sense!
@@ -354,7 +366,12 @@ export default function useGameLogic() {
                             console.log(prevColumnIndex, prevRowIndex);
                             console.log("deleting component tile");
                             //add this tile!
-                            return { filled: false, part: false };
+                            return {
+                                filled: false,
+                                part: false,
+                                hit: false,
+                                missed: false,
+                            };
                         }
                     }
 

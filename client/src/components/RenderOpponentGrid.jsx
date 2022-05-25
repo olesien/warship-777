@@ -22,7 +22,7 @@ export default function RenderOpponentGrid() {
                     className="bg-gameboard container text-center grid-container"
                     style={{ height: "400px", width: "400px" }}
                 >
-                    <RenderColumns grid={opponent.gameboard} />
+                    <RenderColumns grid={opponent.gameboard} type="opponent" />
                 </div>
             </div>
         </div>

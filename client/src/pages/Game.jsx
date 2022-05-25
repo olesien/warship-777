@@ -30,6 +30,7 @@ const Game = () => {
         opponent,
         chatUsername,
         playerAvatar,
+        setIdsTurn,
     } = useGameContext();
 
     const readyBtnPressed = () => {
@@ -39,16 +40,20 @@ const Game = () => {
     };
 
     useEffect(() => {
-        //One person has readied up!
-        const peopleReady = (players) => {
-            //define who player and opponent is
-            console.log(socket.id);
+        const updatePlayers = (players) => {
             const player = players.find((player) => player.id === socket.id);
             const opponent = players.find((player) => player.id !== socket.id);
             setPlayer(player);
             setOpponent(opponent);
             console.log(player);
             console.log(opponent);
+        };
+        //One person has readied up!
+        const peopleReady = (players) => {
+            //define who player and opponent is
+            console.log(socket.id);
+
+            updatePlayers(players);
 
             //Add logic to change the ready element here! player is left side, and opponent is right side.
             //Use player.ready which is true or false to display whether or not they are ready.
@@ -62,17 +67,16 @@ const Game = () => {
 
         //Both are ready, start game
         const start = (game) => {
-            const player = game.players.find(
-                (player) => player.id === socket.id
-            );
-            const opponent = game.players.find(
-                (player) => player.id !== socket.id
-            );
-            setPlayer(player);
-            setOpponent(opponent);
+            console.log(game);
+            updatePlayers(game.players);
+            setIdsTurn(game.idsTurn);
 
-            console.log(player);
-            console.log(opponent);
+            //Start render of the grids!
+        };
+
+        const handleHit = (game) => {
+            updatePlayers(game.players);
+            setIdsTurn(game.idsTurn);
 
             //Start render of the grids!
         };
@@ -80,6 +84,7 @@ const Game = () => {
         //Listen for these!
         socket.on("game:peopleready", peopleReady);
         socket.on("game:start", start);
+        socket.on("game:handleHit", handleHit);
         socket.on("player:start", (data) => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
@@ -104,7 +109,8 @@ const Game = () => {
             setGameStarted(false);
         }
 
-        console.log(player)
+        console.log(player);
+        console.log(startingPlayer);
     }, [player, opponent]);
 
     useEffect(() => {
@@ -145,7 +151,7 @@ const Game = () => {
                         </p>
                         <img src={opponent.avatar} alt="" />
                         <h3>{opponent.username}</h3>
-                        
+
                         <button className={"mb-5 " + opponentBtnStyle}>
                             {opponent.ready ? "Ready!" : "Waiting..."}
                         </button>
@@ -224,7 +230,7 @@ const Game = () => {
                                 className="inner-grid-item quadruple down"
                                 draggable="true"
                                 onDragStart={drag}
-                                ></div>
+                            ></div>
 
                             {/* <div className="grid-container pe-2 twoSquareShip">
                                 <div className="grid-item ship-colors"></div>
@@ -258,9 +264,9 @@ const Game = () => {
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
-    )
-}
+    );
+};
 
 export default Game;
