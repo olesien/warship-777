@@ -22,7 +22,7 @@ export default function EndGame({ socket, winner }) {
               ? <h3>{winner.username}</h3>
               : <h3 className="mt-4"> </h3>}
             
-            <img className="mt-2" src={winner.avatar} alt="" />
+            <img className="winner-image mt-2" src={winner.avatar} alt="" />
           
             {winner.id !== socket.id
               ? <h3>Sunk your ships!</h3>
