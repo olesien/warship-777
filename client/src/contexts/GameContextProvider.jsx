@@ -15,6 +15,7 @@ const GameContextProvider = ({ children }) => {
     const [opponent, setOpponent] = useState({});
     const [winner, setWinner] = useState({});
     const [playerAvatar, setPlayerAvatar] = useState("");
+    const [idsTurn, setIdsTurn] = useState(null);
     const changeRoom = (newRoom) => {
         console.log("changin room");
         setRoom(newRoom);
@@ -27,7 +28,12 @@ const GameContextProvider = ({ children }) => {
         for (let colI = 0; colI < columns; colI++) {
             const row = [];
             for (let rowI = 0; rowI < rows; rowI++) {
-                row.push({ filled: false, part: false });
+                row.push({
+                    filled: false,
+                    part: false,
+                    missed: false,
+                    hit: false,
+                });
             }
             //columns
             innerGrid.push(row);
@@ -35,7 +41,23 @@ const GameContextProvider = ({ children }) => {
         return innerGrid;
     });
 
-    socket.emit("user:hello", "hello");
+    const updateGrid = (columnIndex, rowIndex, update) => {
+        setGrid((oldGrid) => {
+            return oldGrid.map((oldCol, oldColIndex) => {
+                return oldCol.map((oldRow, oldRowIndex) => {
+                    if (
+                        oldColIndex === columnIndex &&
+                        oldRowIndex === rowIndex
+                    ) {
+                        //update this row
+                        return { ...oldRow, [update]: true };
+                    }
+                    return { ...oldRow };
+                });
+            });
+        });
+    };
+
     const values = {
         chatUsername,
         setChatUsername,
@@ -52,6 +74,9 @@ const GameContextProvider = ({ children }) => {
         setPlayerAvatar,
         setWinner,
         winner,
+        updateGrid,
+        idsTurn,
+        setIdsTurn,
     };
 
     return (
