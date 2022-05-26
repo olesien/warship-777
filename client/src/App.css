@@ -412,15 +412,16 @@ div .quadruple.down {
     background-image: url("../src/assets/images/endgame-background.jpg");
 }
 
-.winner-frame, .loser-frame {
+.winner-frame {
     display: flex;
     flex-direction: column;
     text-align: center;
     margin-top: 150px;
 }
 
-.winner-frame h3, .loser-frame h3 {
-    color: black;
+.winner-frame h3 {
+    margin: 0px;
+    color: white;
 }
 
 .play-again-btn-wrapper {
@@ -435,9 +436,42 @@ div .quadruple.down {
 
 .transparent-background {
     margin: auto;
-    padding: 30px;
-    width: 300px;
-    height: 300px;
+    padding: 50px;
+    width: 345px;
+    height: 320px;
     background-color: #ff00006e;
     border-radius: 50%;
+}
+
+.play-again-btn {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 100px;
+    padding: 5px;
+    height: 40px;
+    font-size: 20px;
+    color: white;
+    background-color: #9d0505;
+    border: 1px solid black;
+    border-radius: 10px;
+    line-height: initial;
+    cursor: pointer;
+}
+
+.back-startpage {
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 6px;
+    font-size: 20px;
+    color: white;
+    background-color: #9d0505;
+    border: 1px solid black;
+    border-radius: 10px;
+    line-height: initial;
+    cursor: pointer;
+}
+
+.back-icon {
+    margin-right: 5px;
 }

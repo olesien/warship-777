@@ -1,58 +1,38 @@
-import { useEffect, useState } from 'react'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, Link } from 'react-router-dom';
 
 
-export default function EndGame({ chatUsername, player, opponent }) {
-  const [winner, setWinner] = useState({})
-  const [loser, setLoser] = useState({})
-
-
-  useEffect(() => {
-    console.log(opponent)
-    console.log(player)
-
-    setWinner(player)
-    setLoser(opponent)
-
-    // console.log(winner)
-
-    
-
-  }, [])
+export default function EndGame({ socket, winner }) {
+  const navigate = useNavigate()
 
   return (
     <div className="endgame-wrapper">
       <div className="endgame-background-image">
-        <button className="back-startpage">
+        <button 
+          className="back-startpage"
+          onClick={() => navigate("/" - "game")}
+        >
+          <FontAwesomeIcon icon={faCircleArrowLeft} className="back-icon"/>
           Startpage
         </button>
-        {player ? (
-        <div className="loser-frame">
-          <div className="transparent-background">
-                <h3>{winner.username}</h3>
-
-                <img src={winner.avatar} alt="" />
-              
-                <h3>Sunk your ships!</h3>
-          </div>
-        </div>
-        )
-
-        :
-
-        (
         <div className="winner-frame">
           <div className="transparent-background">
-                <img src={winner.avatar} alt="" />
-              
-                <h3>You sunk the enemy ships!</h3>
+            {winner.id !== socket.id
+              ? <h3>{winner.username}</h3>
+              : <h3 className="mt-4"> </h3>}
+            
+            <img className="mt-2" src={winner.avatar} alt="" />
+          
+            {winner.id !== socket.id
+              ? <h3>Sunk your ships!</h3>
+              : <h3>You sunk the enemy ships!</h3>}
           </div>
         </div>
-        )}
-        <div className="play-again-btn-wrapper">
-          <button className="play-again-btn">
-            Play again!
-          </button>
-        </div>
+
+        <button className="play-again-btn">
+          Play again!
+        </button>
       </div>
     </div>
   )

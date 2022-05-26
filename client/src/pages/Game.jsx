@@ -1,10 +1,7 @@
 import Grid from "../components/Grid";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faArrowRotateRight,
-    faGreaterThanEqual,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
 import useGameLogic from "../hooks/useGameLogic";
 import RenderGridDesc from "../components/RenderGridDesc";
@@ -19,8 +16,9 @@ const Game = () => {
     const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn");
     const [gameStarted, setGameStarted] = useState(false);
     const [startingPlayer, setStartingPlayer] = useState("");
-    const [winner, setWinner] = useState({})
+    const [winner, setWinner] = useState({});
     const [playerRound, setPlayerRound] = useState();
+    const [endGame, setEndGame] = useState(false);
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -47,8 +45,10 @@ const Game = () => {
             const opponent = players.find((player) => player.id !== socket.id);
             setPlayer(player);
             setOpponent(opponent);
-            console.log(player);
-            console.log(opponent);
+            // console.log(player);
+            // console.log(opponent);
+
+            // console.log(player.gameboard)
         };
         //One person has readied up!
         const peopleReady = (players) => {
@@ -84,6 +84,11 @@ const Game = () => {
             //Start render of the grids!
         };
 
+        const playerWin = (winner) => {
+            setWinner(winner)
+            setEndGame(true);
+        }
+
         //Listen for these!
         socket.on("game:peopleready", peopleReady);
         socket.on("game:start", start);
@@ -95,14 +100,16 @@ const Game = () => {
             setPlayerRound(data.player)
             setStartingPlayer(data.msg)
         });
+        socket.on("game:over", playerWin)
 
         return () => {
             console.log("cleaning up");
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
             socket.off("player:start");
+            socket.off("game:over", playerWin)
         };
-    }, [socket, setPlayer, setOpponent, chatUsername, opponent.ready]);
+    }, [socket, setPlayer, setOpponent, chatUsername, opponent.ready, setIdsTurn]);
 
     //game started?
     useEffect(() => {
@@ -112,8 +119,8 @@ const Game = () => {
             setGameStarted(false);
         }
 
-        console.log(player);
-        console.log(startingPlayer);
+        // console.log(player);
+        // console.log(startingPlayer);
     }, [player, opponent]);
 
     useEffect(() => {
@@ -128,7 +135,7 @@ const Game = () => {
 
     return (
         <div className="game-wrapper">
-            {winner === false && (
+            {!endGame && (
             <>
             <div className="game-setup">
                 <div className="players">
@@ -260,11 +267,10 @@ const Game = () => {
                 </div>
             </>
             )}
-            {winner && (
+            {endGame && (
                 <EndGame 
-                    player={player}
-                    opponent={opponent}
-                    chatUsername={chatUsername}
+                    socket={socket}
+                    winner={winner}
                 />
             )}
         </div>
