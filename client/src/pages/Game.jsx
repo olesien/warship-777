@@ -10,6 +10,7 @@ import useGameLogic from "../hooks/useGameLogic";
 import RenderGridDesc from "../components/RenderGridDesc";
 import RenderPlayerGrid from "../components/RenderPlayerGrid";
 import RenderOpponentGrid from "../components/RenderOpponentGrid";
+import PreviewShips from "../components/PreviewShips";
 
 const Game = () => {
     //Game logic
@@ -89,8 +90,8 @@ const Game = () => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
 
-            setPlayerRound(data.player)
-            setStartingPlayer(data.msg)
+            setPlayerRound(data.player);
+            setStartingPlayer(data.msg);
         });
 
         return () => {
@@ -114,14 +115,12 @@ const Game = () => {
     }, [player, opponent]);
 
     useEffect(() => {
-
         const removeStartingPlayer = () => {
-            setStartingPlayer("")
-        }
+            setStartingPlayer("");
+        };
 
-        setTimeout(removeStartingPlayer, 5000)
-
-    }, [startingPlayer, setStartingPlayer])
+        setTimeout(removeStartingPlayer, 5000);
+    }, [startingPlayer, setStartingPlayer]);
 
     return (
         <div className="game-wrapper">
@@ -135,13 +134,16 @@ const Game = () => {
                         </p>
                         <img src={playerAvatar} alt="" />
                         <h3>{chatUsername}</h3>
-
-                        <button
-                            onClick={readyBtnPressed}
-                            className={"mb-5 " + btnStyle}
-                        >
-                            {playerReady ? "Ready!" : "Ready?"}
-                        </button>
+                        {player.ready && opponent.ready ? (
+                            <PreviewShips foe={false} />
+                        ) : (
+                            <button
+                                onClick={readyBtnPressed}
+                                className={"mb-5 " + btnStyle}
+                            >
+                                {playerReady ? "Ready!" : "Ready?"}
+                            </button>
+                        )}
                     </div>
                     <div className="opponent">
                         <p>
@@ -151,27 +153,57 @@ const Game = () => {
                         </p>
                         <img src={opponent.avatar} alt="" />
                         <h3>{opponent.username}</h3>
-
-                        <button className={"mb-5 " + opponentBtnStyle}>
-                            {opponent.ready ? "Ready!" : "Waiting..."}
-                        </button>
+                        {player.ready && opponent.ready ? (
+                            <PreviewShips foe={true} />
+                        ) : (
+                            <button className={"mb-5 " + opponentBtnStyle}>
+                                {opponent.ready ? "Ready!" : "Waiting..."}
+                            </button>
+                        )}
                     </div>
                 </div>
 
-                {startingPlayer ? (<p style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%, -50%)" }}>{ startingPlayer }</p>) : null}
+                {startingPlayer ? (
+                    <p
+                        style={{
+                            position: "absolute",
+                            top: "30%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                        }}
+                    >
+                        {startingPlayer}
+                    </p>
+                ) : null}
 
                 <div className="d-flex align-items-center">
                     {gameStarted ? (
                         //Game started
-                        <> 
-                                {playerRound === player.username 
-                                    ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }} className="text-success">{ `${playerRound}'s turn` }</p>) 
-                                    : (playerRound === opponent.username 
-                                        ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }} className="text-danger">{ `${playerRound}'s turn` }</p>) 
-                                        : null )}
+                        <>
+                            {playerRound === player.username ? (
+                                <p
+                                    style={{
+                                        position: "absolute",
+                                        top: "20%",
+                                        left: "50%",
+                                        transform: "translate(-50%, -50%)",
+                                    }}
+                                    className="text-success"
+                                >{`${playerRound}'s turn`}</p>
+                            ) : playerRound === opponent.username ? (
+                                <p
+                                    style={{
+                                        position: "absolute",
+                                        top: "20%",
+                                        left: "50%",
+                                        transform: "translate(-50%, -50%)",
+                                    }}
+                                    className="text-danger"
+                                >{`${playerRound}'s turn`}</p>
+                            ) : null}
 
-                                <RenderPlayerGrid />  
-                                <RenderOpponentGrid />   
+                            <RenderPlayerGrid />
+                            <RenderOpponentGrid />
                         </>
                     ) : (
                         // Input the battleships <- Game has not started
