@@ -13,7 +13,6 @@ const GameContextProvider = ({ children }) => {
     const [room, setRoom] = useState();
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
-    const [winner, setWinner] = useState({});
     const [playerAvatar, setPlayerAvatar] = useState("");
     const [idsTurn, setIdsTurn] = useState(null);
     const changeRoom = (newRoom) => {
@@ -72,8 +71,6 @@ const GameContextProvider = ({ children }) => {
         setOpponent,
         playerAvatar,
         setPlayerAvatar,
-        setWinner,
-        winner,
         updateGrid,
         idsTurn,
         setIdsTurn,
