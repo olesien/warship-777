@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function EndGame({ socket, winner }) {
   const navigate = useNavigate()
@@ -17,7 +16,11 @@ export default function EndGame({ socket, winner }) {
           Startpage
         </button>
         <div className="winner-frame">
-          <div className="transparent-background">
+          <div 
+            className={winner.id !== socket.id 
+              ? "transparent-background-red" 
+              : "transparent-background-green"}
+          >
             {winner.id !== socket.id
               ? <h3>{winner.username}</h3>
               : <h3 className="mt-4"> </h3>}

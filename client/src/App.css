@@ -445,12 +445,21 @@ div .quadruple.down {
     margin-top: 100px;
 }
 
-.transparent-background {
+.transparent-background-red {
     margin: auto;
     padding: 50px;
     width: 345px;
     height: 320px;
     background-color: #ff00006e;
+    border-radius: 50%;
+}
+
+.transparent-background-green {
+    margin: auto;
+    padding: 50px;
+    width: 345px;
+    height: 320px;
+    background-color: #2cff006e;
     border-radius: 50%;
 }
 
