@@ -8,6 +8,7 @@ import RenderGridDesc from "../components/RenderGridDesc";
 import RenderPlayerGrid from "../components/RenderPlayerGrid";
 import RenderOpponentGrid from "../components/RenderOpponentGrid";
 import EndGame from "../components/EndGame";
+import PreviewShips from "../components/PreviewShips";
 
 const Game = () => {
     //Game logic
@@ -57,7 +58,6 @@ const Game = () => {
 
             updatePlayers(players);
 
-
             //Add logic to change the ready element here! player is left side, and opponent is right side.
             //Use player.ready which is true or false to display whether or not they are ready.
         };
@@ -85,9 +85,9 @@ const Game = () => {
         };
 
         const playerWin = (winner) => {
-            setWinner(winner)
+            setWinner(winner);
             setEndGame(true);
-        }
+        };
 
         //Listen for these!
         socket.on("game:peopleready", peopleReady);
@@ -97,19 +97,26 @@ const Game = () => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
 
-            setPlayerRound(data.player)
-            setStartingPlayer(data.msg)
+            setPlayerRound(data.player);
+            setStartingPlayer(data.msg);
         });
-        socket.on("game:over", playerWin)
+        socket.on("game:over", playerWin);
 
         return () => {
             console.log("cleaning up");
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
             socket.off("player:start");
-            socket.off("game:over", playerWin)
+            socket.off("game:over", playerWin);
         };
-    }, [socket, setPlayer, setOpponent, chatUsername, opponent.ready, setIdsTurn]);
+    }, [
+        socket,
+        setPlayer,
+        setOpponent,
+        chatUsername,
+        opponent.ready,
+        setIdsTurn,
+    ]);
 
     //game started?
     useEffect(() => {
@@ -124,106 +131,151 @@ const Game = () => {
     }, [player, opponent]);
 
     useEffect(() => {
-
         const removeStartingPlayer = () => {
-            setStartingPlayer("")
-        }
+            setStartingPlayer("");
+        };
 
-        setTimeout(removeStartingPlayer, 5000)
-
-    }, [startingPlayer, setStartingPlayer])
+        setTimeout(removeStartingPlayer, 5000);
+    }, [startingPlayer, setStartingPlayer]);
 
     return (
         <div className="game-wrapper">
             {!endGame && (
-            <>
-            <div className="game-setup">
-                <div className="players">
-                    <div className="player">
-                        <p>
-                            {player.ready
-                                ? "You are ready"
-                                : "You are not ready"}
-                        </p>
-                        <img className="player-image" src={playerAvatar} alt="" />
-                        <h3>{chatUsername}</h3>
-
-                        <button
-                            onClick={readyBtnPressed}
-                            className={"mb-5 " + btnStyle}
-                        >
-                            {playerReady ? "Ready!" : "Ready?"}
-                        </button>
-                    </div>
-                    <div className="opponent">
-                        <p>
-                            {opponent.ready
-                                ? "Opponent is ready"
-                                : "Opponent is not ready"}
-                        </p>
-                        <img className="opponent-image" src={opponent.avatar} alt="" />
-                        <h3>{opponent.username}</h3>
-
-                        <button className={"mb-5 " + opponentBtnStyle}>
-                            {opponent.ready ? "Ready!" : "Waiting..."}
-                        </button>
-                    </div>
-                </div>
-
-                {startingPlayer ? (<p style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%, -50%)" }}>{ startingPlayer }</p>) : null}
-
-                <div className="d-flex align-items-center">
-                    {gameStarted ? (
-                        //Game started
-                        <> 
-                                {playerRound === player.username 
-                                    ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }} className="text-success">{ `${playerRound}'s turn` }</p>) 
-                                    : (playerRound === opponent.username 
-                                        ? (<p style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)" }} className="text-danger">{ `${playerRound}'s turn` }</p>) 
-                                        : null )}
-
-                                <RenderPlayerGrid />  
-                                <RenderOpponentGrid />   
-                        </>
-                    ) : (
-                        // Input the battleships <- Game has not started
-                        <div
-                            className="d-flex flex-column"
-                            id="playFieldPosition"
-                        >
-                            <div
-                                className="grid-container justify-content-end w-400"
-                                id="nmrPosition"
-                            >
-                                <RenderGridDesc alfabet={false} />
-                            </div>
-
-                            <div className="d-flex">
-                                <div className="grid-container d-flex flex-column">
-                                    <RenderGridDesc isAlfabet={true} />
-                                </div>
-
-                                <Grid
-                                    grid={grid}
-                                    drop={drop}
-                                    allowDrop={allowDrop}
-                                    drag={drag}
+                <>
+                    <div className="game-setup">
+                        <div className="players">
+                            <div className="player">
+                                <p>
+                                    {player.ready
+                                        ? "You are ready"
+                                        : "You are not ready"}
+                                </p>
+                                <img
+                                    className="player-image"
+                                    src={playerAvatar}
+                                    alt=""
                                 />
+                                <h3>{chatUsername}</h3>
+                                {player.ready && opponent.ready ? (
+                                    <PreviewShips foe={false} />
+                                ) : (
+                                    <button
+                                        onClick={readyBtnPressed}
+                                        className={"mb-5 " + btnStyle}
+                                    >
+                                        {playerReady ? "Ready!" : "Ready?"}
+                                    </button>
+                                )}
+                            </div>
+                            <div className="opponent">
+                                <p>
+                                    {opponent.ready
+                                        ? "Opponent is ready"
+                                        : "Opponent is not ready"}
+                                </p>
+                                <img
+                                    className="opponent-image"
+                                    src={opponent.avatar}
+                                    alt=""
+                                />
+                                <h3>{opponent.username}</h3>
+                                {player.ready && opponent.ready ? (
+                                    <PreviewShips foe={true} />
+                                ) : (
+                                    <button
+                                        className={"mb-5 " + opponentBtnStyle}
+                                    >
+                                        {opponent.ready
+                                            ? "Ready!"
+                                            : "Waiting..."}
+                                    </button>
+                                )}
                             </div>
                         </div>
-                    )}
-                </div>
 
-                {/* Your ships, place them out on the board */}
+                        {startingPlayer ? (
+                            <p
+                                style={{
+                                    position: "absolute",
+                                    top: "30%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                }}
+                            >
+                                {startingPlayer}
+                            </p>
+                        ) : null}
 
-                            <div
-                                id={"boat4"}
-                                className="inner-grid-item quadruple down"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
+                        <div className="d-flex align-items-center">
+                            {gameStarted ? (
+                                //Game started
+                                <>
+                                    {playerRound === player.username ? (
+                                        <p
+                                            style={{
+                                                position: "absolute",
+                                                top: "20%",
+                                                left: "50%",
+                                                transform:
+                                                    "translate(-50%, -50%)",
+                                            }}
+                                            className="text-success"
+                                        >{`${playerRound}'s turn`}</p>
+                                    ) : playerRound === opponent.username ? (
+                                        <p
+                                            style={{
+                                                position: "absolute",
+                                                top: "20%",
+                                                left: "50%",
+                                                transform:
+                                                    "translate(-50%, -50%)",
+                                            }}
+                                            className="text-danger"
+                                        >{`${playerRound}'s turn`}</p>
+                                    ) : null}
 
-                            {/* <div className="grid-container pe-2 twoSquareShip">
+                                    <RenderPlayerGrid />
+                                    <RenderOpponentGrid />
+                                </>
+                            ) : (
+                                // Input the battleships <- Game has not started
+                                <div
+                                    className="d-flex flex-column"
+                                    id="playFieldPosition"
+                                >
+                                    <div
+                                        className="grid-container justify-content-end w-400"
+                                        id="nmrPosition"
+                                    >
+                                        <RenderGridDesc alfabet={false} />
+                                    </div>
+
+                                    <div className="d-flex">
+                                        <div className="grid-container d-flex flex-column">
+                                            <RenderGridDesc isAlfabet={true} />
+                                        </div>
+
+                                        <Grid
+                                            grid={grid}
+                                            drop={drop}
+                                            allowDrop={allowDrop}
+                                            drag={drag}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Your ships, place them out on the board */}
+
+                        <div
+                            id={"boat4"}
+                            className="inner-grid-item quadruple down"
+                            draggable="true"
+                            onDragStart={drag}
+                        ></div>
+
+                        {/* <div className="grid-container pe-2 twoSquareShip">
                                 <div className="grid-item ship-colors"></div>
                                 <div className="grid-item ship-colors"></div>
                             </div>
@@ -257,24 +309,19 @@ const Game = () => {
                         <div className="grid-item ship-colors"></div>
                         <div className="grid-item ship-colors"></div>
                     </div> */}
-            </div>
+                    </div>
 
-                <div
-                    id="rotate-btn"
-                    className="d-flex justify-content-center align-items-center"
-                >
-                    <FontAwesomeIcon icon={faArrowRotateRight} />
-                </div>
-            </>
+                    <div
+                        id="rotate-btn"
+                        className="d-flex justify-content-center align-items-center"
+                    >
+                        <FontAwesomeIcon icon={faArrowRotateRight} />
+                    </div>
+                </>
             )}
-            {endGame && (
-                <EndGame 
-                    socket={socket}
-                    winner={winner}
-                />
-            )}
+            {endGame && <EndGame socket={socket} winner={winner} />}
         </div>
-    )
-}
+    );
+};
 
 export default Game;
