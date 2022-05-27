@@ -10,8 +10,8 @@ export default function RenderBoat({ ship }) {
         const newShip = JSON.parse(JSON.stringify(ship));
         newShip.subparts.unshift({ hit: ship.hit });
         setParts(
-            newShip.subparts.map((part) => (
-                <div className={"subpart " + (part.hit ? " hit" : "")}></div>
+            newShip.subparts.map((part, key) => (
+                <div key={key} className={"subpart " + (part.hit ? " hit" : "")}></div>
             ))
         );
     }, [ship]);

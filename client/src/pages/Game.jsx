@@ -1,5 +1,5 @@
 import Grid from "../components/Grid";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
@@ -22,6 +22,7 @@ const Game = () => {
     const [playerRound, setPlayerRound] = useState();
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const messageRef = useRef()
     const [endGame, setEndGame] = useState(false);
     const { drop, allowDrop, drag } = useGameLogic();
     const {
@@ -37,7 +38,7 @@ const Game = () => {
         setIdsTurn,
     } = useGameContext();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
 
         if (!message.length) {
@@ -56,6 +57,8 @@ const Game = () => {
         console.log(msg)
         console.log("This Works!")
 
+        socket.emit("chat:message", msg)
+
         setMessages(prevMessages =>
             [
                 ...prevMessages,
@@ -65,6 +68,13 @@ const Game = () => {
 
         setMessage('')
         console.log(messages)
+        messageRef.current.focus()
+    }
+
+    const handleIncomingMessage = msg => {
+        console.log("Received a new chat message", msg)
+
+        setMessages(prevMessages => [ ...prevMessages, msg ])
     }
 
     const readyBtnPressed = () => {
@@ -131,6 +141,7 @@ const Game = () => {
         };
 
         //Listen for these!
+        socket.on("chat:message", handleIncomingMessage)
         socket.on("game:peopleready", peopleReady);
         socket.on("game:start", start);
         socket.on("game:handleHit", handleHit);
@@ -145,6 +156,7 @@ const Game = () => {
 
         return () => {
             console.log("cleaning up");
+            socket.off("chat:message", handleIncomingMessage)
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
             socket.off("player:start");
@@ -177,6 +189,10 @@ const Game = () => {
 
         setTimeout(removeStartingPlayer, 5000);
     }, [startingPlayer, setStartingPlayer]);
+
+    useEffect(() => {
+        messageRef.current && messageRef.current.focus()
+    }, [])
 
     return (
         <div className="game-wrapper">
@@ -308,12 +324,53 @@ const Game = () => {
 
                         {/* Your ships, place them out on the board */}
 
-                        <div
-                            id={"boat4"}
-                            className="inner-grid-item quadruple down"
-                            draggable="true"
-                            onDragStart={drag}
-                        ></div>
+                        <div className="boat-setup">
+                            <div
+                                id={"boat1"}
+                                className="inner-grid-item double right"
+                                draggable="true"
+                                onDragStart={drag}
+                            ></div>
+                            <div
+                                id={"boat2"}
+                                className="inner-grid-item double right"
+                                draggable="true"
+                                onDragStart={drag}
+                            ></div>
+                            <div
+                                id={"boat3"}
+                                className="inner-grid-item triple left"
+                                draggable="true"
+                                onDragStart={drag}
+                            ></div>
+
+                            <div
+                                id={"boat4"}
+                                className="inner-grid-item quadruple down"
+                                draggable="true"
+                                onDragStart={drag}
+                            ></div>
+
+                            {/* <div className="grid-container pe-2 twoSquareShip">
+                                <div className="grid-item ship-colors"></div>
+                                <div className="grid-item ship-colors"></div>
+                            </div>
+                            <div className="grid-container pe-2 threeSquareShip">
+                                <div className="grid-item ship-colors"></div>
+                                <div className="grid-item ship-colors"></div>
+                                <div className="grid-item ship-colors"></div>
+                            </div>
+                            <div className="grid-container pe-2 fourSquareShip">
+                                <div className="grid-item ship-colors"></div>
+                                <div className="grid-item ship-colors"></div>
+                                <div className="grid-item ship-colors"></div>
+                                <div className="grid-item ship-colors"></div>
+                            </div>
+                            <div className="grid-container pe-2 twoSquareShip">
+                                <div className="grid-item ship-colors"></div>
+                                <div className="grid-item ship-colors"></div>
+                            </div> */}
+                        </div>
 
                         {/* <div className="grid-container pe-2 twoSquareShip">
                                 <div className="grid-item ship-colors"></div>
@@ -342,6 +399,7 @@ const Game = () => {
                     message={message}
                     setMessage={setMessage}
                     messages={messages}
+                    messageRef={messageRef}
                 />
             </div>
 

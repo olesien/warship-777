@@ -38,7 +38,7 @@ export default function PreviewShips({ foe }) {
             return setOpponentShips(makeShips(opponent));
         }
         return setPlayerShips(makeShips(player));
-    }, [player, opponent, playerShips, opponentShips, foe]);
+    }, [player, opponent, foe]);
     if (foe) {
         return <div>{opponentShips}</div>;
     }

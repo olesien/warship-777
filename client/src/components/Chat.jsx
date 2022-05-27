@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Chat = ({ message, setMessage, messages, onSubmit }) => {
+const Chat = ({ message, setMessage, messages, messageRef, onSubmit }) => {
 
   return (
     <div id="chat">
@@ -24,6 +24,7 @@ const Chat = ({ message, setMessage, messages, onSubmit }) => {
         <input
           id="messageBar" 
           type="text"
+          ref={messageRef}
           value={message}
           placeholder="Write message..."
           onChange={e => setMessage(e.target.value)} 
