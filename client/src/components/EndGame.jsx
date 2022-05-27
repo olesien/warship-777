@@ -2,8 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 
-export default function EndGame({ socket, winner }) {
+export default function EndGame({ socket, winner, room, grid }) {
   const navigate = useNavigate()
+
+  const handlePlayAgain = () => {
+    navigate("/")
+    socket.emit("game:replay", room, grid)
+  }
 
   return (
     <div className="endgame-wrapper">
@@ -33,7 +38,10 @@ export default function EndGame({ socket, winner }) {
           </div>
         </div>
 
-        <button className="play-again-btn">
+        <button 
+          className="play-again-btn"
+          onClick={handlePlayAgain}
+        >
           Play again!
         </button>
       </div>

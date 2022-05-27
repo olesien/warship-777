@@ -319,7 +319,12 @@ const Game = () => {
                     </div>
                 </>
             )}
-            {endGame && <EndGame socket={socket} winner={winner} />}
+            {endGame && <EndGame 
+                socket={socket} 
+                winner={winner} 
+                room={room}
+                grid={grid}
+            />}
         </div>
     );
 };
