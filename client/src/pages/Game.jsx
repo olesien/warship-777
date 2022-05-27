@@ -59,11 +59,6 @@ const Game = () => {
 
         socket.emit("chat:message", msg);
 
-        setMessages((prevMessages) => [
-            ...prevMessages,
-            { ...msg, self: true },
-        ]);
-
         setMessage("");
         console.log(messages);
         messageRef.current.focus();
