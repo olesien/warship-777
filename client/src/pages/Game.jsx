@@ -145,7 +145,7 @@ const Game = () => {
                                 ? "You are ready"
                                 : "You are not ready"}
                         </p>
-                        <img src={playerAvatar} alt="" />
+                        <img className="player-image" src={playerAvatar} alt="" />
                         <h3>{chatUsername}</h3>
 
                         <button
@@ -161,7 +161,7 @@ const Game = () => {
                                 ? "Opponent is ready"
                                 : "Opponent is not ready"}
                         </p>
-                        <img src={opponent.avatar} alt="" />
+                        <img className="opponent-image" src={opponent.avatar} alt="" />
                         <h3>{opponent.username}</h3>
 
                         <button className={"mb-5 " + opponentBtnStyle}>

@@ -389,6 +389,16 @@ div .quadruple.down {
     align-items: center;
 }
 
+.player-image {
+    border: 2px solid green;
+    border-radius: 50%;
+}
+
+.opponent-image {
+    border: 2px solid red;
+    border-radius: 50%;
+}
+
 /* .game-setup {
     display: flex;
     flex-direction: column;
