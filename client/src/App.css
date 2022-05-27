@@ -280,6 +280,15 @@ div .quadruple.down {
     font-size: 50px;
 }
 
+.waiting {
+    width: 300px;
+    margin: auto;
+}
+
+.replay-loading {
+    margin-top: 150px;
+}
+
 .ship-colors {
     border: 1px solid white;
     background-color: #61dafb;
