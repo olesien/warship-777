@@ -20,9 +20,9 @@ const Game = () => {
     const [startingPlayer, setStartingPlayer] = useState("");
     const [winner, setWinner] = useState({});
     const [playerRound, setPlayerRound] = useState();
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
-    const messageRef = useRef()
+    const messageRef = useRef();
     const [endGame, setEndGame] = useState(false);
     const { drop, allowDrop, drag } = useGameLogic();
     const {
@@ -38,44 +38,42 @@ const Game = () => {
         setIdsTurn,
     } = useGameContext();
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!message.length) {
-            return
+            return;
         }
 
-        console.log(message)
+        console.log(message);
 
         const msg = {
             username: chatUsername,
             room: room,
             content: message,
             timestamp: Date.now(),
-        }
+        };
 
-        console.log(msg)
-        console.log("This Works!")
+        console.log(msg);
+        console.log("This Works!");
 
-        socket.emit("chat:message", msg)
+        socket.emit("chat:message", msg);
 
-        setMessages(prevMessages =>
-            [
-                ...prevMessages,
-                { ...msg, self: true}
-            ]
-        )
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            { ...msg, self: true },
+        ]);
 
-        setMessage('')
-        console.log(messages)
-        messageRef.current.focus()
-    }
+        setMessage("");
+        console.log(messages);
+        messageRef.current.focus();
+    };
 
-    const handleIncomingMessage = msg => {
-        console.log("Received a new chat message", msg)
+    const handleIncomingMessage = (msg) => {
+        console.log("Received a new chat message", msg);
 
-        setMessages(prevMessages => [ ...prevMessages, msg ])
-    }
+        setMessages((prevMessages) => [...prevMessages, msg]);
+    };
 
     const readyBtnPressed = () => {
         setPlayerReady(!playerReady);
@@ -117,7 +115,7 @@ const Game = () => {
             updatePlayers(game.players);
             setIdsTurn(game.idsTurn);
 
-            console.log(game.room)
+            console.log(game.room);
 
             //Start render of the grids!
         };
@@ -127,9 +125,9 @@ const Game = () => {
             setIdsTurn(game.idsTurn);
 
             if (game.idsTurn === game.players[0].id) {
-                setPlayerRound(game.players[0].username)
+                setPlayerRound(game.players[0].username);
             } else if (game.idsTurn === game.players[1].id) {
-                setPlayerRound(game.players[1].username)
+                setPlayerRound(game.players[1].username);
             }
 
             //Start render of the grids!
@@ -141,7 +139,7 @@ const Game = () => {
         };
 
         //Listen for these!
-        socket.on("chat:message", handleIncomingMessage)
+        socket.on("chat:message", handleIncomingMessage);
         socket.on("game:peopleready", peopleReady);
         socket.on("game:start", start);
         socket.on("game:handleHit", handleHit);
@@ -156,7 +154,7 @@ const Game = () => {
 
         return () => {
             console.log("cleaning up");
-            socket.off("chat:message", handleIncomingMessage)
+            socket.off("chat:message", handleIncomingMessage);
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
             socket.off("player:start");
@@ -191,8 +189,8 @@ const Game = () => {
     }, [startingPlayer, setStartingPlayer]);
 
     useEffect(() => {
-        messageRef.current && messageRef.current.focus()
-    }, [])
+        messageRef.current && messageRef.current.focus();
+    }, []);
 
     return (
         <div className="game-wrapper">
@@ -393,17 +391,17 @@ const Game = () => {
             
                             */}
 
-            <div>
-                <Chat
-                    onSubmit={handleSubmit}
-                    message={message}
-                    setMessage={setMessage}
-                    messages={messages}
-                    messageRef={messageRef}
-                />
-            </div>
+                        <div>
+                            <Chat
+                                onSubmit={handleSubmit}
+                                message={message}
+                                setMessage={setMessage}
+                                messages={messages}
+                                messageRef={messageRef}
+                            />
+                        </div>
 
-                    {/* <div className="grid-container pe-2 threeSquareShip">
+                        {/* <div className="grid-container pe-2 threeSquareShip">
                         <div className="grid-item ship-colors"></div>
                         <div className="grid-item ship-colors"></div>
                         <div className="grid-item ship-colors"></div>
