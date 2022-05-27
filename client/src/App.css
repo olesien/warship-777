@@ -400,3 +400,24 @@ div .quadruple.down {
     justify-content: center;
     margin-top: 20px;
 }
+
+#chat {
+    width: 15%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#messages-wrapper {
+    height: 240px;
+    background: gray;
+}
+  
+#messageBar {
+    width: 80%;
+}
+  
+#sendMessageBtn {
+    width: 20%;
+}
+  

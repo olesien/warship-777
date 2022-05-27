@@ -10,6 +10,7 @@ import useGameLogic from "../hooks/useGameLogic";
 import RenderGridDesc from "../components/RenderGridDesc";
 import RenderPlayerGrid from "../components/RenderPlayerGrid";
 import RenderOpponentGrid from "../components/RenderOpponentGrid";
+import Chat from "../components/Chat";
 
 const Game = () => {
     //Game logic
@@ -19,6 +20,8 @@ const Game = () => {
     const [gameStarted, setGameStarted] = useState(false);
     const [startingPlayer, setStartingPlayer] = useState("");
     const [playerRound, setPlayerRound] = useState();
+    const [message, setMessage] = useState('');
+    const [messages, setMessages] = useState([]);
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -32,6 +35,36 @@ const Game = () => {
         playerAvatar,
         setIdsTurn,
     } = useGameContext();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!message.length) {
+            return
+        }
+
+        console.log(message)
+
+        const msg = {
+            username: chatUsername,
+            room: room,
+            content: message,
+            timestamp: Date.now(),
+        }
+
+        console.log(msg)
+        console.log("This Works!")
+
+        setMessages(prevMessages =>
+            [
+                ...prevMessages,
+                { ...msg, self: true}
+            ]
+        )
+
+        setMessage('')
+        console.log(messages)
+    }
 
     const readyBtnPressed = () => {
         setPlayerReady(!playerReady);
@@ -70,6 +103,8 @@ const Game = () => {
             console.log(game);
             updatePlayers(game.players);
             setIdsTurn(game.idsTurn);
+
+            console.log(game.room)
 
             //Start render of the grids!
         };
@@ -269,6 +304,15 @@ const Game = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div>
+                <Chat
+                    onSubmit={handleSubmit}
+                    message={message}
+                    setMessage={setMessage}
+                    messages={messages}
+                />
             </div>
         </div>
     );
