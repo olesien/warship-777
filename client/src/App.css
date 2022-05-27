@@ -389,6 +389,16 @@ div .quadruple.down {
     align-items: center;
 }
 
+.player-image {
+    border: 2px solid green;
+    border-radius: 50%;
+}
+
+.opponent-image {
+    border: 2px solid red;
+    border-radius: 50%;
+}
+
 /* .game-setup {
     display: flex;
     flex-direction: column;
@@ -421,3 +431,106 @@ div .quadruple.down {
     width: 20%;
 }
   
+.endgame-wrapper {
+    width: 100vw;
+    height: 100vh;
+}
+
+.endgame-background-image {
+    height: 100vh;
+    background-size: cover;
+    background-image: url("../src/assets/images/endgame-background.jpg");
+}
+
+.winner-frame {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 150px;
+}
+
+.winner-frame h3 {
+    margin: 0px;
+    color: white;
+}
+
+.winner-image {
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.play-again-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.transparent-background {
+    margin: auto;
+    padding: 50px;
+    width: 345px;
+    height: 320px;
+    background-color: #ff00006e;
+    border-radius: 50%;
+}
+
+.play-again-btn {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 100px;
+    padding: 5px;
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    color: white;
+    background-color: #9d0505;
+    border: 1px solid black;
+    border-radius: 10px;
+    line-height: initial;
+    cursor: pointer;
+}
+
+.back-startpage {
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 6px;
+    font-size: 20px;
+    color: white;
+    background-color: #9d0505;
+    border: 1px solid black;
+    border-radius: 10px;
+    line-height: initial;
+    cursor: pointer;
+}
+
+.back-icon {
+    margin-right: 5px;
+}
+.previewboat {
+    height: 40px;
+    background-color: green;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.boatLength1 {
+    width: 80px;
+}
+
+.boatLength2 {
+    width: 120px;
+}
+
+.boatLength3 {
+    width: 160px;
+}
+
+.subpart {
+    flex: 1;
+}
+
+.hit {
+    background-color: red;
+}
