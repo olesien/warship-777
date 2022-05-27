@@ -34,11 +34,13 @@ export default function PreviewShips({ foe }) {
     const [playerShips, setPlayerShips] = useState([]);
     const [opponentShips, setOpponentShips] = useState([]);
     useEffect(() => {
+        console.log();
         if (foe) {
-            return setOpponentShips(makeShips(opponent));
+            setOpponentShips(makeShips(opponent));
+        } else {
+            setPlayerShips(makeShips(player));
         }
-        return setPlayerShips(makeShips(player));
-    }, [player, opponent, playerShips, opponentShips, foe]);
+    }, [player, opponent, foe]);
     if (foe) {
         return <div>{opponentShips}</div>;
     }
