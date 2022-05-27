@@ -496,3 +496,30 @@ div .quadruple.down {
 .back-icon {
     margin-right: 5px;
 }
+.previewboat {
+    height: 40px;
+    background-color: green;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.boatLength1 {
+    width: 80px;
+}
+
+.boatLength2 {
+    width: 120px;
+}
+
+.boatLength3 {
+    width: 160px;
+}
+
+.subpart {
+    flex: 1;
+}
+
+.hit {
+    background-color: red;
+}
