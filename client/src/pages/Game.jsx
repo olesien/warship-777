@@ -15,11 +15,12 @@ const Game = () => {
     const [playerReady, setPlayerReady] = useState(false);
     const [btnStyle, setBtnStyle] = useState("ready-btn");
     const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn");
-    const [gameStarted, setGameStarted] = useState(false);
+    // const [gameStarted, setGameStarted] = useState(false);
     const [startingPlayer, setStartingPlayer] = useState("");
     const [winner, setWinner] = useState({});
     const [playerRound, setPlayerRound] = useState();
-    const [endGame, setEndGame] = useState(false);
+    // const [endGame, setEndGame] = useState(false);
+    const [boatHit, setBoatHit] = useState(false)
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -32,11 +33,51 @@ const Game = () => {
         chatUsername,
         playerAvatar,
         setIdsTurn,
+        gameStarted,
+        setGameStarted,
+        endGame,
+        setEndGame,
     } = useGameContext();
+
+    const init = () => {
+        player.ready = false
+        opponent.ready = false
+        setGameStarted(false)
+        setEndGame(false)
+        setPlayerReady(false)
+        stylesReadyBtn()
+        console.log(grid)
+        // const gridCol = grid.map(col => {
+        //     const gridRow = col.map(row => {
+        //         if (row.hit) {
+        //             return row.hit = false
+        //         }
+        //     })
+        //     console.log(gridRow)
+        // })
+        // console.log(gridCol)
+
+
+        // const partsHit = gameboard.reduce((prevValue, col) => {
+        //     const partsHitInCol = col.reduce((prevValue, row) => {
+        //             if (row.hit) {
+        //                     //row hit
+        //                     return prevValue + 1;
+        //             }
+        //             return prevValue;
+        //     }, 0);
+        //     return prevValue + partsHitInCol;
+        // }, 0);
+      }
+
+    const stylesReadyBtn = () => {
+        playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
+    }
 
     const readyBtnPressed = () => {
         setPlayerReady(!playerReady);
-        playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
+        stylesReadyBtn()
+        // playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
         socket.emit("user:ready", room, grid);
     };
 
@@ -89,24 +130,26 @@ const Game = () => {
             setEndGame(true);
         };
 
-        //Listen for these!
-        socket.on("game:peopleready", peopleReady);
-        socket.on("game:start", start);
-        socket.on("game:handleHit", handleHit);
-        socket.on("player:start", (data) => {
+        const playerStart = (data) => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
 
             setPlayerRound(data.player);
             setStartingPlayer(data.msg);
-        });
+        }
+
+        //Listen for these!
+        socket.on("game:peopleready", peopleReady);
+        socket.on("game:start", start);
+        socket.on("game:handleHit", handleHit);
+        socket.on("player:start", playerStart);
         socket.on("game:over", playerWin);
 
         return () => {
             console.log("cleaning up");
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
-            socket.off("player:start");
+            socket.off("player:start", playerStart);
             socket.off("game:over", playerWin);
         };
     }, [
@@ -116,6 +159,7 @@ const Game = () => {
         chatUsername,
         opponent.ready,
         setIdsTurn,
+        setEndGame,
     ]);
 
     //game started?
@@ -128,7 +172,7 @@ const Game = () => {
 
         // console.log(player);
         // console.log(startingPlayer);
-    }, [player, opponent]);
+    }, [player, opponent, setGameStarted]);
 
     useEffect(() => {
         const removeStartingPlayer = () => {
@@ -324,6 +368,7 @@ const Game = () => {
                 winner={winner} 
                 room={room}
                 grid={grid}
+                init={init}
             />}
         </div>
     );

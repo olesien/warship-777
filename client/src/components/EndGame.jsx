@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import WaitingPlayer from '../components/WaitingPlayer';
 
-export default function EndGame({ socket, winner, room, grid }) {
+export default function EndGame({ socket, winner, room, grid, init }) {
+
   const [loading, setLoading] = useState(false)
   const [awaitPlayers, setAwaitPlayers] = useState(0)
   const navigate = useNavigate()
@@ -12,16 +13,31 @@ export default function EndGame({ socket, winner, room, grid }) {
   const handlePlayAgain = () => {
     setLoading(true)
     setAwaitPlayers(prevValue => prevValue + 1)
-    console.log(awaitPlayers)
-
-    if (awaitPlayers === 2) {
-    navigate("/")
-    socket.emit("game:replay", room, grid)
-    }
   }
+
+
   useEffect(() => {
+
+    if (awaitPlayers > 0) {
+      socket.emit("game:replay", room, grid, awaitPlayers)
+    }
     
-  }, [awaitPlayers])
+    if (awaitPlayers === 2) {
+      init()
+      setAwaitPlayers(0)
+    }
+    
+    socket.on("game:replay", (playersReady) => {
+      setAwaitPlayers(playersReady)
+    })
+
+
+    return () => {
+      console.log("CLEANUP")
+      socket.off("game:replay")
+    }
+
+  }, [socket, room, awaitPlayers, grid])
 
   return (
     <div className="endgame-wrapper">

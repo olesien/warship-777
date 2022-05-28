@@ -285,6 +285,11 @@ div .quadruple.down {
     margin: auto;
 }
 
+.waiting h4 {
+    display: flex;
+    justify-content: center;
+}
+
 .replay-loading {
     margin-top: 150px;
 }
