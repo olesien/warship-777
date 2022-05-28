@@ -76,10 +76,6 @@ const GameContextProvider = ({ children }) => {
         updateGrid,
         idsTurn,
         setIdsTurn,
-        setGameStarted,
-        gameStarted,
-        endGame,
-        setEndGame,
     };
 
     return (

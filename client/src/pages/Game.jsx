@@ -15,11 +15,11 @@ const Game = () => {
     const [playerReady, setPlayerReady] = useState(false);
     const [btnStyle, setBtnStyle] = useState("ready-btn");
     const [opponentBtnStyle, setOpponentBtnStyle] = useState("ready-btn");
-    // const [gameStarted, setGameStarted] = useState(false);
+    const [gameStarted, setGameStarted] = useState(false);
     const [startingPlayer, setStartingPlayer] = useState("");
     const [winner, setWinner] = useState({});
     const [playerRound, setPlayerRound] = useState();
-    // const [endGame, setEndGame] = useState(false);
+    const [endGame, setEndGame] = useState(false);
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -32,10 +32,6 @@ const Game = () => {
         chatUsername,
         playerAvatar,
         setIdsTurn,
-        gameStarted,
-        setGameStarted,
-        endGame,
-        setEndGame,
     } = useGameContext();
 
     const init = () => {
@@ -45,28 +41,7 @@ const Game = () => {
         setEndGame(false)
         setPlayerReady(false)
         stylesReadyBtn()
-        console.log(grid)
-        // const gridCol = grid.map(col => {
-        //     const gridRow = col.map(row => {
-        //         if (row.hit) {
-        //             row.hit = false
-        //         }
-        //     })
-        //     console.log(gridRow)
-        // })
-        // console.log(gridCol)
 
-
-        // const partsHit = gameboard.reduce((prevValue, col) => {
-        //     const partsHitInCol = col.reduce((prevValue, row) => {
-        //             if (row.hit) {
-        //                     //row hit
-        //                     return prevValue + 1;
-        //             }
-        //             return prevValue;
-        //     }, 0);
-        //     return prevValue + partsHitInCol;
-        // }, 0);
       }
 
     const stylesReadyBtn = () => {
@@ -76,7 +51,6 @@ const Game = () => {
     const readyBtnPressed = () => {
         setPlayerReady(!playerReady);
         stylesReadyBtn()
-        // playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
         socket.emit("user:ready", room, grid);
     };
 
