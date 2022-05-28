@@ -49,7 +49,7 @@ const Game = () => {
         // const gridCol = grid.map(col => {
         //     const gridRow = col.map(row => {
         //         if (row.hit) {
-        //             return row.hit = false
+        //             row.hit = false
         //         }
         //     })
         //     console.log(gridRow)
