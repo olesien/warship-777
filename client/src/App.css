@@ -164,23 +164,43 @@ div .quadruple.down {
 #avatarSelect {
     position: absolute;
     top: 30px;
-    left: 20px;
+    left: 80px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding: 0;
 }
 
-#avatarSelect > label:hover {
+/* #avatarSelect > label:hover {
     cursor: pointer;
-}
+} */
 
 .avatar {
-    height: 145px;
+    /* height: 145px;
     width: 145px;
     margin-left: 25px;
     margin-right: 25px;
     margin-bottom: 20px;
-    border-radius: 100px;
+    border-radius: 100px; */
+    padding: 15px;
+}
+
+.avatar-btn {
+    padding: 0;
+    border: 3px solid red;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.avatar-btn-selected {
+    padding: 0;
+    border: 3px solid green;
+    border-radius: 50%;
+    background-color: green;
+}
+
+
+.avatarImg {
+    /* width: 115px; */
+    height: 115px;
 }
 
 .avatar > input {

@@ -41,7 +41,6 @@ const Game = () => {
         setEndGame(false)
         setPlayerReady(false)
         stylesReadyBtn()
-
       }
 
     const stylesReadyBtn = () => {

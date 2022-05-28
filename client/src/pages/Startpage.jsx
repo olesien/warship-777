@@ -13,7 +13,8 @@ import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png";
 
 const Startpage = ({ onSubmit }) => {
     const [username, setUsername] = useState("");
-    // const [avatar, setAvatar] = useState("");
+    const [btnStyle, setBtnStyle] = useState("avatar-btn");
+    const [selectAvatar, setSelectAvatar] = useState(false)
     const [loading, setLoading] = useState(false);
     const {
         socket,
@@ -25,6 +26,57 @@ const Startpage = ({ onSubmit }) => {
         setPlayer,
         setOpponent,
     } = useGameContext();
+    
+    // const characters = [
+    //     {
+    //         id: 1,
+    //         name: "Monkey D. Luffy",
+    //         class: "avatar-btn",
+    //         avatar: MonkeyImg,
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "Roronoa Zoro",
+    //         class: "avatar-btn",
+    //         avatar: RoronoaImg,
+    //     },
+    //     {
+    //         id: 3,
+    //         name: "Shanks",
+    //         class: "avatar-btn",
+    //         avatar: ShanksImg,
+    //     },
+    //     {
+    //         id: 4,
+    //         name: "Nami",
+    //         class: "avatar-btn",
+    //         avatar: NamiImg,
+    //     },
+    //     {
+    //         id: 5,
+    //         name: "Dracule Mihawk",
+    //         class: "avatar-btn",
+    //         avatar: DraculeImg,
+    //     },
+    //     {
+    //         id: 6,
+    //         name: "Karasu",
+    //         class: "avatar-btn",
+    //         avatar: KarasuImg,
+    //     },
+    //     {
+    //         id: 7,
+    //         name: "Nefertari Vivi",
+    //         class: "avatar-btn",
+    //         avatar: NeferatiImg
+    //     },
+    //     {
+    //         id: 8,
+    //         name: "Arlong",
+    //         class: "avatar-btn",
+    //         avatar: ArlongImg,
+    //     },
+    // ]
 
     const one = "Monkey D. Luffy";
     const two = "Roronoa Zoro";
@@ -60,6 +112,12 @@ const Startpage = ({ onSubmit }) => {
         console.log("Start game");
         //navigate("/game");
     };
+
+    
+    const toggleAvatarClick = () => {
+        setSelectAvatar(!selectAvatar)
+        selectAvatar ? setBtnStyle("avatar-btn") : setBtnStyle("avatar-btn-selected");
+    }
 
     useEffect(() => {
         setUsername("");
@@ -144,7 +202,7 @@ const Startpage = ({ onSubmit }) => {
                 />
             </div>
 
-            <form action="" id="avatarSelect">
+            {/* <form action="" id="avatarSelect">
                 <label className="avatar">
                     <input
                         type="radio"
@@ -240,7 +298,113 @@ const Startpage = ({ onSubmit }) => {
                     />
                     <img src={ArlongImg} alt="" className="avatarImg" />
                 </label>
-            </form>
+            </form> */}
+
+            <div id="avatarSelect">
+                <div className="avatar">
+                    <button 
+                        className={btnStyle}
+                        onClick={() => {
+                            toggleAvatarClick()
+                            avatarName(one)
+                            setPlayerAvatar(MonkeyImg)
+                        }}
+                    >
+                        <img className="avatarImg" src={MonkeyImg} alt="" />
+                    </button>
+                </div>
+
+                <div className="avatar">
+                    <button 
+                        className={btnStyle}
+                        onClick={() => {
+                            toggleAvatarClick()
+                            avatarName(two)
+                            setPlayerAvatar(RoronoaImg)
+                        }}
+                    >
+                        <img className="avatarImg" src={RoronoaImg} alt="" />
+                    </button>
+                </div>
+
+                <div className="avatar">
+                    <button 
+                        className={btnStyle}
+                        onClick={() => {
+                            toggleAvatarClick()
+                            avatarName(three)
+                            setPlayerAvatar(ShanksImg)
+                        }}
+                    >
+                        <img className="avatarImg" src={ShanksImg} alt="" />
+                    </button>
+                </div>
+
+                <div className="avatar">
+                    <button 
+                        className={btnStyle}
+                        onClick={() => {
+                            toggleAvatarClick()
+                            avatarName(four)
+                            setPlayerAvatar(NamiImg)
+                        }}
+                    >
+                        <img className="avatarImg" src={NamiImg} alt="" />
+                    </button>
+                </div>
+
+                <div className="avatar">
+                    <button 
+                        className={btnStyle}
+                        onClick={() => {
+                            toggleAvatarClick()
+                            avatarName(five)
+                            setPlayerAvatar(DraculeImg)
+                        }}
+                    >
+                        <img className="avatarImg" src={DraculeImg} alt="" />
+                    </button>
+                </div>
+
+                <div className="avatar">
+                    <button 
+                        className={btnStyle}
+                        onClick={() => {
+                            toggleAvatarClick()
+                            avatarName(six)
+                            setPlayerAvatar(KarasuImg)
+                        }}
+                    >
+                        <img className="avatarImg" src={KarasuImg} alt="" />
+                    </button>
+                </div>
+
+                <div className="avatar">
+                    <button 
+                        className={btnStyle}
+                        onClick={() => {
+                            toggleAvatarClick()
+                            avatarName(seven)
+                            setPlayerAvatar(NeferatiImg)
+                        }}
+                    >
+                        <img className="avatarImg" src={NeferatiImg} alt="" />
+                    </button>
+                </div>
+
+                <div className="avatar">
+                    <button 
+                        className={btnStyle}
+                        onClick={() => {
+                            toggleAvatarClick()
+                            avatarName(eight)
+                            setPlayerAvatar(ArlongImg)
+                        }}
+                    >
+                        <img className="avatarImg" src={ArlongImg} alt="" />
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };
