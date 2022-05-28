@@ -20,7 +20,6 @@ const Game = () => {
     const [winner, setWinner] = useState({});
     const [playerRound, setPlayerRound] = useState();
     // const [endGame, setEndGame] = useState(false);
-    const [boatHit, setBoatHit] = useState(false)
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
