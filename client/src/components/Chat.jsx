@@ -10,9 +10,9 @@ const Chat = ({ message, setMessage, messages, messageRef, onSubmit }) => {
                         const time = ts.toLocaleTimeString();
                         return (
                             <li key={index} className="message">
-                                <span>{time}</span>
-                                <span>{message.username}</span>
-                                <span>{message.content}</span>
+                                <span className="messageTime">{time}</span>
+                                <span className="messageUsername">{message.username}:</span>
+                                <span className="messageContent">{message.content}</span>
                             </li>
                         );
                     })}
@@ -33,6 +33,7 @@ const Chat = ({ message, setMessage, messages, messageRef, onSubmit }) => {
                     type="submit"
                     value="Send"
                     id="sendMessageBtn"
+                    className="btn-primary"
                     // disabled={!message.length}
                 />
             </form>

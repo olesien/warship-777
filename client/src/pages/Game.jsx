@@ -386,15 +386,20 @@ const Game = () => {
             
                             */}
 
-                        <div>
-                            <Chat
-                                onSubmit={handleSubmit}
-                                message={message}
-                                setMessage={setMessage}
-                                messages={messages}
-                                messageRef={messageRef}
-                            />
-                        </div>
+                        {gameStarted 
+                            ?
+                            <div id="chat-div">
+                                <Chat
+                                    onSubmit={handleSubmit}
+                                    message={message}
+                                    setMessage={setMessage}
+                                    messages={messages}
+                                    messageRef={messageRef}
+                                />
+                            </div>
+                            : null}
+
+                        
 
                         {/* <div className="grid-container pe-2 threeSquareShip">
                         <div className="grid-item ship-colors"></div>
