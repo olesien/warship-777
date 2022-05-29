@@ -15,32 +15,32 @@ const GameContextProvider = ({ children }) => {
     const [opponent, setOpponent] = useState({});
     const [playerAvatar, setPlayerAvatar] = useState("");
     const [idsTurn, setIdsTurn] = useState(null);
-    const [gameStarted, setGameStarted] = useState(false)
-    const [endGame, setEndGame] = useState(false)
     const changeRoom = (newRoom) => {
         console.log("changin room");
         setRoom(newRoom);
     };
-
-    const [grid, setGrid] = useState(() => {
-        const columns = 10;
-        const rows = 10;
-        const innerGrid = [];
-        for (let colI = 0; colI < columns; colI++) {
-            const row = [];
-            for (let rowI = 0; rowI < rows; rowI++) {
-                row.push({
-                    filled: false,
-                    part: false,
-                    missed: false,
-                    hit: false,
-                });
+    const initialGrid = () => {
+            const columns = 10;
+            const rows = 10;
+            const innerGrid = [];
+            for (let colI = 0; colI < columns; colI++) {
+                const row = [];
+                for (let rowI = 0; rowI < rows; rowI++) {
+                    row.push({
+                        filled: false,
+                        part: false,
+                        missed: false,
+                        hit: false,
+                    });
+                }
+                //columns
+                innerGrid.push(row);
             }
-            //columns
-            innerGrid.push(row);
+            return innerGrid;
         }
-        return innerGrid;
-    });
+
+    const [grid, setGrid] = useState(initialGrid);
+
 
     const updateGrid = (columnIndex, rowIndex, update) => {
         setGrid((oldGrid) => {
@@ -76,6 +76,7 @@ const GameContextProvider = ({ children }) => {
         updateGrid,
         idsTurn,
         setIdsTurn,
+        initialGrid,
     };
 
     return (

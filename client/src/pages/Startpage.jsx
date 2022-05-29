@@ -13,8 +13,6 @@ import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png";
 
 const Startpage = ({ onSubmit }) => {
     const [username, setUsername] = useState("");
-    const [btnStyle, setBtnStyle] = useState("avatar-btn");
-    const [selectAvatar, setSelectAvatar] = useState(false)
     const [loading, setLoading] = useState(false);
     const {
         socket,
@@ -27,74 +25,69 @@ const Startpage = ({ onSubmit }) => {
         setOpponent,
     } = useGameContext();
     
-    // const characters = [
-    //     {
-    //         id: 1,
-    //         name: "Monkey D. Luffy",
-    //         class: "avatar-btn",
-    //         avatar: MonkeyImg,
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Roronoa Zoro",
-    //         class: "avatar-btn",
-    //         avatar: RoronoaImg,
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Shanks",
-    //         class: "avatar-btn",
-    //         avatar: ShanksImg,
-    //     },
-    //     {
-    //         id: 4,
-    //         name: "Nami",
-    //         class: "avatar-btn",
-    //         avatar: NamiImg,
-    //     },
-    //     {
-    //         id: 5,
-    //         name: "Dracule Mihawk",
-    //         class: "avatar-btn",
-    //         avatar: DraculeImg,
-    //     },
-    //     {
-    //         id: 6,
-    //         name: "Karasu",
-    //         class: "avatar-btn",
-    //         avatar: KarasuImg,
-    //     },
-    //     {
-    //         id: 7,
-    //         name: "Nefertari Vivi",
-    //         class: "avatar-btn",
-    //         avatar: NeferatiImg
-    //     },
-    //     {
-    //         id: 8,
-    //         name: "Arlong",
-    //         class: "avatar-btn",
-    //         avatar: ArlongImg,
-    //     },
-    // ]
+    const characters = [
+        {
+            id: 1,
+            name: "Monkey D. Luffy",
+            avatar: MonkeyImg,
+        },
+        {
+            id: 2,
+            name: "Roronoa Zoro",
+            avatar: RoronoaImg,
+        },
+        {
+            id: 3,
+            name: "Shanks",
+            avatar: ShanksImg,
+        },
+        {
+            id: 4,
+            name: "Nami",
+            avatar: NamiImg,
+        },
+        {
+            id: 5,
+            name: "Dracule Mihawk",
+            avatar: DraculeImg,
+        },
+        {
+            id: 6,
+            name: "Karasu",
+            avatar: KarasuImg,
+        },
+        {
+            id: 7,
+            name: "Nefertari Vivi",
+            avatar: NeferatiImg
+        },
+        {
+            id: 8,
+            name: "Arlong",
+            avatar: ArlongImg,
+        },
+    ]
 
-    const one = "Monkey D. Luffy";
-    const two = "Roronoa Zoro";
-    const three = "Shanks";
-    const four = "Nami";
-    const five = "Dracule Mihawk";
-    const six = "Karasu";
-    const seven = "Nefertari Vivi";
-    const eight = "Arlong";
+    // console.log(characters)
+    // console.log(avatarNameArr)
 
-    const avatarNameArr = [one, two, three, four, five, six, seven, eight];
+    // const one = "Monkey D. Luffy";
+    // const two = "Roronoa Zoro";
+    // const three = "Shanks";
+    // const four = "Nami";
+    // const five = "Dracule Mihawk";
+    // const six = "Karasu";
+    // const seven = "Nefertari Vivi";
+    // const eight = "Arlong";
+
+    // const avatarNameArr = [one, two, three, four, five, six, seven, eight];
 
     const avatarName = (name) => {
         if (username === "") {
             setUsername(name);
-        } else if (avatarNameArr.includes(username, 0)) {
+        } else if (username.includes(username, 0)) {
             setUsername(name);
-        } else if (!avatarNameArr.includes(username, 0)) {
+        } else if (!username.includes(username, 0)) {
             return;
         }
     };
@@ -110,14 +103,8 @@ const Startpage = ({ onSubmit }) => {
     const startGame = () => {
         setLoading(false);
         console.log("Start game");
-        //navigate("/game");
     };
 
-    
-    const toggleAvatarClick = () => {
-        setSelectAvatar(!selectAvatar)
-        selectAvatar ? setBtnStyle("avatar-btn") : setBtnStyle("avatar-btn-selected");
-    }
 
     useEffect(() => {
         setUsername("");
@@ -303,10 +290,10 @@ const Startpage = ({ onSubmit }) => {
             <div id="avatarSelect">
                 <div className="avatar">
                     <button 
-                        className={btnStyle}
-                        onClick={() => {
-                            toggleAvatarClick()
-                            avatarName(one)
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[0].name)
                             setPlayerAvatar(MonkeyImg)
                         }}
                     >
@@ -316,10 +303,10 @@ const Startpage = ({ onSubmit }) => {
 
                 <div className="avatar">
                     <button 
-                        className={btnStyle}
-                        onClick={() => {
-                            toggleAvatarClick()
-                            avatarName(two)
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[1].name)
                             setPlayerAvatar(RoronoaImg)
                         }}
                     >
@@ -329,10 +316,10 @@ const Startpage = ({ onSubmit }) => {
 
                 <div className="avatar">
                     <button 
-                        className={btnStyle}
-                        onClick={() => {
-                            toggleAvatarClick()
-                            avatarName(three)
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[2].name)
                             setPlayerAvatar(ShanksImg)
                         }}
                     >
@@ -342,10 +329,10 @@ const Startpage = ({ onSubmit }) => {
 
                 <div className="avatar">
                     <button 
-                        className={btnStyle}
-                        onClick={() => {
-                            toggleAvatarClick()
-                            avatarName(four)
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[3].name)
                             setPlayerAvatar(NamiImg)
                         }}
                     >
@@ -355,10 +342,10 @@ const Startpage = ({ onSubmit }) => {
 
                 <div className="avatar">
                     <button 
-                        className={btnStyle}
-                        onClick={() => {
-                            toggleAvatarClick()
-                            avatarName(five)
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[4].name)
                             setPlayerAvatar(DraculeImg)
                         }}
                     >
@@ -368,10 +355,10 @@ const Startpage = ({ onSubmit }) => {
 
                 <div className="avatar">
                     <button 
-                        className={btnStyle}
-                        onClick={() => {
-                            toggleAvatarClick()
-                            avatarName(six)
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[5].name)
                             setPlayerAvatar(KarasuImg)
                         }}
                     >
@@ -381,10 +368,10 @@ const Startpage = ({ onSubmit }) => {
 
                 <div className="avatar">
                     <button 
-                        className={btnStyle}
-                        onClick={() => {
-                            toggleAvatarClick()
-                            avatarName(seven)
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[6].name)
                             setPlayerAvatar(NeferatiImg)
                         }}
                     >
@@ -394,10 +381,10 @@ const Startpage = ({ onSubmit }) => {
 
                 <div className="avatar">
                     <button 
-                        className={btnStyle}
-                        onClick={() => {
-                            toggleAvatarClick()
-                            avatarName(eight)
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[7].name)
                             setPlayerAvatar(ArlongImg)
                         }}
                     >

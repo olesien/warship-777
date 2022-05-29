@@ -164,7 +164,7 @@ div .quadruple.down {
 #avatarSelect {
     position: absolute;
     top: 30px;
-    left: 80px;
+    left: 120px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
@@ -185,14 +185,14 @@ div .quadruple.down {
 
 .avatar-btn {
     padding: 0;
-    border: 3px solid red;
+    border: 2px solid red;
     border-radius: 50%;
     background-color: red;
 }
 
 .avatar-btn-selected {
     padding: 0;
-    border: 3px solid green;
+    border: 2px solid green;
     border-radius: 50%;
     background-color: green;
 }
@@ -200,7 +200,7 @@ div .quadruple.down {
 
 .avatarImg {
     /* width: 115px; */
-    height: 115px;
+    height: 100px;
 }
 
 .avatar > input {

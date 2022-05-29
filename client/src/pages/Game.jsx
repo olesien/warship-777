@@ -23,6 +23,7 @@ const Game = () => {
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
+        setGrid,
         room,
         socket,
         setPlayer,
@@ -32,6 +33,7 @@ const Game = () => {
         chatUsername,
         playerAvatar,
         setIdsTurn,
+        initialGrid,
     } = useGameContext();
 
     const init = () => {
@@ -41,6 +43,7 @@ const Game = () => {
         setEndGame(false)
         setPlayerReady(false)
         stylesReadyBtn()
+        setGrid(initialGrid)
       }
 
     const stylesReadyBtn = () => {
