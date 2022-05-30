@@ -18,7 +18,7 @@ const Game = () => {
     const [gameStarted, setGameStarted] = useState(false);
     const [startingPlayer, setStartingPlayer] = useState("");
     const [winner, setWinner] = useState({});
-    const [playerRound, setPlayerRound] = useState();
+    const [playerRound, setPlayerRound] = useState("");
     const [endGame, setEndGame] = useState(false);
     const { drop, allowDrop, drag } = useGameLogic();
     const {
@@ -108,9 +108,12 @@ const Game = () => {
         const playerStart = (data) => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
-
-            setPlayerRound(data.player);
-            setStartingPlayer(data.msg);
+            
+            // FORTSÄTT HÄR
+            // if (player.ready && opponent.ready) {
+                setPlayerRound(data.player);
+                setStartingPlayer(data.msg);
+            // }
         }
 
         //Listen for these!
