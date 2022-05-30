@@ -28,7 +28,7 @@ const calculateParts = (partCount, direction) => {
 };
 
 export default function useGameLogic() {
-    const { grid, setGrid } = useGameContext();
+    const { grid, setGrid, removeBoatFromStart } = useGameContext();
     //filled means that it can be interacted with. Part is just for visuals
 
     // const [grid, setGrid] = useState([
@@ -168,9 +168,9 @@ export default function useGameLogic() {
     function drop(ev) {
         ev.preventDefault();
         //extract the element by its id
-        var data = ev.dataTransfer.getData("text");
+        const boatId = ev.dataTransfer.getData("text");
         //get the element
-        const child = document.getElementById(data);
+        const child = document.getElementById(boatId);
         //Get the parents & their indexes.
         const parentNode = child.parentNode;
         const parentIndex = Number(parentNode.id.substring(3));
@@ -382,7 +382,9 @@ export default function useGameLogic() {
             //Is new. Delete the old one
             if (isNew) {
                 try {
-                    child.parentNode.removeChild(child);
+                    //Get boat index and remove it from start!
+                    const boatIndex = Number(boatId.substring(4)) - 1;
+                    removeBoatFromStart(boatIndex);
                 } catch (err) {
                     console.log(err);
                 }

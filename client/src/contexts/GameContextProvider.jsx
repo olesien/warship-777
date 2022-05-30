@@ -63,6 +63,14 @@ const GameContextProvider = ({ children }) => {
         });
     };
 
+    const removeBoatFromStart = (index) => {
+        console.log(index);
+        //Filter it!
+        setStartBoats((startBoats) =>
+            startBoats.filter((boat, boatIndex) => boatIndex !== index)
+        );
+    };
+
     const values = {
         chatUsername,
         setChatUsername,
@@ -81,6 +89,7 @@ const GameContextProvider = ({ children }) => {
         idsTurn,
         setIdsTurn,
         startBoats,
+        removeBoatFromStart,
     };
 
     return (
