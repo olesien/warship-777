@@ -1,32 +1,540 @@
-h1, h2, h3, h4, h5, h6 {
-	margin-bottom: 0.75em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: 0.75em;
 }
 
 hr {
-	border-top-width: 2px;
-	margin-top: 1.5rem;
-	margin-bottom: 1.5rem;
-	width: 100%;
+    border-top-width: 2px;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
 }
 
 #app {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 .grid-container {
-	display: grid;
-	grid-template-columns: repeat(10, 1fr);
-	padding: 0;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    padding: 0;
 }
 
 .grid-item {
-	border: 1px solid black;
-	height: 40px;
-	width: 40px;
-	padding: 0;
-	margin: 0;
+    border: 1px solid #61dafb;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.inner-grid-item {
+    background-color: #0cf232;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.inner-grid-opponent-hit {
+    background-color: #d21919;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.inner-grid-opponent-missed {
+    background-color: #f96f6f;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.inner-grid-player-hit {
+    background-color: #7c0000;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.inner-grid-player-missed {
+    background-color: #676767;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.inner-grid-item.draggable {
+    background-color: #0db328;
+}
+
+.clickable:hover {
+    cursor: pointer;
+    background-color: #1c1e22;
+}
+
+/* boat direcitons */
+/* horizontal */
+div .double.right,
+div .double.left {
+    width: 80px;
+}
+
+div .triple.right,
+div .triple.left {
+    width: 120px;
+}
+
+div .quadruple.right,
+div .quadruple.left {
+    width: 160px;
+}
+
+/* vertical */
+
+div .double.up,
+div .double.down {
+    height: 80px;
+}
+
+div .triple.up,
+div .triple.down {
+    height: 120px;
+}
+
+div .quadruple.up,
+div .quadruple.down {
+    height: 160px;
+}
+
+#boat1,
+#boat2,
+#boat3 {
+    margin: 10px;
+}
+
+#userFormPosition {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#userName {
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 15px;
+    margin-bottom: 15px;
+    height: 40px;
+    font-size: 20px;
+    width: 200px;
+}
+
+#fightBtn {
+    width: 80%;
+    border: 1px solid black;
+    background-color: #9d0505;
+    border-radius: 10px;
+    color: white;
+    height: 40px;
+    font-size: 20px;
+    line-height: initial;
+    font-weight: bold;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#fightBtn:disabled {
+    background-color: #5d0303;
+    color: rgba(255, 255, 255, 0.63);
+}
+
+#avatarSelect {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0;
+}
+
+#avatarSelect > label:hover {
+    cursor: pointer;
+}
+
+.avatar {
+    height: 145px;
+    width: 145px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    border-radius: 100px;
+}
+
+.avatar > input {
+    display: none;
+}
+
+.avatar > input[type="radio"]:not(:checked) + .avatarImg {
+    position: relative;
+    border: 3px solid #ff0000;
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.avatar > input[type="radio"]:checked + .avatarImg {
+    position: relative;
+    border: 2px solid greenyellow;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    z-index: +100;
+}
+
+#one {
+    background: url("../src/assets/images/onepieceavatars-modified\ 1.png");
+}
+
+#two {
+    background: url("../src/assets/images/onepieceavatars-modified\ \(1\)\ 1.png");
+}
+
+#three {
+    background: url("../src/assets/images/onepieceavatars-modified\ \(2\)\ 1.png");
+}
+
+#four {
+    background: url("../src/assets/images/onepieceavatars-modified\ \(3\)\ 1.png");
+}
+
+#five {
+    background: url("../src/assets/images/onepieceavatars-modified\ \(5\)\ 1.png");
+}
+
+#six {
+    background: url("../src/assets/images/onepieceavatars-modified\ \(6\)\ 1.png");
+}
+
+#seven {
+    background: url("../src/assets/images/onepieceavatars-modified\ \(4\)\ 1.png");
+}
+
+#eight {
+    background: url("../src/assets/images/onepieceavatars-modified\ \(7\)\ 1.png");
+}
+
+#homePage {
+    background: url("../src/assets/images/image 3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 70%;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+#homePageText {
+    padding-top: 20px;
+    padding-right: 120px;
+}
+
+#of {
+    position: relative;
+    left: 110px;
+}
+
+#homePageText h1 {
+    font-size: 70px;
+    color: #9d0505;
+    margin: 0;
+    font-family: "IM Fell English", serif;
+}
+
+#waitingText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #9d0505;
+    font-family: "IM Fell English", serif;
+}
+
+#waitingText h1 {
+    font-size: 50px;
+}
+
+.ship-colors {
+    border: 1px solid white;
+    background-color: #61dafb;
+}
+
+.bg-gameboard {
+    background-color: #282c34;
+}
+
+.ready-btn {
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100px;
+}
+
+.ready-btn-green {
+    background-color: black;
+    border: 1px solid green;
+    color: green;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100px;
+}
+
+#rotate-btn {
+    margin: auto;
+    border: 1px solid white;
+    background-color: #9d0505;
+    height: 20px;
+    width: 20px;
+}
+
+.black-border {
+    border: 1px solid black;
+}
+
+.i {
+    width: 14px;
+}
+
+#gameboardSize {
+    height: 400px;
+    width: 400px;
+}
+
+.w-400 {
+    width: 400px;
+}
+
+.h-100px {
+    height: 100px;
+}
+
+#playFieldPosition {
+    /* position: relative;
+    right: 44px; */
+    margin: auto auto;
+}
+
+#nmrPosition {
+    /* position: relative;
+    left: 44px; */
+    margin: auto;
+}
+
+.fourSquareShip {
+    width: 170px;
+}
+
+.threeSquareShip {
+    width: 130px;
+}
+
+.twoSquareShip {
+    width: 90px;
+}
+
+.waiting h4 {
+    padding-left: 20px;
+    font-family: "IM Fell English", serif;
+    font-weight: bold;
+    color: #000000db;
+}
+
+.game-wrapper {
+    width: 100%;
+}
+
+.players {
+    display: flex;
+    justify-content: space-around;
+}
+
+.players img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 120px;
+}
+
+.player,
+.opponent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem;
+}
+
+.outer-player,
+.outer-opponent {
+    display: flex;
+    align-items: center;
+}
+
+.outer-player {
+    flex-direction: row;
+}
+
+.outer-opponent {
+    flex-direction: row-reverse;
+}
+
+.player-image {
+    border: 2px solid green;
+    border-radius: 50%;
+}
+
+.opponent-image {
+    border: 2px solid red;
+    border-radius: 50%;
+}
+
+/* .game-setup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
+.boat-setup {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.endgame-wrapper {
+    width: 100vw;
+    height: 100vh;
+}
+
+.endgame-background-image {
+    height: 100vh;
+    background-size: cover;
+    background-image: url("../src/assets/images/endgame-background.jpg");
+}
+
+.winner-frame {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 150px;
+}
+
+.winner-frame h3 {
+    margin: 0px;
+    color: white;
+}
+
+.winner-image {
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.play-again-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.transparent-background-red {
+    margin: auto;
+    padding: 50px;
+    width: 345px;
+    height: 320px;
+    background-color: #ff00006e;
+    border-radius: 50%;
+}
+
+.transparent-background-green {
+    margin: auto;
+    padding: 50px;
+    width: 345px;
+    height: 320px;
+    background-color: #2cff006e;
+    border-radius: 50%;
+}
+
+.play-again-btn {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 100px;
+    padding: 5px;
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    color: white;
+    background-color: #9d0505;
+    border: 1px solid black;
+    border-radius: 10px;
+    line-height: initial;
+    cursor: pointer;
+}
+
+.back-startpage {
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 6px;
+    font-size: 20px;
+    color: white;
+    background-color: #9d0505;
+    border: 1px solid black;
+    border-radius: 10px;
+    line-height: initial;
+    cursor: pointer;
+}
+
+.back-icon {
+    margin-right: 5px;
+}
+.previewboat {
+    height: 30px;
+    background-color: green;
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.boatLength1 {
+    width: 60px;
+}
+
+.boatLength2 {
+    width: 80px;
+}
+
+.boatLength3 {
+    width: 120px;
+}
+
+.subpart {
+    flex: 1;
+}
+
+.hit {
+    background-color: red;
 }
