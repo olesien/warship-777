@@ -18,7 +18,6 @@ const Startpage = ({ onSubmit }) => {
     const {
         socket,
         setChatUsername,
-        chatUsername,
         changeRoom,
         playerAvatar,
         setPlayerAvatar,
@@ -53,6 +52,11 @@ const Startpage = ({ onSubmit }) => {
         setLoading(true);
         console.log(username);
         setChatUsername(username);
+        // emits that username value
+        socket.emit("user:joined", {
+            username: username,
+            avatar: playerAvatar,
+        });
     };
 
     const startGame = () => {
@@ -61,18 +65,10 @@ const Startpage = ({ onSubmit }) => {
         //navigate("/game");
     };
 
+    //listen for user join
     useEffect(() => {
         setUsername("");
         console.log("UseEffect runs");
-
-        if (!username.length) {
-            return;
-        }
-        // emits that username value
-        socket.emit("user:joined", {
-            username: chatUsername,
-            avatar: playerAvatar,
-        });
         socket.on("user:joined", (msg) => {
             console.log(msg);
         });
@@ -86,11 +82,11 @@ const Startpage = ({ onSubmit }) => {
                 console.log(msg);
             });
         };
-    }, [chatUsername, playerAvatar, socket, username.length]);
+    }, [socket]);
 
+    //listen for update of players
     useEffect(() => {
-        socket.on("players", (game) => {
-            console.log(socket, setChatUsername, chatUsername, changeRoom);
+        const updatePlayers = (game) => {
             console.log(game);
             const player = game.players.find(
                 (player) => player.id === socket.id
@@ -102,32 +98,13 @@ const Startpage = ({ onSubmit }) => {
             setOpponent(opponent);
             changeRoom(game.room);
             startGame();
-        });
+        };
+        socket.on("players", updatePlayers);
         return () => {
             console.log("cleaning up");
-            socket.off("players", (game) => {
-                console.log(socket, setChatUsername, chatUsername, changeRoom);
-                console.log(game);
-                const player = game.players.find(
-                    (player) => player.id === socket.id
-                );
-                const opponent = game.players.find(
-                    (player) => player.id !== socket.id
-                );
-                setPlayer(player);
-                setOpponent(opponent);
-                changeRoom(game.room);
-                startGame();
-            });
+            socket.off("players", updatePlayers);
         };
-    }, [
-        changeRoom,
-        chatUsername,
-        setChatUsername,
-        setOpponent,
-        setPlayer,
-        socket,
-    ]);
+    }, [socket, changeRoom, setOpponent, setPlayer]);
 
     return (
         <div className="d-flex justify-content-end" id="homePage">
