@@ -68,20 +68,6 @@ const Startpage = ({ onSubmit }) => {
         },
     ]
 
-    // console.log(characters)
-    // console.log(avatarNameArr)
-
-    // const one = "Monkey D. Luffy";
-    // const two = "Roronoa Zoro";
-    // const three = "Shanks";
-    // const four = "Nami";
-    // const five = "Dracule Mihawk";
-    // const six = "Karasu";
-    // const seven = "Nefertari Vivi";
-    // const eight = "Arlong";
-
-    // const avatarNameArr = [one, two, three, four, five, six, seven, eight];
-
     const avatarName = (name) => {
         if (username === "") {
             setUsername(name);
@@ -105,18 +91,18 @@ const Startpage = ({ onSubmit }) => {
         console.log("Start game");
     };
 
-                <div className="avatar">
-                    <button 
-                        className="avatar-btn"
-                        onClick={(e) => {
-                            e.currentTarget.classList.toggle('avatar-btn-selected')
-                            avatarName(characters[7].name)
-                            setPlayerAvatar(characters[7].avatar)
-                        }}
-                    >
-                        <img className="avatarImg" src={characters[7].avatar} alt={"Image of " + characters[7].name} />
-                    </button>
-                </div>
+                // <div className="avatar">
+                //     <button 
+                //         className="avatar-btn"
+                //         onClick={(e) => {
+                //             e.currentTarget.classList.toggle('avatar-btn-selected')
+                //             avatarName(characters[7].name)
+                //             setPlayerAvatar(characters[7].avatar)
+                //         }}
+                //     >
+                //         <img className="avatarImg" src={characters[7].avatar} alt={"Image of " + characters[7].name} />
+                //     </button>
+                // </div>
 
 
     useEffect(() => {
@@ -202,104 +188,6 @@ const Startpage = ({ onSubmit }) => {
                 />
             </div>
 
-            {/* <form action="" id="avatarSelect">
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(one);
-                            setPlayerAvatar(MonkeyImg);
-                        }}
-                    />
-                    <img src={MonkeyImg} alt="" className="avatarImg" />
-                </label>
-
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(two);
-                            setPlayerAvatar(RoronoaImg);
-                        }}
-                    />
-                    <img src={RoronoaImg} alt="" className="avatarImg" />
-                </label>
-
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(three);
-                            setPlayerAvatar(ShanksImg);
-                        }}
-                    />
-                    <img src={ShanksImg} alt="" className="avatarImg" />
-                </label>
-
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(four);
-                            setPlayerAvatar(NamiImg);
-                        }}
-                    />
-                    <img src={NamiImg} alt="" className="avatarImg" />
-                </label>
-
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(five);
-                            setPlayerAvatar(DraculeImg);
-                        }}
-                    />
-                    <img src={DraculeImg} alt="" className="avatarImg" />
-                </label>
-
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(six);
-                            setPlayerAvatar(KarasuImg);
-                        }}
-                    />
-                    <img src={KarasuImg} alt="" className="avatarImg" />
-                </label>
-
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(seven);
-                            setPlayerAvatar(NeferatiImg);
-                        }}
-                    />
-                    <img src={NeferatiImg} alt="" className="avatarImg" />
-                </label>
-
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(eight);
-                            setPlayerAvatar(ArlongImg);
-                        }}
-                    />
-                    <img src={ArlongImg} alt="" className="avatarImg" />
-                </label>
-            </form> */}
-
             <div id="avatarSelect">
                 <div className="avatar">
                     <button 
@@ -347,7 +235,7 @@ const Startpage = ({ onSubmit }) => {
                         <img 
                             className="avatarImg" 
                             src={characters[2].avatar} 
-                            alt={"Image of " + characters[7].name} 
+                            alt={"Image of " + characters[2].name} 
                         />
                     </button>
                 </div>

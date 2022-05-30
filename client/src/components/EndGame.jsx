@@ -41,7 +41,6 @@ export default function EndGame({ socket, winner, room, grid, init }) {
 
   return (
     <div className="endgame-wrapper">
-      {/* {!loading &&  */}
         <div className="endgame-background-image">
           <button 
             className="back-startpage"
@@ -81,7 +80,6 @@ export default function EndGame({ socket, winner, room, grid, init }) {
             Play again!
           </button>
         </div>
-      {/* } */}
     </div>
   )
 }
