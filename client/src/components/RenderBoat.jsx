@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 export default function RenderBoat({ ship }) {
-    const [sunk, setSunk] = useState(false);
+    const [afloat, setAfloat] = useState(false);
     const partLength = ship.subparts.length;
     //ship.subparts.unshift({hit: ship.hit})
     useEffect(() => {
@@ -14,14 +14,14 @@ export default function RenderBoat({ ship }) {
         // );
 
         //Has any part NOT been struck?
-        const isSunk = newShip.subparts.find((part) => !part.hit);
-        if (!isSunk) {
-            setSunk(false);
+        const isAfloat = newShip.subparts.find((part) => !part.hit);
+        if (isAfloat) {
+            setAfloat(true);
         } else {
-            setSunk(true);
+            setAfloat(false);
         }
     }, [ship]);
-    if (sunk) {
+    if (afloat) {
         return <div className={"previewboat boatLength" + partLength}></div>;
     }
 
