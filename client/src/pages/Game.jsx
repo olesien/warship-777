@@ -1,5 +1,5 @@
 import Grid from "../components/Grid";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
@@ -37,8 +37,12 @@ const Game = () => {
         startBoats,
         rotateShips,
     } = useGameContext();
-
-    const init = () => {
+    
+    const stylesReadyBtn = useCallback(() => {
+        playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
+    }, [playerReady])
+    
+    const init = useCallback(() => {
         player.ready = false
         opponent.ready = false
         setGameStarted(false)
@@ -46,11 +50,8 @@ const Game = () => {
         setPlayerReady(false)
         stylesReadyBtn()
         setGrid(initialGrid)
-      }
+      }, [initialGrid, opponent, player, setGrid, stylesReadyBtn])
 
-    const stylesReadyBtn = () => {
-        playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
-    }
 
     const readyBtnPressed = () => {
         setPlayerReady(!playerReady);
