@@ -292,7 +292,11 @@ const Game = () => {
 
                         {/* Your ships, place them out on the board */}
 
-                        <div className="boat-setup">
+                        <div
+                            className="boat-setup"
+                            onDrop={drop}
+                            onDragOver={allowDrop}
+                        >
                             {startBoats.map((boat, index) => (
                                 <div
                                     key={index}

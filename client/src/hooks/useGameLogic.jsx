@@ -28,7 +28,8 @@ const calculateParts = (partCount, direction) => {
 };
 
 export default function useGameLogic() {
-    const { grid, setGrid, removeBoatFromStart } = useGameContext();
+    const { grid, setGrid, removeBoatFromStart, addBoatToStart } =
+        useGameContext();
     //filled means that it can be interacted with. Part is just for visuals
 
     // const [grid, setGrid] = useState([
@@ -192,8 +193,23 @@ export default function useGameLogic() {
         //Is it a new ship (dragged from outside the grid)
         let isNew = parentColumnIndex === -1;
 
+        console.log(isNew);
+
+        const isDroppingOnStart = ev.target.classList.contains("boat-setup");
+
+        if (isDroppingOnStart) {
+            isNew = false;
+        }
+
+        console.log(isDroppingOnStart);
+
         //is a part of the ship!
-        if (grid[columnIndex][rowIndex].part) {
+        if (
+            !isDroppingOnStart &&
+            (grid[columnIndex] === undefined ||
+                grid[columnIndex][rowIndex].part)
+        ) {
+            console.log("returning!");
             return;
         }
 
@@ -270,6 +286,10 @@ export default function useGameLogic() {
                     const newRow = rowIndex + subpart.row;
                     const oldRow = parentRowIndex + subpart.row;
 
+                    if (isDroppingOnStart) {
+                        return { oldColumn, oldRow };
+                    }
+
                     //x axis will cause overflow
                     if (!prevGrid[newColumn]) {
                         obfuscated = true;
@@ -292,7 +312,8 @@ export default function useGameLogic() {
             }
 
             //If obfuscated, just return!
-            if (obfuscated) {
+            if (!isDroppingOnStart && obfuscated) {
+                console.log("returning");
                 return prevGrid;
             }
 
@@ -304,7 +325,8 @@ export default function useGameLogic() {
                     //add "main" boat tile
                     if (
                         prevRowIndex === rowIndex &&
-                        prevColumnIndex === columnIndex
+                        prevColumnIndex === columnIndex &&
+                        !isDroppingOnStart
                     ) {
                         console.log(
                             "Adding to: " + prevColumnIndex + " " + prevRowIndex
@@ -343,7 +365,7 @@ export default function useGameLogic() {
                             child.newColumn === prevColumnIndex &&
                             child.newRow === prevRowIndex
                     );
-                    if (rightTile) {
+                    if (rightTile && !isDroppingOnStart) {
                         //add this tile!
                         console.log("adding component tile");
                         return {
@@ -356,11 +378,15 @@ export default function useGameLogic() {
 
                     //If it's new we can't delete the old tile in the traditional sense!
                     if (!isNew) {
+                        console.log("running delete tiles");
                         const deleteTile = children.find(
                             (child) =>
                                 child.oldColumn === prevColumnIndex &&
                                 child.oldRow === prevRowIndex
                         );
+
+                        console.log(children);
+                        console.log(prevColumnIndex, prevRowIndex);
 
                         if (deleteTile) {
                             console.log(prevColumnIndex, prevRowIndex);
@@ -388,6 +414,32 @@ export default function useGameLogic() {
                 } catch (err) {
                     console.log(err);
                 }
+            } else if (isDroppingOnStart) {
+                console.log("dropping on start");
+                const sizeIndex = children.length;
+                const size = lengthList[sizeIndex];
+                console.log(size);
+
+                //directions
+                let direction = "right";
+
+                const oldSubPart = oldGridItem.subparts[0];
+
+                console.log(oldSubPart);
+
+                if (oldSubPart.col === -1) {
+                    //go left;
+                    direction = "left";
+                } else if (oldSubPart.row === 1) {
+                    //go up
+                    direction = "up";
+                } else if (oldSubPart.row === -1) {
+                    //go down;
+                    direction = "down";
+                }
+
+                console.log(direction);
+                addBoatToStart(size, direction);
             }
             //Return the new grid
             return newGrid;

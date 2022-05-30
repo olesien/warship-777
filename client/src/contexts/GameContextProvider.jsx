@@ -71,6 +71,10 @@ const GameContextProvider = ({ children }) => {
         );
     };
 
+    const addBoatToStart = (size, direction) => {
+        setStartBoats((startBoats) => [...startBoats, { size, direction }]);
+    };
+
     const values = {
         chatUsername,
         setChatUsername,
@@ -90,6 +94,7 @@ const GameContextProvider = ({ children }) => {
         setIdsTurn,
         startBoats,
         removeBoatFromStart,
+        addBoatToStart,
     };
 
     return (
