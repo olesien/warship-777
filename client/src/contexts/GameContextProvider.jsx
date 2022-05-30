@@ -14,6 +14,12 @@ const GameContextProvider = ({ children }) => {
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
     const [playerAvatar, setPlayerAvatar] = useState("");
+    const [startBoats, setStartBoats] = useState([
+        { size: "double", direction: "right" },
+        { size: "double", direction: "right" },
+        { size: "triple", direction: "left" },
+        { size: "quadruple", direction: "down" },
+    ]);
     const [idsTurn, setIdsTurn] = useState(null);
     const changeRoom = (newRoom) => {
         console.log("changin room");
@@ -74,6 +80,7 @@ const GameContextProvider = ({ children }) => {
         updateGrid,
         idsTurn,
         setIdsTurn,
+        startBoats,
     };
 
     return (

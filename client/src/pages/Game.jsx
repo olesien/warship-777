@@ -32,6 +32,7 @@ const Game = () => {
         chatUsername,
         playerAvatar,
         setIdsTurn,
+        startBoats,
     } = useGameContext();
 
     const readyBtnPressed = () => {
@@ -292,90 +293,16 @@ const Game = () => {
                         {/* Your ships, place them out on the board */}
 
                         <div className="boat-setup">
-                            <div
-                                id={"boat1"}
-                                className="inner-grid-item double right"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-                            <div
-                                id={"boat2"}
-                                className="inner-grid-item double right"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-                            <div
-                                id={"boat3"}
-                                className="inner-grid-item triple left"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-
-                            <div
-                                id={"boat4"}
-                                className="inner-grid-item quadruple down"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-
-                            {/* <div className="grid-container pe-2 twoSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-
-                            <div className="grid-container pe-2 threeSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-
-                            <div className="grid-container pe-2 fourSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-
-                            <div className="grid-container pe-2 twoSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div> */}
+                            {startBoats.map((boat, index) => (
+                                <div
+                                    key={index}
+                                    id={`boat${index + 1}`}
+                                    className={`inner-grid-item ${boat.size} ${boat.direction}`}
+                                    draggable="true"
+                                    onDragStart={drag}
+                                ></div>
+                            ))}
                         </div>
-
-                        {/* <div className="grid-container pe-2 twoSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-
-                    <div
-                        id={"boat4"}
-                        className="inner-grid-item quadruple down"
-                        draggable="true"
-                        onDragStart={drag}
-                        ></div>
-
-                    {/* <div className="grid-container pe-2 twoSquareShip">
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                    </div>
-
-                    <div className="grid-container pe-2 threeSquareShip">
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                    </div>
-
-                    <div className="grid-container pe-2 fourSquareShip">
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                    </div>
-
-                    <div className="grid-container pe-2 twoSquareShip">
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                    </div> */}
                     </div>
 
                     <div
