@@ -14,6 +14,12 @@ const GameContextProvider = ({ children }) => {
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
     const [playerAvatar, setPlayerAvatar] = useState("");
+    const [startBoats, setStartBoats] = useState([
+        { size: "double", direction: "right" },
+        { size: "double", direction: "right" },
+        { size: "triple", direction: "left" },
+        { size: "quadruple", direction: "down" },
+    ]);
     const [idsTurn, setIdsTurn] = useState(null);
     const changeRoom = (newRoom) => {
         console.log("changin room");
@@ -59,6 +65,37 @@ const GameContextProvider = ({ children }) => {
         });
     };
 
+    const removeBoatFromStart = (index) => {
+        console.log(index);
+        //Filter it!
+        setStartBoats((startBoats) =>
+            startBoats.filter((boat, boatIndex) => boatIndex !== index)
+        );
+    };
+
+    const addBoatToStart = (size, direction) => {
+        setStartBoats((startBoats) => [...startBoats, { size, direction }]);
+    };
+
+    const rotateShips = () => {
+        console.log("rotating");
+        setStartBoats((startBoats) => {
+            return startBoats.map((boat) => {
+                let direction = "right";
+                if (boat.direction === "right") {
+                    direction = "down";
+                }
+                if (boat.direction === "down") {
+                    direction = "left";
+                }
+                if (boat.direction === "left") {
+                    direction = "up";
+                }
+                return { ...boat, direction };
+            });
+        });
+    };
+
     const values = {
         chatUsername,
         setChatUsername,
@@ -77,6 +114,10 @@ const GameContextProvider = ({ children }) => {
         idsTurn,
         setIdsTurn,
         initialGrid,
+        startBoats,
+        removeBoatFromStart,
+        addBoatToStart,
+        rotateShips,
     };
 
     return (
