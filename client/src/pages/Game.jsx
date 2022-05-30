@@ -33,6 +33,7 @@ const Game = () => {
         playerAvatar,
         setIdsTurn,
         startBoats,
+        rotateShips,
     } = useGameContext();
 
     const readyBtnPressed = () => {
@@ -312,6 +313,7 @@ const Game = () => {
                     <div
                         id="rotate-btn"
                         className="d-flex justify-content-center align-items-center"
+                        onClick={rotateShips}
                     >
                         <FontAwesomeIcon icon={faArrowRotateRight} />
                     </div>

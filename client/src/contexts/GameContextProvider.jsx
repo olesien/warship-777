@@ -75,6 +75,25 @@ const GameContextProvider = ({ children }) => {
         setStartBoats((startBoats) => [...startBoats, { size, direction }]);
     };
 
+    const rotateShips = () => {
+        console.log("rotating");
+        setStartBoats((startBoats) => {
+            return startBoats.map((boat) => {
+                let direction = "right";
+                if (boat.direction === "right") {
+                    direction = "down";
+                }
+                if (boat.direction === "down") {
+                    direction = "left";
+                }
+                if (boat.direction === "left") {
+                    direction = "up";
+                }
+                return { ...boat, direction };
+            });
+        });
+    };
+
     const values = {
         chatUsername,
         setChatUsername,
@@ -95,6 +114,7 @@ const GameContextProvider = ({ children }) => {
         startBoats,
         removeBoatFromStart,
         addBoatToStart,
+        rotateShips,
     };
 
     return (
