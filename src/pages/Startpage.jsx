@@ -76,6 +76,19 @@ const Startpage = ({ onSubmit }) => {
         socket.on("user:joined", (msg) => {
             console.log(msg);
         });
+        // socket.on("user:disconnect", (msg) => {
+        //   console.log(msg)
+        // })
+
+        return () => {
+            console.log("cleaning up");
+            socket.off("user:joined", (msg) => {
+                console.log(msg);
+            });
+        };
+    }, [chatUsername, playerAvatar, socket, username.length]);
+
+    useEffect(() => {
         socket.on("players", (game) => {
             console.log(socket, setChatUsername, chatUsername, changeRoom);
             console.log(game);
@@ -90,21 +103,31 @@ const Startpage = ({ onSubmit }) => {
             changeRoom(game.room);
             startGame();
         });
-        // socket.on("user:disconnect", (msg) => {
-        //   console.log(msg)
-        // })
-
         return () => {
             console.log("cleaning up");
-            socket.off("user:joined", (msg) => {
-                console.log(msg);
-            });
-            socket.on("players", (game) => {
-                changeRoom(game.id);
+            socket.off("players", (game) => {
+                console.log(socket, setChatUsername, chatUsername, changeRoom);
+                console.log(game);
+                const player = game.players.find(
+                    (player) => player.id === socket.id
+                );
+                const opponent = game.players.find(
+                    (player) => player.id !== socket.id
+                );
+                setPlayer(player);
+                setOpponent(opponent);
+                changeRoom(game.room);
                 startGame();
             });
         };
-    }, [socket, chatUsername]);
+    }, [
+        changeRoom,
+        chatUsername,
+        setChatUsername,
+        setOpponent,
+        setPlayer,
+        socket,
+    ]);
 
     return (
         <div className="d-flex justify-content-end" id="homePage">
