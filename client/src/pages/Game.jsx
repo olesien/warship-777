@@ -37,26 +37,32 @@ const Game = () => {
         startBoats,
         rotateShips,
     } = useGameContext();
-    
+
     const stylesReadyBtn = useCallback(() => {
         playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
-    }, [playerReady])
-    
-    const init = useCallback(() => {
-        player.ready = false
-        opponent.ready = false
-        setGameStarted(false)
-        setEndGame(false)
-        setPlayerReady(false)
-        stylesReadyBtn()
-        setGrid(initialGrid)
-      }, [initialGrid, opponent, player, setGrid, stylesReadyBtn])
+    }, [playerReady]);
 
+    const init = useCallback(() => {
+        player.ready = false;
+        opponent.ready = false;
+        setGameStarted(false);
+        setEndGame(false);
+        setPlayerReady(false);
+        stylesReadyBtn();
+        setGrid(initialGrid);
+    }, [initialGrid, opponent, player, setGrid, stylesReadyBtn]);
 
     const readyBtnPressed = () => {
-        setPlayerReady(!playerReady);
-        stylesReadyBtn()
-        socket.emit("user:ready", room, grid);
+        socket.emit("user:ready", room, grid, (error) => {
+            if (error === false) {
+                //has user placed enough stuff?
+                setPlayerReady(!playerReady);
+                stylesReadyBtn();
+            } else {
+                //error
+                alert("Error. Probably not placed enough ships");
+            }
+        });
     };
 
     useEffect(() => {
@@ -111,13 +117,13 @@ const Game = () => {
         const playerStart = (data) => {
             if (data.player === chatUsername) console.log(data.msg);
             console.log(data.player);
-            
+
             // FORTSÄTT HÄR
             // if (player.ready && opponent.ready) {
-                setPlayerRound(data.player);
-                setStartingPlayer(data.msg);
+            setPlayerRound(data.player);
+            setStartingPlayer(data.msg);
             // }
-        }
+        };
 
         //Listen for these!
         socket.on("game:peopleready", peopleReady);
@@ -342,13 +348,15 @@ const Game = () => {
                     </div>
                 </>
             )}
-            {endGame && <EndGame 
-                socket={socket} 
-                winner={winner} 
-                room={room}
-                grid={grid}
-                init={init}
-            />}
+            {endGame && (
+                <EndGame
+                    socket={socket}
+                    winner={winner}
+                    room={room}
+                    grid={grid}
+                    init={init}
+                />
+            )}
         </div>
     );
 };
