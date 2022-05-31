@@ -31,7 +31,7 @@ const Startpage = ({ onSubmit }) => {
             id: 1,
             name: "Monkey D. Luffy",
             avatar: MonkeyImg,
-            selected: false,
+            selected: true,
         },
         {
             id: 2,
