@@ -6,11 +6,8 @@ const Chat = ({ message, setMessage, messages, messageRef, onSubmit }) => {
             <div id="messages-wrapper">
                 <ul id="messages">
                     {messages.map((message, index) => {
-                        const ts = new Date(message.timestamp);
-                        const time = ts.toLocaleTimeString();
                         return (
                             <li key={index} className="message">
-                                <span className="messageTime">{time}</span>
                                 <span className="messageUsername">{message.username}:</span>
                                 <span className="messageContent">{message.content}</span>
                             </li>
