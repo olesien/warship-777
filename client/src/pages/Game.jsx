@@ -10,6 +10,8 @@ import RenderOpponentGrid from "../components/RenderOpponentGrid";
 import Chat from "../components/Chat";
 import EndGame from "../components/EndGame";
 import PreviewShips from "../components/PreviewShips";
+import Hit from "../assets/sounds/Hit.mp3"
+import Miss from "../assets/sounds/Miss.mp3"
 
 const Game = () => {
     //Game logic
@@ -128,6 +130,16 @@ const Game = () => {
             //Start render of the grids!
         };
 
+        const handleHitTrue = () => {
+            const hitSound = new Audio(Hit)
+            hitSound.play()
+        }
+
+        const handleMissTrue = () => {
+            const missSound = new Audio(Miss)
+            missSound.play()
+        }
+
         const playerWin = (winner) => {
             setWinner(winner);
             setEndGame(true);
@@ -137,6 +149,8 @@ const Game = () => {
         socket.on("chat:message", handleIncomingMessage);
         socket.on("game:peopleready", peopleReady);
         socket.on("game:start", start);
+        socket.on("game:handleHitTrue", handleHitTrue);
+        socket.on("game:handleMissTrue", handleMissTrue);
         socket.on("game:handleHit", handleHit);
         socket.on("player:start", (data) => {
             if (data.player === chatUsername) console.log(data.msg);
@@ -152,6 +166,8 @@ const Game = () => {
             socket.off("chat:message", handleIncomingMessage);
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
+            socket.off("game:handleHitTrue", handleHitTrue);
+            socket.off("game:handleMissTrue", handleMissTrue);
             socket.off("player:start");
             socket.off("game:over", playerWin);
         };
