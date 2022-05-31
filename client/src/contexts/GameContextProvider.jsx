@@ -9,41 +9,48 @@ export const useGameContext = () => {
 };
 
 const GameContextProvider = ({ children }) => {
+    const boats = [
+        { size: "double", direction: "right" },
+        { size: "double", direction: "right" },
+        { size: "triple", direction: "left" },
+        { size: "quadruple", direction: "down" },
+    ]
     const [chatUsername, setChatUsername] = useState();
     const [room, setRoom] = useState();
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
     const [playerAvatar, setPlayerAvatar] = useState("");
-    const [startBoats, setStartBoats] = useState([
-        { size: "double", direction: "right" },
-        { size: "double", direction: "right" },
-        { size: "triple", direction: "left" },
-        { size: "quadruple", direction: "down" },
-    ]);
+    const [startBoats, setStartBoats] = useState(boats);
     const [idsTurn, setIdsTurn] = useState(null);
     const changeRoom = (newRoom) => {
         console.log("changin room");
         setRoom(newRoom);
     };
+
+    const resetShips = () => {
+        setStartBoats(boats)
+    }
+
     const initialGrid = () => {
-            const columns = 10;
-            const rows = 10;
-            const innerGrid = [];
-            for (let colI = 0; colI < columns; colI++) {
-                const row = [];
-                for (let rowI = 0; rowI < rows; rowI++) {
-                    row.push({
-                        filled: false,
-                        part: false,
-                        missed: false,
-                        hit: false,
-                    });
-                }
-                //columns
-                innerGrid.push(row);
+        resetShips()
+        const columns = 10;
+        const rows = 10;
+        const innerGrid = [];
+        for (let colI = 0; colI < columns; colI++) {
+            const row = [];
+            for (let rowI = 0; rowI < rows; rowI++) {
+                row.push({
+                    filled: false,
+                    part: false,
+                    missed: false,
+                    hit: false,
+                });
             }
-            return innerGrid;
+            //columns
+            innerGrid.push(row);
         }
+        return innerGrid;
+    }
 
     const [grid, setGrid] = useState(initialGrid);
 
@@ -76,6 +83,7 @@ const GameContextProvider = ({ children }) => {
     const addBoatToStart = (size, direction) => {
         setStartBoats((startBoats) => [...startBoats, { size, direction }]);
     };
+
 
     const rotateShips = () => {
         console.log("rotating");
