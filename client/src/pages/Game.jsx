@@ -417,7 +417,7 @@ const Game = () => {
                         className="d-flex justify-content-center align-items-center"
                         onClick={rotateShips}
                     >
-                        <FontAwesomeIcon icon={faArrowRotateRight} />
+                        <FontAwesomeIcon icon={faArrowRotateRight} style={{ height: "80%" }} />
                     </div>
                 </>
             )}

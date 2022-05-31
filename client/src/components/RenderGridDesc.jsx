@@ -27,7 +27,7 @@ export default function RenderGridDesc({ isAlfabet }) {
             {grid.map((row, count) => (
                 <div
                     key={count}
-                    className="grid-item d-flex justify-content-center align-items-end black-border"
+                    className="grid-item d-flex justify-content-center align-items-center black-border"
                 >
                     {isAlfabet ? alfabet[count] : count + 1}
                 </div>
