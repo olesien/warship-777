@@ -1,5 +1,5 @@
 import Grid from "../components/Grid";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
@@ -7,8 +7,11 @@ import useGameLogic from "../hooks/useGameLogic";
 import RenderGridDesc from "../components/RenderGridDesc";
 import RenderPlayerGrid from "../components/RenderPlayerGrid";
 import RenderOpponentGrid from "../components/RenderOpponentGrid";
+import Chat from "../components/Chat";
 import EndGame from "../components/EndGame";
 import PreviewShips from "../components/PreviewShips";
+import Hit from "../assets/sounds/Hit.mp3"
+import Miss from "../assets/sounds/Miss.mp3"
 
 const Game = () => {
     //Game logic
@@ -19,6 +22,9 @@ const Game = () => {
     const [startingPlayer, setStartingPlayer] = useState("");
     const [winner, setWinner] = useState({});
     const [playerRound, setPlayerRound] = useState("");
+    const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState([]);
+    const messageRef = useRef();
     const [endGame, setEndGame] = useState(false);
     const { drop, allowDrop, drag } = useGameLogic();
     const {
@@ -52,6 +58,38 @@ const Game = () => {
         setGrid(initialGrid)
       }, [initialGrid, opponent, player, setGrid, stylesReadyBtn])
 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!message.length) {
+            return;
+        }
+
+        console.log(message);
+
+        const msg = {
+            username: chatUsername,
+            room: room,
+            content: message,
+            timestamp: Date.now(),
+        };
+
+        console.log(msg);
+        console.log("This Works!");
+
+        socket.emit("chat:message", msg);
+
+        setMessage("");
+        console.log(messages);
+        messageRef.current.focus();
+    };
+
+    const handleIncomingMessage = (msg) => {
+        console.log("Received a new chat message", msg);
+
+        setMessages((prevMessages) => [...prevMessages, msg]);
+    };
 
     const readyBtnPressed = () => {
         setPlayerReady(!playerReady);
@@ -93,6 +131,8 @@ const Game = () => {
             updatePlayers(game.players);
             setIdsTurn(game.idsTurn);
 
+            console.log(game.room);
+
             //Start render of the grids!
         };
 
@@ -100,8 +140,24 @@ const Game = () => {
             updatePlayers(game.players);
             setIdsTurn(game.idsTurn);
 
+            if (game.idsTurn === game.players[0].id) {
+                setPlayerRound(game.players[0].username);
+            } else if (game.idsTurn === game.players[1].id) {
+                setPlayerRound(game.players[1].username);
+            }
+
             //Start render of the grids!
         };
+
+        const handleHitTrue = () => {
+            const hitSound = new Audio(Hit)
+            hitSound.play()
+        }
+
+        const handleMissTrue = () => {
+            const missSound = new Audio(Miss)
+            missSound.play()
+        }
 
         const playerWin = (winner) => {
             setWinner(winner);
@@ -120,16 +176,22 @@ const Game = () => {
         }
 
         //Listen for these!
+        socket.on("chat:message", handleIncomingMessage);
         socket.on("game:peopleready", peopleReady);
         socket.on("game:start", start);
+        socket.on("game:handleHitTrue", handleHitTrue);
+        socket.on("game:handleMissTrue", handleMissTrue);
         socket.on("game:handleHit", handleHit);
         socket.on("player:start", playerStart);
         socket.on("game:over", playerWin);
 
         return () => {
             console.log("cleaning up");
+            socket.off("chat:message", handleIncomingMessage);
             socket.off("game:peopleready", peopleReady);
             socket.off("game:start", start);
+            socket.off("game:handleHitTrue", handleHitTrue);
+            socket.off("game:handleMissTrue", handleMissTrue);
             socket.off("player:start", playerStart);
             socket.off("game:over", playerWin);
         };
@@ -162,6 +224,10 @@ const Game = () => {
 
         setTimeout(removeStartingPlayer, 5000);
     }, [startingPlayer, setStartingPlayer]);
+
+    useEffect(() => {
+        messageRef.current && messageRef.current.focus();
+    }, []);
 
     return (
         <div className="game-wrapper">
@@ -332,6 +398,19 @@ const Game = () => {
                             ))}
                         </div>
                     </div>
+
+                    {gameStarted 
+                            ?
+                            <div id="chat-div">
+                                <Chat
+                                    onSubmit={handleSubmit}
+                                    message={message}
+                                    setMessage={setMessage}
+                                    messages={messages}
+                                    messageRef={messageRef}
+                                />
+                            </div>
+                            : null}
 
                     <div
                         id="rotate-btn"

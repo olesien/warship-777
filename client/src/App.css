@@ -454,6 +454,69 @@ div .quadruple.down {
     margin-top: 20px;
 }
 
+input {
+    outline: none !important;
+}
+
+#chat-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#chat {
+    width: 250px;
+    background: #282c34;
+    border-radius: 15px;
+}
+
+#messages-wrapper {
+    height: 400px;
+    overflow: scroll;
+}
+
+#messages {
+    list-style-type: none;
+    margin: 0;
+    padding-top: 5px;
+    padding-left: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    word-break: break-word;
+}
+
+.messageTime {
+    width: 40px;
+    font-size: 0.5rem;
+    padding: 2px;
+}
+
+.messageUsername {
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+/* .messageContent {
+
+} */
+  
+#messageBar {
+    width: 80%;
+    border-radius: 0px 0px 0px 10px;
+    border-width: 0px;
+}
+  
+#sendMessageBtn {
+    width: 20%;
+    border-radius: 0px 0px 10px 0px;
+    border-width: 0px;
+    outline: none !important;
+}
+  
 .endgame-wrapper {
     width: 100vw;
     height: 100vh;
