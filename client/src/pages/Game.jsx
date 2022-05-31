@@ -399,6 +399,19 @@ const Game = () => {
                         </div>
                     </div>
 
+                    {gameStarted 
+                            ?
+                            <div id="chat-div">
+                                <Chat
+                                    onSubmit={handleSubmit}
+                                    message={message}
+                                    setMessage={setMessage}
+                                    messages={messages}
+                                    messageRef={messageRef}
+                                />
+                            </div>
+                            : null}
+
                     <div
                         id="rotate-btn"
                         className="d-flex justify-content-center align-items-center"
