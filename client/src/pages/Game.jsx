@@ -210,7 +210,7 @@ const Game = () => {
                                         <h3>{chatUsername}</h3>
                                         <button
                                             onClick={readyBtnPressed}
-                                            className={"mb-5 " + btnStyle}
+                                            className={"mb-3 " + btnStyle}
                                         >
                                             {playerReady ? "Ready!" : "Ready?"}
                                         </button>
@@ -229,7 +229,7 @@ const Game = () => {
                                         <h3>{opponent.username}</h3>
                                         <button
                                             className={
-                                                "mb-5 " + opponentBtnStyle
+                                                "mb-3 " + opponentBtnStyle
                                             }
                                         >
                                             {opponent.ready
