@@ -1,5 +1,5 @@
 import Grid from "../components/Grid";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
@@ -21,7 +21,7 @@ const Game = () => {
     const [gameStarted, setGameStarted] = useState(false);
     const [startingPlayer, setStartingPlayer] = useState("");
     const [winner, setWinner] = useState({});
-    const [playerRound, setPlayerRound] = useState();
+    const [playerRound, setPlayerRound] = useState("");
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const messageRef = useRef();
@@ -29,6 +29,7 @@ const Game = () => {
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
+        setGrid,
         room,
         socket,
         setPlayer,
@@ -38,7 +39,25 @@ const Game = () => {
         chatUsername,
         playerAvatar,
         setIdsTurn,
+        initialGrid,
+        startBoats,
+        rotateShips,
     } = useGameContext();
+    
+    const stylesReadyBtn = useCallback(() => {
+        playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
+    }, [playerReady])
+    
+    const init = useCallback(() => {
+        player.ready = false
+        opponent.ready = false
+        setGameStarted(false)
+        setEndGame(false)
+        setPlayerReady(false)
+        stylesReadyBtn()
+        setGrid(initialGrid)
+      }, [initialGrid, opponent, player, setGrid, stylesReadyBtn])
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -74,7 +93,7 @@ const Game = () => {
 
     const readyBtnPressed = () => {
         setPlayerReady(!playerReady);
-        playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
+        stylesReadyBtn()
         socket.emit("user:ready", room, grid);
     };
 
@@ -145,6 +164,17 @@ const Game = () => {
             setEndGame(true);
         };
 
+        const playerStart = (data) => {
+            if (data.player === chatUsername) console.log(data.msg);
+            console.log(data.player);
+            
+            // FORTSÄTT HÄR
+            // if (player.ready && opponent.ready) {
+                setPlayerRound(data.player);
+                setStartingPlayer(data.msg);
+            // }
+        }
+
         //Listen for these!
         socket.on("chat:message", handleIncomingMessage);
         socket.on("game:peopleready", peopleReady);
@@ -152,13 +182,7 @@ const Game = () => {
         socket.on("game:handleHitTrue", handleHitTrue);
         socket.on("game:handleMissTrue", handleMissTrue);
         socket.on("game:handleHit", handleHit);
-        socket.on("player:start", (data) => {
-            if (data.player === chatUsername) console.log(data.msg);
-            console.log(data.player);
-
-            setPlayerRound(data.player);
-            setStartingPlayer(data.msg);
-        });
+        socket.on("player:start", playerStart);
         socket.on("game:over", playerWin);
 
         return () => {
@@ -168,7 +192,7 @@ const Game = () => {
             socket.off("game:start", start);
             socket.off("game:handleHitTrue", handleHitTrue);
             socket.off("game:handleMissTrue", handleMissTrue);
-            socket.off("player:start");
+            socket.off("player:start", playerStart);
             socket.off("game:over", playerWin);
         };
     }, [
@@ -178,6 +202,7 @@ const Game = () => {
         chatUsername,
         opponent.ready,
         setIdsTurn,
+        setEndGame,
     ]);
 
     //game started?
@@ -188,8 +213,9 @@ const Game = () => {
             setGameStarted(false);
         }
 
-        console.log(player);
-    }, [player, opponent]);
+        // console.log(player);
+        // console.log(startingPlayer);
+    }, [player, opponent, setGameStarted]);
 
     useEffect(() => {
         const removeStartingPlayer = () => {
@@ -209,53 +235,76 @@ const Game = () => {
                 <>
                     <div className="game-setup">
                         <div className="players">
-                            <div className="player">
-                                <p>
-                                    {player.ready
-                                        ? "You are ready"
-                                        : "You are not ready"}
-                                </p>
-                                <img
-                                    className="player-image"
-                                    src={playerAvatar}
-                                    alt=""
-                                />
-                                <h3>{chatUsername}</h3>
-                                {player.ready && opponent.ready ? (
-                                    <PreviewShips foe={false} />
-                                ) : (
-                                    <button
-                                        onClick={readyBtnPressed}
-                                        className={"mb-5 " + btnStyle}
-                                    >
-                                        {playerReady ? "Ready!" : "Ready?"}
-                                    </button>
-                                )}
-                            </div>
-                            <div className="opponent">
-                                <p>
-                                    {opponent.ready
-                                        ? "Opponent is ready"
-                                        : "Opponent is not ready"}
-                                </p>
-                                <img
-                                    className="opponent-image"
-                                    src={opponent.avatar}
-                                    alt=""
-                                />
-                                <h3>{opponent.username}</h3>
-                                {player.ready && opponent.ready ? (
-                                    <PreviewShips foe={true} />
-                                ) : (
-                                    <button
-                                        className={"mb-5 " + opponentBtnStyle}
-                                    >
-                                        {opponent.ready
-                                            ? "Ready!"
-                                            : "Waiting..."}
-                                    </button>
-                                )}
-                            </div>
+                            {player.ready && opponent.ready ? (
+                                <>
+                                    <div className="outer-player">
+                                        <div className="player">
+                                            <img
+                                                className="player-image"
+                                                src={playerAvatar}
+                                                alt=""
+                                            />
+                                            <h3>{chatUsername}</h3>
+                                        </div>
+                                        <PreviewShips foe={false} />
+                                    </div>
+                                    <div className="outer-opponent">
+                                        <div className="opponent">
+                                            <img
+                                                className="opponent-image"
+                                                src={opponent.avatar}
+                                                alt=""
+                                            />
+                                            <h3>{opponent.username}</h3>
+                                        </div>
+                                        <PreviewShips foe={true} />
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="player">
+                                        <p>
+                                            {player.ready
+                                                ? "You are ready"
+                                                : "You are not ready"}
+                                        </p>
+                                        <img
+                                            className="player-image"
+                                            src={playerAvatar}
+                                            alt=""
+                                        />
+                                        <h3>{chatUsername}</h3>
+                                        <button
+                                            onClick={readyBtnPressed}
+                                            className={"mb-5 " + btnStyle}
+                                        >
+                                            {playerReady ? "Ready!" : "Ready?"}
+                                        </button>
+                                    </div>
+                                    <div className="opponent">
+                                        <p>
+                                            {opponent.ready
+                                                ? "Opponent is ready"
+                                                : "Opponent is not ready"}
+                                        </p>
+                                        <img
+                                            className="opponent-image"
+                                            src={opponent.avatar}
+                                            alt=""
+                                        />
+                                        <h3>{opponent.username}</h3>
+                                        <button
+                                            className={
+                                                "mb-5 " + opponentBtnStyle
+                                            }
+                                        >
+                                            {opponent.ready
+                                                ? "Ready!"
+                                                : "Waiting..."}
+                                        </button>
+                                    </div>
+                                </>
+                            )}
                         </div>
 
                         {startingPlayer ? (
@@ -333,118 +382,39 @@ const Game = () => {
 
                         {/* Your ships, place them out on the board */}
 
-                        <div className="boat-setup">
-                            <div
-                                id={"boat1"}
-                                className="inner-grid-item double right"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-                            <div
-                                id={"boat2"}
-                                className="inner-grid-item double right"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-                            <div
-                                id={"boat3"}
-                                className="inner-grid-item triple left"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-
-                            <div
-                                id={"boat4"}
-                                className="inner-grid-item quadruple down"
-                                draggable="true"
-                                onDragStart={drag}
-                            ></div>
-
-                            {/* <div className="grid-container pe-2 twoSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-                            <div className="grid-container pe-2 threeSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-                            <div className="grid-container pe-2 fourSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-                            <div className="grid-container pe-2 twoSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div> */}
+                        <div
+                            className="boat-setup"
+                            onDrop={drop}
+                            onDragOver={allowDrop}
+                        >
+                            {startBoats.map((boat, index) => (
+                                <div
+                                    key={index}
+                                    id={`boat${index + 1}`}
+                                    className={`inner-grid-item ${boat.size} ${boat.direction}`}
+                                    draggable="true"
+                                    onDragStart={drag}
+                                ></div>
+                            ))}
                         </div>
-
-                        {/* <div className="grid-container pe-2 twoSquareShip">
-                                <div className="grid-item ship-colors"></div>
-                                <div className="grid-item ship-colors"></div>
-                            </div>
-
-                    <div
-                        id={"boat4"}
-                        className="inner-grid-item quadruple down"
-                        draggable="true"
-                        onDragStart={drag}
-                        ></div>
-
-                    {/* <div className="grid-container pe-2 twoSquareShip">
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                    </div>
-                </div>
-            </div>
-            
-                            */}
-
-                        {gameStarted 
-                            ?
-                            <div id="chat-div">
-                                <Chat
-                                    onSubmit={handleSubmit}
-                                    message={message}
-                                    setMessage={setMessage}
-                                    messages={messages}
-                                    messageRef={messageRef}
-                                />
-                            </div>
-                            : null}
-
-                        
-
-                        {/* <div className="grid-container pe-2 threeSquareShip">
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                    </div>
-
-                    <div className="grid-container pe-2 fourSquareShip">
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                    </div>
-
-                    <div className="grid-container pe-2 twoSquareShip">
-                        <div className="grid-item ship-colors"></div>
-                        <div className="grid-item ship-colors"></div>
-                    </div>  */}
                     </div>
 
                     <div
                         id="rotate-btn"
                         className="d-flex justify-content-center align-items-center"
+                        onClick={rotateShips}
                     >
                         <FontAwesomeIcon icon={faArrowRotateRight} />
                     </div>
                 </>
             )}
-            {endGame && <EndGame socket={socket} winner={winner} />}
+            {endGame && <EndGame 
+                socket={socket} 
+                winner={winner} 
+                room={room}
+                grid={grid}
+                init={init}
+            />}
         </div>
     );
 };

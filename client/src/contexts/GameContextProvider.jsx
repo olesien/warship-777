@@ -9,18 +9,30 @@ export const useGameContext = () => {
 };
 
 const GameContextProvider = ({ children }) => {
+    const boats = [
+        { size: "double", direction: "right" },
+        { size: "double", direction: "right" },
+        { size: "triple", direction: "left" },
+        { size: "quadruple", direction: "down" },
+    ]
     const [chatUsername, setChatUsername] = useState();
     const [room, setRoom] = useState();
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
     const [playerAvatar, setPlayerAvatar] = useState("");
+    const [startBoats, setStartBoats] = useState(boats);
     const [idsTurn, setIdsTurn] = useState(null);
     const changeRoom = (newRoom) => {
         console.log("changin room");
         setRoom(newRoom);
     };
 
-    const [grid, setGrid] = useState(() => {
+    const resetShips = () => {
+        setStartBoats(boats)
+    }
+
+    const initialGrid = () => {
+        resetShips()
         const columns = 10;
         const rows = 10;
         const innerGrid = [];
@@ -38,7 +50,10 @@ const GameContextProvider = ({ children }) => {
             innerGrid.push(row);
         }
         return innerGrid;
-    });
+    }
+
+    const [grid, setGrid] = useState(initialGrid);
+
 
     const updateGrid = (columnIndex, rowIndex, update) => {
         setGrid((oldGrid) => {
@@ -53,6 +68,38 @@ const GameContextProvider = ({ children }) => {
                     }
                     return { ...oldRow };
                 });
+            });
+        });
+    };
+
+    const removeBoatFromStart = (index) => {
+        console.log(index);
+        //Filter it!
+        setStartBoats((startBoats) =>
+            startBoats.filter((boat, boatIndex) => boatIndex !== index)
+        );
+    };
+
+    const addBoatToStart = (size, direction) => {
+        setStartBoats((startBoats) => [...startBoats, { size, direction }]);
+    };
+
+
+    const rotateShips = () => {
+        console.log("rotating");
+        setStartBoats((startBoats) => {
+            return startBoats.map((boat) => {
+                let direction = "right";
+                if (boat.direction === "right") {
+                    direction = "down";
+                }
+                if (boat.direction === "down") {
+                    direction = "left";
+                }
+                if (boat.direction === "left") {
+                    direction = "up";
+                }
+                return { ...boat, direction };
             });
         });
     };
@@ -74,6 +121,11 @@ const GameContextProvider = ({ children }) => {
         updateGrid,
         idsTurn,
         setIdsTurn,
+        initialGrid,
+        startBoats,
+        removeBoatFromStart,
+        addBoatToStart,
+        rotateShips,
     };
 
     return (
