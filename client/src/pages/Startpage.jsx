@@ -10,6 +10,7 @@ import DraculeImg from "../assets/images/onepieceavatars-modified (5) 1.png";
 import KarasuImg from "../assets/images/onepieceavatars-modified (6) 1.png";
 import NeferatiImg from "../assets/images/onepieceavatars-modified (4) 1.png";
 import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png";
+import Avatars from "../components/Avatars";
 
 const Startpage = ({ onSubmit }) => {
     const [username, setUsername] = useState("");
@@ -24,51 +25,67 @@ const Startpage = ({ onSubmit }) => {
         setPlayer,
         setOpponent,
     } = useGameContext();
-    
-    const characters = [
+
+    const [characters, setCharacters] = useState([
         {
             id: 1,
             name: "Monkey D. Luffy",
             avatar: MonkeyImg,
+            selected: false,
         },
         {
             id: 2,
             name: "Roronoa Zoro",
             avatar: RoronoaImg,
+            selected: false,
         },
         {
             id: 3,
             name: "Shanks",
             avatar: ShanksImg,
+            selected: false,
         },
         {
             id: 4,
             name: "Nami",
             avatar: NamiImg,
+            selected: false,
         },
         {
             id: 5,
             name: "Dracule Mihawk",
             avatar: DraculeImg,
+            selected: false,
         },
         {
             id: 6,
             name: "Karasu",
             avatar: KarasuImg,
+            selected: false,
         },
         {
             id: 7,
             name: "Nefertari Vivi",
-            avatar: NeferatiImg
+            avatar: NeferatiImg,
+            selected: false,
         },
         {
             id: 8,
             name: "Arlong",
             avatar: ArlongImg,
+            selected: false,
         },
-    ]
+    ]);
 
     const avatarName = (name) => {
+        //rerender characters
+        setCharacters((characters) => {
+            return characters.map((character) =>
+                character.name === name
+                    ? { ...character, selected: true }
+                    : { ...character, selected: false }
+            );
+        });
         if (username === "") {
             setUsername(name);
         } else if (username.includes(username, 0)) {
@@ -91,19 +108,18 @@ const Startpage = ({ onSubmit }) => {
         console.log("Start game");
     };
 
-                // <div className="avatar">
-                //     <button 
-                //         className="avatar-btn"
-                //         onClick={(e) => {
-                //             e.currentTarget.classList.toggle('avatar-btn-selected')
-                //             avatarName(characters[7].name)
-                //             setPlayerAvatar(characters[7].avatar)
-                //         }}
-                //     >
-                //         <img className="avatarImg" src={characters[7].avatar} alt={"Image of " + characters[7].name} />
-                //     </button>
-                // </div>
-
+    // <div className="avatar">
+    //     <button
+    //         className="avatar-btn"
+    //         onClick={(e) => {
+    //             e.currentTarget.classList.toggle('avatar-btn-selected')
+    //             avatarName(characters[7].name)
+    //             setPlayerAvatar(characters[7].avatar)
+    //         }}
+    //     >
+    //         <img className="avatarImg" src={characters[7].avatar} alt={"Image of " + characters[7].name} />
+    //     </button>
+    // </div>
 
     useEffect(() => {
         setUsername("");
@@ -189,7 +205,10 @@ const Startpage = ({ onSubmit }) => {
             </div>
 
             <div id="avatarSelect">
-                <div className="avatar">
+                {characters.map((character) => (
+                    <Avatars character={character} avatarName={avatarName} />
+                ))}
+                {/* <div className="avatar">
                     <button 
                         className="avatar-btn"
                         onClick={(e) => {
@@ -323,7 +342,7 @@ const Startpage = ({ onSubmit }) => {
                             alt={"Image of " + characters[7].name}
                         />
                     </button>
-                </div>
+                </div> */}
             </div>
         </div>
     );
