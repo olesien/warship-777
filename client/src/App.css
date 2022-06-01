@@ -121,7 +121,8 @@ div .quadruple.down {
 
 #boat1,
 #boat2,
-#boat3 {
+#boat3, 
+#boat4 {
     margin: 10px;
 }
 
@@ -449,8 +450,11 @@ div .quadruple.down {
 
 .boat-setup {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     margin-top: 20px;
+    border: 2px solid #61dafb;
+    flex-wrap: wrap;
+    width: 250px;
 }
 
 input {
@@ -459,19 +463,19 @@ input {
 
 #chat-div {
     position: absolute;
-    top: 50%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 #chat {
-    width: 250px;
+    width: 230px;
     background: #282c34;
     border-radius: 15px;
 }
 
 #messages-wrapper {
-    height: 400px;
+    height: 300px;
     overflow: scroll;
 }
 

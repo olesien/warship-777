@@ -311,7 +311,7 @@ const Game = () => {
                             <p
                                 style={{
                                     position: "absolute",
-                                    top: "30%",
+                                    top: "45%",
                                     left: "50%",
                                     transform: "translate(-50%, -50%)",
                                 }}
@@ -328,7 +328,7 @@ const Game = () => {
                                         <p
                                             style={{
                                                 position: "absolute",
-                                                top: "20%",
+                                                top: "50%",
                                                 left: "50%",
                                                 transform:
                                                     "translate(-50%, -50%)",
@@ -339,7 +339,7 @@ const Game = () => {
                                         <p
                                             style={{
                                                 position: "absolute",
-                                                top: "20%",
+                                                top: "50%",
                                                 left: "50%",
                                                 transform:
                                                     "translate(-50%, -50%)",
@@ -382,21 +382,36 @@ const Game = () => {
 
                         {/* Your ships, place them out on the board */}
 
-                        <div
-                            className="boat-setup"
-                            onDrop={drop}
-                            onDragOver={allowDrop}
-                        >
-                            {startBoats.map((boat, index) => (
-                                <div
-                                    key={index}
-                                    id={`boat${index + 1}`}
-                                    className={`inner-grid-item ${boat.size} ${boat.direction}`}
-                                    draggable="true"
-                                    onDragStart={drag}
-                                ></div>
-                            ))}
-                        </div>
+                        {!gameStarted 
+                            ? 
+                                <div style={{ position: "absolute", top: "55%", right: "15%" }}>
+
+                                    <div
+                                        className="boat-setup"
+                                        onDrop={drop}
+                                        onDragOver={allowDrop}
+                                    >
+                                        {startBoats.map((boat, index) => (
+                                            <div
+                                                key={index}
+                                                id={`boat${index + 1}`}
+                                                className={`inner-grid-item ${boat.size} ${boat.direction}`}
+                                                draggable="true"
+                                                onDragStart={drag}
+                                            ></div>
+                                        ))}
+                                    </div>
+            
+                                    <div
+                                        id="rotate-btn"
+                                        className="d-flex justify-content-center align-items-center"
+                                        onClick={rotateShips}
+                                    >
+                                        <FontAwesomeIcon icon={faArrowRotateRight} style={{ height: "80%" }} />
+                                    </div>
+            
+                                </div>
+                            : null}   
                     </div>
 
                     {gameStarted 
@@ -412,13 +427,7 @@ const Game = () => {
                             </div>
                             : null}
 
-                    <div
-                        id="rotate-btn"
-                        className="d-flex justify-content-center align-items-center"
-                        onClick={rotateShips}
-                    >
-                        <FontAwesomeIcon icon={faArrowRotateRight} style={{ height: "80%" }} />
-                    </div>
+                    
                 </>
             )}
             {endGame && <EndGame 
