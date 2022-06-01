@@ -229,6 +229,10 @@ const Game = () => {
         messageRef.current && messageRef.current.focus();
     }, []);
 
+    useEffect(() => {
+        setMessages([]);
+    }, [winner])
+
     return (
         <div className="game-wrapper">
             {!endGame && (
