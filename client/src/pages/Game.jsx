@@ -10,8 +10,8 @@ import RenderOpponentGrid from "../components/RenderOpponentGrid";
 import Chat from "../components/Chat";
 import EndGame from "../components/EndGame";
 import PreviewShips from "../components/PreviewShips";
-import Hit from "../assets/sounds/Hit.mp3"
-import Miss from "../assets/sounds/Miss.mp3"
+import Hit from "../assets/sounds/Hit.mp3";
+import Miss from "../assets/sounds/Miss.mp3";
 
 const Game = () => {
     //Game logic
@@ -156,14 +156,14 @@ const Game = () => {
         };
 
         const handleHitTrue = () => {
-            const hitSound = new Audio(Hit)
-            hitSound.play()
-        }
+            const hitSound = new Audio(Hit);
+            hitSound.play();
+        };
 
         const handleMissTrue = () => {
-            const missSound = new Audio(Miss)
-            missSound.play()
-        }
+            const missSound = new Audio(Miss);
+            missSound.play();
+        };
 
         const playerWin = (winner) => {
             setWinner(winner);
@@ -237,7 +237,7 @@ const Game = () => {
 
     useEffect(() => {
         setMessages([]);
-    }, [winner])
+    }, [winner]);
 
     return (
         <div className="game-wrapper">
@@ -392,52 +392,55 @@ const Game = () => {
 
                         {/* Your ships, place them out on the board */}
 
-                        {!gameStarted 
-                            ? 
-                                <div style={{ position: "absolute", top: "55%", right: "15%" }}>
-
-                                    <div
-                                        className="boat-setup"
-                                        onDrop={drop}
-                                        onDragOver={allowDrop}
-                                    >
-                                        {startBoats.map((boat, index) => (
-                                            <div
-                                                key={index}
-                                                id={`boat${index + 1}`}
-                                                className={`inner-grid-item ${boat.size} ${boat.direction}`}
-                                                draggable="true"
-                                                onDragStart={drag}
-                                            ></div>
-                                        ))}
-                                    </div>
-            
-                                    <div
-                                        id="rotate-btn"
-                                        className="d-flex justify-content-center align-items-center"
-                                        onClick={rotateShips}
-                                    >
-                                        <FontAwesomeIcon icon={faArrowRotateRight} style={{ height: "80%" }} />
-                                    </div>
-            
+                        {!gameStarted ? (
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    top: "55%",
+                                    right: "15%",
+                                }}
+                            >
+                                <div
+                                    className="boat-setup"
+                                    onDrop={drop}
+                                    onDragOver={allowDrop}
+                                >
+                                    {startBoats.map((boat, index) => (
+                                        <div
+                                            key={index}
+                                            id={`boat${index + 1}`}
+                                            className={`inner-grid-item ${boat.size} ${boat.direction}`}
+                                            draggable="true"
+                                            onDragStart={drag}
+                                        ></div>
+                                    ))}
                                 </div>
-                            : null}   
+
+                                <div
+                                    id="rotate-btn"
+                                    className="d-flex justify-content-center align-items-center"
+                                    onClick={rotateShips}
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faArrowRotateRight}
+                                        style={{ height: "80%" }}
+                                    />
+                                </div>
+                            </div>
+                        ) : null}
                     </div>
 
-                    {gameStarted 
-                            ?
-                            <div id="chat-div">
-                                <Chat
-                                    onSubmit={handleSubmit}
-                                    message={message}
-                                    setMessage={setMessage}
-                                    messages={messages}
-                                    messageRef={messageRef}
-                                />
-                            </div>
-                            : null}
-
-                    
+                    {gameStarted ? (
+                        <div id="chat-div">
+                            <Chat
+                                onSubmit={handleSubmit}
+                                message={message}
+                                setMessage={setMessage}
+                                messages={messages}
+                                messageRef={messageRef}
+                            />
+                        </div>
+                    ) : null}
                 </>
             )}
             {endGame && (

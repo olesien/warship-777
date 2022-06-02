@@ -104,12 +104,11 @@ const Startpage = ({ onSubmit }) => {
         setLoading(true);
         console.log(username);
         setChatUsername(username);
-
-        setUsername("");
         console.log("UseEffect runs");
         // emits that username value
+        console.log(username);
         socket.emit("user:joined", {
-            username: chatUsername,
+            username: username,
             avatar: playerAvatar,
         });
     };
