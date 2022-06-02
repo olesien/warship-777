@@ -390,7 +390,7 @@ const Game = () => {
                                 style={{
                                     position: "absolute",
                                     top: "55%",
-                                    right: "15%",
+                                    left: "15%",
                                 }}
                             >
                                 <div
