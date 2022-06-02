@@ -628,3 +628,13 @@ input {
 .hit {
     background-color: red;
 }
+
+.redirect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.redirect h3 {
+    margin-top: 50px;
+}

@@ -13,7 +13,7 @@ import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png";
 import StartPageTheme from "../assets/sounds/MainTheme.mp3"
 import Avatars from "../components/Avatars";
 
-const Startpage = ({ onSubmit }) => {
+const Startpage = () => {
     const [username, setUsername] = useState("");
     const [loading, setLoading] = useState(false);
     const {
@@ -22,7 +22,6 @@ const Startpage = ({ onSubmit }) => {
         chatUsername,
         changeRoom,
         playerAvatar,
-        setPlayerAvatar,
         setPlayer,
         setOpponent,
     } = useGameContext();
@@ -109,19 +108,6 @@ const Startpage = ({ onSubmit }) => {
         console.log("Start game");
     };
 
-    // <div className="avatar">
-    //     <button
-    //         className="avatar-btn"
-    //         onClick={(e) => {
-    //             e.currentTarget.classList.toggle('avatar-btn-selected')
-    //             avatarName(characters[7].name)
-    //             setPlayerAvatar(characters[7].avatar)
-    //         }}
-    //     >
-    //         <img className="avatarImg" src={characters[7].avatar} alt={"Image of " + characters[7].name} />
-    //     </button>
-    // </div>
-
     useEffect(() => {
         setUsername("");
         console.log("UseEffect runs");
@@ -151,9 +137,6 @@ const Startpage = ({ onSubmit }) => {
             changeRoom(game.room);
             startGame();
         });
-        // socket.on("user:disconnect", (msg) => {
-        //   console.log(msg)
-        // })
 
         return () => {
             console.log("cleaning up");
@@ -211,142 +194,8 @@ const Startpage = ({ onSubmit }) => {
             <div id="avatarSelect">
                 {characters.map((character) => (
                     <Avatars character={character} avatarName={avatarName} />
-                ))}
-                {/* <div className="avatar">
-                    <button 
-                        className="avatar-btn"
-                        onClick={(e) => {
-                            e.currentTarget.classList.toggle('avatar-btn-selected')
-                            avatarName(characters[0].name)
-                            setPlayerAvatar(characters[0].avatar)
-                        }}
-                    >
-                        <img 
-                            className="avatarImg" 
-                            src={characters[0].avatar} 
-                            alt={"Image of " + characters[0].name} 
-                        />
-                    </button>
-                </div>
-
-                <div className="avatar">
-                    <button 
-                        className="avatar-btn"
-                        onClick={(e) => {
-                            e.currentTarget.classList.toggle('avatar-btn-selected')
-                            avatarName(characters[1].name)
-                            setPlayerAvatar(characters[1].avatar)
-                        }}
-                    >
-                        <img 
-                            className="avatarImg" 
-                            src={characters[1].avatar} 
-                            alt={"Image of " + characters[1].name} 
-                        />
-                    </button>
-                </div>
-
-                <div className="avatar">
-                    <button 
-                        className="avatar-btn"
-                        onClick={(e) => {
-                            e.currentTarget.classList.toggle('avatar-btn-selected')
-                            avatarName(characters[2].name)
-                            setPlayerAvatar(characters[2].avatar)
-                        }}
-                    >
-                        <img 
-                            className="avatarImg" 
-                            src={characters[2].avatar} 
-                            alt={"Image of " + characters[2].name} 
-                        />
-                    </button>
-                </div>
-
-                <div className="avatar">
-                    <button 
-                        className="avatar-btn"
-                        onClick={(e) => {
-                            e.currentTarget.classList.toggle('avatar-btn-selected')
-                            avatarName(characters[3].name)
-                            setPlayerAvatar(characters[3].avatar)
-                        }}
-                    >
-                        <img 
-                            className="avatarImg" 
-                            src={characters[3].avatar} 
-                            alt={"Image of " + characters[3].name} 
-                        />
-                    </button>
-                </div>
-
-                <div className="avatar">
-                    <button 
-                        className="avatar-btn"
-                        onClick={(e) => {
-                            e.currentTarget.classList.toggle('avatar-btn-selected')
-                            avatarName(characters[4].name)
-                            setPlayerAvatar(characters[4].avatar)
-                        }}
-                    >
-                        <img 
-                            className="avatarImg" 
-                            src={characters[4].avatar} 
-                            alt={"Image of " + characters[4].name}
-                        />
-                    </button>
-                </div>
-
-                <div className="avatar">
-                    <button 
-                        className="avatar-btn"
-                        onClick={(e) => {
-                            e.currentTarget.classList.toggle('avatar-btn-selected')
-                            avatarName(characters[5].name)
-                            setPlayerAvatar(characters[5].avatar)
-                        }}
-                    >
-                        <img 
-                            className="avatarImg" 
-                            src={characters[5].avatar} 
-                            alt={"Image of " + characters[5].name} 
-                        />
-                    </button>
-                </div>
-
-                <div className="avatar">
-                    <button 
-                        className="avatar-btn"
-                        onClick={(e) => {
-                            e.currentTarget.classList.toggle('avatar-btn-selected')
-                            avatarName(characters[6].name)
-                            setPlayerAvatar(characters[6].avatar)
-                        }}
-                    >
-                        <img 
-                            className="avatarImg" 
-                            src={characters[6].avatar} 
-                            alt={"Image of " + characters[6].name}
-                        />
-                    </button>
-                </div>
-
-                <div className="avatar">
-                    <button 
-                        className="avatar-btn"
-                        onClick={(e) => {
-                            e.currentTarget.classList.toggle('avatar-btn-selected')
-                            avatarName(characters[7].name)
-                            setPlayerAvatar(characters[7].avatar)
-                        }}
-                    >
-                        <img 
-                            className="avatarImg" 
-                            src={characters[7].avatar} 
-                            alt={"Image of " + characters[7].name}
-                        />
-                    </button>
-                </div> */}
+                    ))
+                }
             </div>
         </div>
     );
