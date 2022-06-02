@@ -10,6 +10,7 @@ import DraculeImg from "../assets/images/onepieceavatars-modified (5) 1.png";
 import KarasuImg from "../assets/images/onepieceavatars-modified (6) 1.png";
 import NeferatiImg from "../assets/images/onepieceavatars-modified (4) 1.png";
 import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png";
+import StartPageTheme from "../assets/sounds/MainTheme.mp3"
 import Avatars from "../components/Avatars";
 
 const Startpage = ({ onSubmit }) => {
@@ -171,6 +172,9 @@ const Startpage = ({ onSubmit }) => {
 
     return (
         <div className="d-flex justify-content-end" id="homePage">
+            <audio controls autoPlay loop={true} style={{ display: "none" }}>
+                <source src={StartPageTheme} type="audio/mp3" />
+            </audio>
             <div id="homePageText">
                 <h1>Battle</h1>
                 <div id="of">
