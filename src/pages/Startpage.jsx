@@ -17,15 +17,12 @@ import StartPageTheme from "../assets/sounds/MainTheme.mp3";
 import Avatars from "../components/Avatars";
 
 const Startpage = () => {
-    const playBtn = document.getElementById("playBtn")
-    const muteBtn = document.getElementById("muteBtn")
+    const playBtn = document.getElementById("playBtn");
+    const muteBtn = document.getElementById("muteBtn");
     const [username, setUsername] = useState("");
     const [loading, setLoading] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [play, { stop }] = useSound(
-        StartPageTheme,
-        {volume: 0.4}
-    )
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [play, { stop }] = useSound(StartPageTheme, { volume: 0.4 });
     const {
         socket,
         setChatUsername,
@@ -109,15 +106,15 @@ const Startpage = () => {
         if (isPlaying === false) {
             play();
             setIsPlaying(true);
-            playBtn.classList.add("d-none")
-            muteBtn.classList.remove("d-none")
+            playBtn.classList.add("d-none");
+            muteBtn.classList.remove("d-none");
         } else if (isPlaying === true) {
             stop();
             setIsPlaying(false);
-            muteBtn.classList.add("d-none")
-            playBtn.classList.remove("d-none")
+            muteBtn.classList.add("d-none");
+            playBtn.classList.remove("d-none");
         }
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -137,13 +134,12 @@ const Startpage = () => {
         });
     };
 
-    const startGame = () => {
-        setLoading(false);
-        console.log("Start game");
-        stop()
-    };
-
     useEffect(() => {
+        const startGame = () => {
+            setLoading(false);
+            console.log("Start game");
+            stop();
+        };
         socket.on("user:joined", (msg) => {
             console.log(msg);
         });
@@ -162,7 +158,7 @@ const Startpage = () => {
             changeRoom(game.room);
             startGame();
         };
-        
+
         socket.on("players", changePlayers);
 
         return () => {
@@ -180,6 +176,7 @@ const Startpage = () => {
         setChatUsername,
         setOpponent,
         setPlayer,
+        stop,
     ]);
 
     return (
@@ -190,7 +187,11 @@ const Startpage = () => {
 
             <div id="musicDiv" onClick={toggleSound}>
                 <FontAwesomeIcon icon={faPlay} id="playBtn" className="" />
-                <FontAwesomeIcon icon={faVolumeXmark} id="muteBtn" className="d-none" />
+                <FontAwesomeIcon
+                    icon={faVolumeXmark}
+                    id="muteBtn"
+                    className="d-none"
+                />
             </div>
             <div id="homePageText">
                 <h1>Battle</h1>
@@ -235,8 +236,7 @@ const Startpage = () => {
                         avatarName={avatarName}
                         key={index}
                     />
-                    ))
-                }
+                ))}
             </div>
         </div>
     );

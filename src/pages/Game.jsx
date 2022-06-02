@@ -1,6 +1,6 @@
 import Grid from "../components/Grid";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
@@ -11,9 +11,9 @@ import RenderOpponentGrid from "../components/RenderOpponentGrid";
 import Chat from "../components/Chat";
 import EndGame from "../components/EndGame";
 import PreviewShips from "../components/PreviewShips";
-import PlayerDisconnect from '../components/PlayerDisconnect';
-import Hit from "../assets/sounds/Hit.mp3"
-import Miss from "../assets/sounds/Miss.mp3"
+import PlayerDisconnect from "../components/PlayerDisconnect";
+import Hit from "../assets/sounds/Hit.mp3";
+import Miss from "../assets/sounds/Miss.mp3";
 
 const Game = () => {
     //Game logic
@@ -28,7 +28,7 @@ const Game = () => {
     const [messages, setMessages] = useState([]);
     const messageRef = useRef();
     const [endGame, setEndGame] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -115,7 +115,7 @@ const Game = () => {
             setPlayer(player);
             setOpponent(opponent);
         };
-        
+
         //One person has readied up!
         const peopleReady = (players) => {
             updatePlayers(players);
@@ -168,7 +168,7 @@ const Game = () => {
 
         const playerStart = (data) => {
             setPlayerRound(data.player);
-        }
+        };
 
         //Listen for these!
         socket.on("chat:message", handleIncomingMessage);
@@ -180,13 +180,13 @@ const Game = () => {
         socket.on("player:start", playerStart);
         socket.on("game:over", playerWin);
         socket.on("game:leave", () => {
-            setPlayerDisconnect(true)
-            console.log("Opponent left the game")
+            setPlayerDisconnect(true);
+            console.log("Opponent left the game");
             setTimeout(() => {
-                navigate("/" - "game")
-                setPlayerDisconnect(false)
-            }, 5000)
-        })
+                navigate("/" - "game");
+                setPlayerDisconnect(false);
+            }, 5000);
+        });
 
         return () => {
             console.log("cleaning up");
@@ -195,8 +195,17 @@ const Game = () => {
             socket.off("game:start", start);
             socket.off("game:handleHitTrue", handleHitTrue);
             socket.off("game:handleMissTrue", handleMissTrue);
+            socket.off("game:handleHit", handleHit);
             socket.off("player:start", playerStart);
             socket.off("game:over", playerWin);
+            socket.off("game:leave", () => {
+                setPlayerDisconnect(true);
+                console.log("Opponent left the game");
+                setTimeout(() => {
+                    navigate("/" - "game");
+                    setPlayerDisconnect(false);
+                }, 5000);
+            });
         };
     }, [
         socket,
@@ -208,6 +217,7 @@ const Game = () => {
         setEndGame,
         setPlayerDisconnect,
         playerDisconnect,
+        navigate,
     ]);
 
     //game started?
@@ -221,7 +231,6 @@ const Game = () => {
 
     useEffect(() => {
         setStartingPlayer("");
-
     }, [setStartingPlayer]);
 
     useEffect(() => {
@@ -436,16 +445,16 @@ const Game = () => {
                     ) : null}
                 </>
             )}
-            {endGame && !playerDisconnect && <EndGame 
-                socket={socket} 
-                winner={winner} 
-                room={room}
-                grid={grid}
-                init={init}
-            />}
-            {playerDisconnect && 
-                <PlayerDisconnect />
-            }
+            {endGame && !playerDisconnect && (
+                <EndGame
+                    socket={socket}
+                    winner={winner}
+                    room={room}
+                    grid={grid}
+                    init={init}
+                />
+            )}
+            {playerDisconnect && <PlayerDisconnect />}
         </div>
     );
 };
