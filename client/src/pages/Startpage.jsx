@@ -32,7 +32,7 @@ const Startpage = ({ onSubmit }) => {
             id: 1,
             name: "Monkey D. Luffy",
             avatar: MonkeyImg,
-            selected: false,
+            selected: true,
         },
         {
             id: 2,
@@ -98,7 +98,10 @@ const Startpage = ({ onSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        if (username.length < 3) {
+            alert("Your username is not long enough!");
+            return;
+        }
         setLoading(true);
         console.log(username);
         setChatUsername(username);
@@ -209,8 +212,12 @@ const Startpage = ({ onSubmit }) => {
             </div>
 
             <div id="avatarSelect">
-                {characters.map((character) => (
-                    <Avatars character={character} avatarName={avatarName} />
+                {characters.map((character, index) => (
+                    <Avatars
+                        character={character}
+                        avatarName={avatarName}
+                        key={index}
+                    />
                 ))}
                 {/* <div className="avatar">
                     <button 
