@@ -8,8 +8,12 @@ const Chat = ({ message, setMessage, messages, messageRef, onSubmit }) => {
                     {messages.map((message, index) => {
                         return (
                             <li key={index} className="message">
-                                <span className="messageUsername">{message.username}:</span>
-                                <span className="messageContent">{message.content}</span>
+                                <span className="messageUsername">
+                                    {message.username}:
+                                </span>
+                                <span className="messageContent">
+                                    {message.content}
+                                </span>
                             </li>
                         );
                     })}

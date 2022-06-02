@@ -121,7 +121,7 @@ div .quadruple.down {
 
 #boat1,
 #boat2,
-#boat3, 
+#boat3,
 #boat4 {
     margin: 10px;
 }
@@ -191,7 +191,6 @@ div .quadruple.down {
     border-radius: 50%;
     background-color: green;
 }
-
 
 .avatarImg {
     /* width: 115px; */
@@ -505,20 +504,20 @@ input {
 /* .messageContent {
 
 } */
-  
+
 #messageBar {
     width: 80%;
     border-radius: 0px 0px 0px 10px;
     border-width: 0px;
 }
-  
+
 #sendMessageBtn {
     width: 20%;
     border-radius: 0px 0px 10px 0px;
     border-width: 0px;
     outline: none !important;
 }
-  
+
 .endgame-wrapper {
     width: 100vw;
     height: 100vh;

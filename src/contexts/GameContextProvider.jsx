@@ -16,7 +16,7 @@ const GameContextProvider = ({ children }) => {
         { size: "double", direction: "right" },
         { size: "triple", direction: "left" },
         { size: "quadruple", direction: "left" },
-    ]
+    ];
     const [chatUsername, setChatUsername] = useState();
     const [room, setRoom] = useState();
     const [player, setPlayer] = useState({});
