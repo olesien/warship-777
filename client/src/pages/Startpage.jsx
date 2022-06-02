@@ -10,7 +10,7 @@ import DraculeImg from "../assets/images/onepieceavatars-modified (5) 1.png";
 import KarasuImg from "../assets/images/onepieceavatars-modified (6) 1.png";
 import NeferatiImg from "../assets/images/onepieceavatars-modified (4) 1.png";
 import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png";
-import StartPageTheme from "../assets/sounds/MainTheme.mp3"
+import StartPageTheme from "../assets/sounds/MainTheme.mp3";
 import Avatars from "../components/Avatars";
 
 const Startpage = () => {
@@ -31,7 +31,7 @@ const Startpage = () => {
             id: 1,
             name: "Monkey D. Luffy",
             avatar: MonkeyImg,
-            selected: false,
+            selected: true,
         },
         {
             id: 2,
@@ -97,10 +97,20 @@ const Startpage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        if (username.length < 3) {
+            alert("Your username is not long enough!");
+            return;
+        }
         setLoading(true);
         console.log(username);
         setChatUsername(username);
+        console.log("UseEffect runs");
+        // emits that username value
+        console.log(username);
+        socket.emit("user:joined", {
+            username: username,
+            avatar: playerAvatar,
+        });
     };
 
     const startGame = () => {
@@ -109,21 +119,11 @@ const Startpage = () => {
     };
 
     useEffect(() => {
-        setUsername("");
-        console.log("UseEffect runs");
-
-        if (!username.length) {
-            return;
-        }
-        // emits that username value
-        socket.emit("user:joined", {
-            username: chatUsername,
-            avatar: playerAvatar,
-        });
         socket.on("user:joined", (msg) => {
             console.log(msg);
         });
-        socket.on("players", (game) => {
+
+        const changePlayers = (game) => {
             console.log(socket, setChatUsername, chatUsername, changeRoom);
             console.log(game);
             const player = game.players.find(
@@ -136,19 +136,25 @@ const Startpage = () => {
             setOpponent(opponent);
             changeRoom(game.room);
             startGame();
-        });
+        };
+        
+        socket.on("players", changePlayers);
 
         return () => {
             console.log("cleaning up");
             socket.off("user:joined", (msg) => {
                 console.log(msg);
             });
-            socket.on("players", (game) => {
-                changeRoom(game.id);
-                startGame();
-            });
+            socket.off("players", changePlayers);
         };
-    }, [socket, chatUsername]);
+    }, [
+        socket,
+        changeRoom,
+        chatUsername,
+        setChatUsername,
+        setOpponent,
+        setPlayer,
+    ]);
 
     return (
         <div className="d-flex justify-content-end" id="homePage">
@@ -192,8 +198,12 @@ const Startpage = () => {
             </div>
 
             <div id="avatarSelect">
-                {characters.map((character) => (
-                    <Avatars character={character} avatarName={avatarName} />
+                {characters.map((character, index) => (
+                    <Avatars
+                        character={character}
+                        avatarName={avatarName}
+                        key={index}
+                    />
                     ))
                 }
             </div>

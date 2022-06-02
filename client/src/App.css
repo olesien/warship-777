@@ -121,7 +121,8 @@ div .quadruple.down {
 
 #boat1,
 #boat2,
-#boat3 {
+#boat3, 
+#boat4 {
     margin: 10px;
 }
 
@@ -339,8 +340,8 @@ div .quadruple.down {
     margin: auto;
     border: 1px solid white;
     background-color: #9d0505;
-    height: 20px;
-    width: 20px;
+    height: 50px;
+    width: 50px;
 }
 
 .black-border {
@@ -371,9 +372,8 @@ div .quadruple.down {
 }
 
 #nmrPosition {
-    /* position: relative;
-    left: 44px; */
-    margin: auto;
+    position: relative;
+    left: 40px;
 }
 
 .fourSquareShip {
@@ -450,8 +450,11 @@ div .quadruple.down {
 
 .boat-setup {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     margin-top: 20px;
+    border: 2px solid #61dafb;
+    flex-wrap: wrap;
+    width: 250px;
 }
 
 input {
@@ -460,19 +463,19 @@ input {
 
 #chat-div {
     position: absolute;
-    top: 50%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 #chat {
-    width: 250px;
+    width: 230px;
     background: #282c34;
     border-radius: 15px;
 }
 
 #messages-wrapper {
-    height: 400px;
+    height: 300px;
     overflow: scroll;
 }
 

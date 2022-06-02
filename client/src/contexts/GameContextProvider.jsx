@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import socketio from "socket.io-client";
 
+import MonkeyImg from "../assets/images/onepieceavatars-modified 1.png";
+
 const GameContext = createContext();
 const socket = socketio.connect(process.env.REACT_APP_SOCKET_URL);
 
@@ -13,14 +15,14 @@ const GameContextProvider = ({ children }) => {
         { size: "double", direction: "right" },
         { size: "double", direction: "right" },
         { size: "triple", direction: "left" },
-        { size: "quadruple", direction: "down" },
+        { size: "quadruple", direction: "left" },
     ]
     const [chatUsername, setChatUsername] = useState();
     const [room, setRoom] = useState();
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
     const [playerDisconnect, setPlayerDisconnect] = useState(false)
-    const [playerAvatar, setPlayerAvatar] = useState("");
+    const [playerAvatar, setPlayerAvatar] = useState(MonkeyImg);
     const [startBoats, setStartBoats] = useState(boats);
     const [idsTurn, setIdsTurn] = useState(null);
     const changeRoom = (newRoom) => {
@@ -29,11 +31,11 @@ const GameContextProvider = ({ children }) => {
     };
 
     const resetShips = () => {
-        setStartBoats(boats)
-    }
+        setStartBoats(boats);
+    };
 
     const initialGrid = () => {
-        resetShips()
+        resetShips();
         const columns = 10;
         const rows = 10;
         const innerGrid = [];
@@ -51,10 +53,9 @@ const GameContextProvider = ({ children }) => {
             innerGrid.push(row);
         }
         return innerGrid;
-    }
+    };
 
     const [grid, setGrid] = useState(initialGrid);
-
 
     const updateGrid = (columnIndex, rowIndex, update) => {
         setGrid((oldGrid) => {
@@ -84,7 +85,6 @@ const GameContextProvider = ({ children }) => {
     const addBoatToStart = (size, direction) => {
         setStartBoats((startBoats) => [...startBoats, { size, direction }]);
     };
-
 
     const rotateShips = () => {
         console.log("rotating");

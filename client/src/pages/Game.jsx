@@ -48,21 +48,20 @@ const Game = () => {
         playerDisconnect,
         setPlayerDisconnect,
     } = useGameContext();
-    
+
     const stylesReadyBtn = useCallback(() => {
         playerReady ? setBtnStyle("ready-btn") : setBtnStyle("ready-btn-green");
-    }, [playerReady])
-    
-    const init = useCallback(() => {
-        player.ready = false
-        opponent.ready = false
-        setGameStarted(false)
-        setEndGame(false)
-        setPlayerReady(false)
-        stylesReadyBtn()
-        setGrid(initialGrid)
-      }, [initialGrid, opponent, player, setGrid, stylesReadyBtn])
+    }, [playerReady]);
 
+    const init = useCallback(() => {
+        player.ready = false;
+        opponent.ready = false;
+        setGameStarted(false);
+        setEndGame(false);
+        setPlayerReady(false);
+        stylesReadyBtn();
+        setGrid(initialGrid);
+    }, [initialGrid, opponent, player, setGrid, stylesReadyBtn]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -97,9 +96,16 @@ const Game = () => {
     };
 
     const readyBtnPressed = () => {
-        setPlayerReady(!playerReady);
-        stylesReadyBtn()
-        socket.emit("user:ready", room, grid);
+        socket.emit("user:ready", room, grid, (error) => {
+            if (error === false) {
+                //has user placed enough stuff?
+                setPlayerReady(!playerReady);
+                stylesReadyBtn();
+            } else {
+                //error
+                alert("Error. Probably not placed enough ships");
+            }
+        });
     };
 
     useEffect(() => {
@@ -146,14 +152,14 @@ const Game = () => {
         };
 
         const handleHitTrue = () => {
-            const hitSound = new Audio(Hit)
-            hitSound.play()
-        }
+            const hitSound = new Audio(Hit);
+            hitSound.play();
+        };
 
         const handleMissTrue = () => {
-            const missSound = new Audio(Miss)
-            missSound.play()
-        }
+            const missSound = new Audio(Miss);
+            missSound.play();
+        };
 
         const playerWin = (winner) => {
             setWinner(winner);
@@ -222,6 +228,10 @@ const Game = () => {
     useEffect(() => {
         messageRef.current && messageRef.current.focus();
     }, []);
+
+    useEffect(() => {
+        setMessages([]);
+    }, [winner]);
 
     return (
         <div className="game-wrapper">
@@ -305,7 +315,7 @@ const Game = () => {
                             <p
                                 style={{
                                     position: "absolute",
-                                    top: "30%",
+                                    top: "45%",
                                     left: "50%",
                                     transform: "translate(-50%, -50%)",
                                 }}
@@ -322,7 +332,7 @@ const Game = () => {
                                         <p
                                             style={{
                                                 position: "absolute",
-                                                top: "20%",
+                                                top: "50%",
                                                 left: "50%",
                                                 transform:
                                                     "translate(-50%, -50%)",
@@ -333,7 +343,7 @@ const Game = () => {
                                         <p
                                             style={{
                                                 position: "absolute",
-                                                top: "20%",
+                                                top: "50%",
                                                 left: "50%",
                                                 transform:
                                                     "translate(-50%, -50%)",
@@ -376,43 +386,55 @@ const Game = () => {
 
                         {/* Your ships, place them out on the board */}
 
-                        <div
-                            className="boat-setup"
-                            onDrop={drop}
-                            onDragOver={allowDrop}
-                        >
-                            {startBoats.map((boat, index) => (
+                        {!gameStarted ? (
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    top: "55%",
+                                    right: "15%",
+                                }}
+                            >
                                 <div
-                                    key={index}
-                                    id={`boat${index + 1}`}
-                                    className={`inner-grid-item ${boat.size} ${boat.direction}`}
-                                    draggable="true"
-                                    onDragStart={drag}
-                                ></div>
-                            ))}
-                        </div>
-                    </div>
+                                    className="boat-setup"
+                                    onDrop={drop}
+                                    onDragOver={allowDrop}
+                                >
+                                    {startBoats.map((boat, index) => (
+                                        <div
+                                            key={index}
+                                            id={`boat${index + 1}`}
+                                            className={`inner-grid-item ${boat.size} ${boat.direction}`}
+                                            draggable="true"
+                                            onDragStart={drag}
+                                        ></div>
+                                    ))}
+                                </div>
 
-                    {gameStarted 
-                            ?
-                            <div id="chat-div">
-                                <Chat
-                                    onSubmit={handleSubmit}
-                                    message={message}
-                                    setMessage={setMessage}
-                                    messages={messages}
-                                    messageRef={messageRef}
-                                />
+                                <div
+                                    id="rotate-btn"
+                                    className="d-flex justify-content-center align-items-center"
+                                    onClick={rotateShips}
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faArrowRotateRight}
+                                        style={{ height: "80%" }}
+                                    />
+                                </div>
                             </div>
-                            : null}
-
-                    <div
-                        id="rotate-btn"
-                        className="d-flex justify-content-center align-items-center"
-                        onClick={rotateShips}
-                    >
-                        <FontAwesomeIcon icon={faArrowRotateRight} />
+                        ) : null}
                     </div>
+
+                    {gameStarted ? (
+                        <div id="chat-div">
+                            <Chat
+                                onSubmit={handleSubmit}
+                                message={message}
+                                setMessage={setMessage}
+                                messages={messages}
+                                messageRef={messageRef}
+                            />
+                        </div>
+                    ) : null}
                 </>
             )}
             {endGame && !playerDisconnect && <EndGame 
