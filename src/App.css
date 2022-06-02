@@ -121,7 +121,8 @@ div .quadruple.down {
 
 #boat1,
 #boat2,
-#boat3 {
+#boat3,
+#boat4 {
     margin: 10px;
 }
 
@@ -164,23 +165,36 @@ div .quadruple.down {
 #avatarSelect {
     position: absolute;
     top: 30px;
-    left: 20px;
+    left: 120px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding: 0;
 }
 
-#avatarSelect > label:hover {
+/* #avatarSelect > label:hover {
     cursor: pointer;
-}
+} */
 
 .avatar {
-    height: 145px;
-    width: 145px;
-    margin-left: 25px;
-    margin-right: 25px;
-    margin-bottom: 20px;
-    border-radius: 100px;
+    padding: 15px;
+}
+
+.avatar-btn {
+    padding: 0;
+    border: 2px solid red;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.avatar-btn-selected {
+    padding: 0;
+    border: 2px solid green;
+    border-radius: 50%;
+    background-color: green;
+}
+
+.avatarImg {
+    /* width: 115px; */
+    height: 110px;
 }
 
 .avatar > input {
@@ -280,6 +294,20 @@ div .quadruple.down {
     font-size: 50px;
 }
 
+.waiting {
+    width: 300px;
+    margin: auto;
+}
+
+.waiting h4 {
+    display: flex;
+    justify-content: center;
+}
+
+.replay-loading {
+    margin-top: 150px;
+}
+
 .ship-colors {
     border: 1px solid white;
     background-color: #61dafb;
@@ -311,8 +339,8 @@ div .quadruple.down {
     margin: auto;
     border: 1px solid white;
     background-color: #9d0505;
-    height: 20px;
-    width: 20px;
+    height: 50px;
+    width: 50px;
 }
 
 .black-border {
@@ -343,9 +371,8 @@ div .quadruple.down {
 }
 
 #nmrPosition {
-    /* position: relative;
-    left: 44px; */
-    margin: auto;
+    position: relative;
+    left: 40px;
 }
 
 .fourSquareShip {
@@ -379,7 +406,7 @@ div .quadruple.down {
 .players img {
     max-width: 100%;
     max-height: 100%;
-    width: 120px;
+    /* width: 120px; */
 }
 
 .player,
@@ -387,7 +414,7 @@ div .quadruple.down {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2rem;
+    margin-top: 0.5rem;
 }
 
 .outer-player,
@@ -422,8 +449,73 @@ div .quadruple.down {
 
 .boat-setup {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     margin-top: 20px;
+    border: 2px solid #61dafb;
+    flex-wrap: wrap;
+    width: 250px;
+}
+
+input {
+    outline: none !important;
+}
+
+#chat-div {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#chat {
+    width: 230px;
+    background: #282c34;
+    border-radius: 15px;
+}
+
+#messages-wrapper {
+    height: 300px;
+    overflow: scroll;
+}
+
+#messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    word-break: break-word;
+}
+
+.messageTime {
+    width: 40px;
+    font-size: 0.5rem;
+    padding: 2px;
+}
+
+.messageUsername {
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+/* .messageContent {
+
+} */
+
+#messageBar {
+    width: 80%;
+    border-radius: 0px 0px 0px 10px;
+    border-width: 0px;
+}
+
+#sendMessageBtn {
+    width: 20%;
+    border-radius: 0px 0px 10px 0px;
+    border-width: 0px;
+    outline: none !important;
 }
 
 .endgame-wrapper {

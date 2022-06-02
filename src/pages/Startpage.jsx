@@ -10,51 +10,106 @@ import DraculeImg from "../assets/images/onepieceavatars-modified (5) 1.png";
 import KarasuImg from "../assets/images/onepieceavatars-modified (6) 1.png";
 import NeferatiImg from "../assets/images/onepieceavatars-modified (4) 1.png";
 import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png";
+import StartPageTheme from "../assets/sounds/MainTheme.mp3";
+import Avatars from "../components/Avatars";
 
 const Startpage = ({ onSubmit }) => {
     const [username, setUsername] = useState("");
-    // const [avatar, setAvatar] = useState("");
     const [loading, setLoading] = useState(false);
     const {
         socket,
         setChatUsername,
+        chatUsername,
         changeRoom,
         playerAvatar,
-        setPlayerAvatar,
         setPlayer,
         setOpponent,
     } = useGameContext();
 
-    const one = "Monkey D. Luffy";
-    const two = "Roronoa Zoro";
-    const three = "Shanks";
-    const four = "Nami";
-    const five = "Dracule Mihawk";
-    const six = "Karasu";
-    const seven = "Nefertari Vivi";
-    const eight = "Arlong";
-
-    const avatarNameArr = [one, two, three, four, five, six, seven, eight];
+    const [characters, setCharacters] = useState([
+        {
+            id: 1,
+            name: "Monkey D. Luffy",
+            avatar: MonkeyImg,
+            selected: true,
+        },
+        {
+            id: 2,
+            name: "Roronoa Zoro",
+            avatar: RoronoaImg,
+            selected: false,
+        },
+        {
+            id: 3,
+            name: "Shanks",
+            avatar: ShanksImg,
+            selected: false,
+        },
+        {
+            id: 4,
+            name: "Nami",
+            avatar: NamiImg,
+            selected: false,
+        },
+        {
+            id: 5,
+            name: "Dracule Mihawk",
+            avatar: DraculeImg,
+            selected: false,
+        },
+        {
+            id: 6,
+            name: "Karasu",
+            avatar: KarasuImg,
+            selected: false,
+        },
+        {
+            id: 7,
+            name: "Nefertari Vivi",
+            avatar: NeferatiImg,
+            selected: false,
+        },
+        {
+            id: 8,
+            name: "Arlong",
+            avatar: ArlongImg,
+            selected: false,
+        },
+    ]);
 
     const avatarName = (name) => {
+        //rerender characters
+        setCharacters((characters) => {
+            return characters.map((character) =>
+                character.name === name
+                    ? { ...character, selected: true }
+                    : { ...character, selected: false }
+            );
+        });
         if (username === "") {
             setUsername(name);
-        } else if (avatarNameArr.includes(username, 0)) {
+        } else if (username.includes(username, 0)) {
             setUsername(name);
-        } else if (!avatarNameArr.includes(username, 0)) {
+        } else if (!username.includes(username, 0)) {
             return;
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        if (username.length < 3) {
+            alert("Your username is not long enough!");
+            return;
+        }
         setLoading(true);
         console.log(username);
         setChatUsername(username);
+
+        setUsername("");
+        console.log("UseEffect runs");
         // emits that username value
         socket.emit("user:joined", {
-            username: username,
+            username: chatUsername,
             avatar: playerAvatar,
         });
     };
@@ -62,31 +117,28 @@ const Startpage = ({ onSubmit }) => {
     const startGame = () => {
         setLoading(false);
         console.log("Start game");
-        //navigate("/game");
     };
 
-    //listen for user join
+    // <div className="avatar">
+    //     <button
+    //         className="avatar-btn"
+    //         onClick={(e) => {
+    //             e.currentTarget.classList.toggle('avatar-btn-selected')
+    //             avatarName(characters[7].name)
+    //             setPlayerAvatar(characters[7].avatar)
+    //         }}
+    //     >
+    //         <img className="avatarImg" src={characters[7].avatar} alt={"Image of " + characters[7].name} />
+    //     </button>
+    // </div>
+
     useEffect(() => {
-        setUsername("");
-        console.log("UseEffect runs");
         socket.on("user:joined", (msg) => {
             console.log(msg);
         });
-        // socket.on("user:disconnect", (msg) => {
-        //   console.log(msg)
-        // })
 
-        return () => {
-            console.log("cleaning up");
-            socket.off("user:joined", (msg) => {
-                console.log(msg);
-            });
-        };
-    }, [socket]);
-
-    //listen for update of players
-    useEffect(() => {
-        const updatePlayers = (game) => {
+        const changePlayers = (game) => {
+            console.log(socket, setChatUsername, chatUsername, changeRoom);
             console.log(game);
             const player = game.players.find(
                 (player) => player.id === socket.id
@@ -99,15 +151,29 @@ const Startpage = ({ onSubmit }) => {
             changeRoom(game.room);
             startGame();
         };
-        socket.on("players", updatePlayers);
+        socket.on("players", changePlayers);
+
         return () => {
             console.log("cleaning up");
-            socket.off("players", updatePlayers);
+            socket.off("user:joined", (msg) => {
+                console.log(msg);
+            });
+            socket.off("players", changePlayers);
         };
-    }, [socket, changeRoom, setOpponent, setPlayer]);
+    }, [
+        socket,
+        changeRoom,
+        chatUsername,
+        setChatUsername,
+        setOpponent,
+        setPlayer,
+    ]);
 
     return (
         <div className="d-flex justify-content-end" id="homePage">
+            <audio controls autoPlay loop={true} style={{ display: "none" }}>
+                <source src={StartPageTheme} type="audio/mp3" />
+            </audio>
             <div id="homePageText">
                 <h1>Battle</h1>
                 <div id="of">
@@ -144,103 +210,150 @@ const Startpage = ({ onSubmit }) => {
                 />
             </div>
 
-            <form action="" id="avatarSelect">
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(one);
-                            setPlayerAvatar(MonkeyImg);
-                        }}
+            <div id="avatarSelect">
+                {characters.map((character, index) => (
+                    <Avatars
+                        character={character}
+                        avatarName={avatarName}
+                        key={index}
                     />
-                    <img src={MonkeyImg} alt="" className="avatarImg" />
-                </label>
+                ))}
+                {/* <div className="avatar">
+                    <button 
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[0].name)
+                            setPlayerAvatar(characters[0].avatar)
+                        }}
+                    >
+                        <img 
+                            className="avatarImg" 
+                            src={characters[0].avatar} 
+                            alt={"Image of " + characters[0].name} 
+                        />
+                    </button>
+                </div>
 
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(two);
-                            setPlayerAvatar(RoronoaImg);
+                <div className="avatar">
+                    <button 
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[1].name)
+                            setPlayerAvatar(characters[1].avatar)
                         }}
-                    />
-                    <img src={RoronoaImg} alt="" className="avatarImg" />
-                </label>
+                    >
+                        <img 
+                            className="avatarImg" 
+                            src={characters[1].avatar} 
+                            alt={"Image of " + characters[1].name} 
+                        />
+                    </button>
+                </div>
 
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(three);
-                            setPlayerAvatar(ShanksImg);
+                <div className="avatar">
+                    <button 
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[2].name)
+                            setPlayerAvatar(characters[2].avatar)
                         }}
-                    />
-                    <img src={ShanksImg} alt="" className="avatarImg" />
-                </label>
+                    >
+                        <img 
+                            className="avatarImg" 
+                            src={characters[2].avatar} 
+                            alt={"Image of " + characters[2].name} 
+                        />
+                    </button>
+                </div>
 
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(four);
-                            setPlayerAvatar(NamiImg);
+                <div className="avatar">
+                    <button 
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[3].name)
+                            setPlayerAvatar(characters[3].avatar)
                         }}
-                    />
-                    <img src={NamiImg} alt="" className="avatarImg" />
-                </label>
+                    >
+                        <img 
+                            className="avatarImg" 
+                            src={characters[3].avatar} 
+                            alt={"Image of " + characters[3].name} 
+                        />
+                    </button>
+                </div>
 
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(five);
-                            setPlayerAvatar(DraculeImg);
+                <div className="avatar">
+                    <button 
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[4].name)
+                            setPlayerAvatar(characters[4].avatar)
                         }}
-                    />
-                    <img src={DraculeImg} alt="" className="avatarImg" />
-                </label>
+                    >
+                        <img 
+                            className="avatarImg" 
+                            src={characters[4].avatar} 
+                            alt={"Image of " + characters[4].name}
+                        />
+                    </button>
+                </div>
 
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(six);
-                            setPlayerAvatar(KarasuImg);
+                <div className="avatar">
+                    <button 
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[5].name)
+                            setPlayerAvatar(characters[5].avatar)
                         }}
-                    />
-                    <img src={KarasuImg} alt="" className="avatarImg" />
-                </label>
+                    >
+                        <img 
+                            className="avatarImg" 
+                            src={characters[5].avatar} 
+                            alt={"Image of " + characters[5].name} 
+                        />
+                    </button>
+                </div>
 
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(seven);
-                            setPlayerAvatar(NeferatiImg);
+                <div className="avatar">
+                    <button 
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[6].name)
+                            setPlayerAvatar(characters[6].avatar)
                         }}
-                    />
-                    <img src={NeferatiImg} alt="" className="avatarImg" />
-                </label>
+                    >
+                        <img 
+                            className="avatarImg" 
+                            src={characters[6].avatar} 
+                            alt={"Image of " + characters[6].name}
+                        />
+                    </button>
+                </div>
 
-                <label className="avatar">
-                    <input
-                        type="radio"
-                        name="avatar"
-                        onClick={() => {
-                            avatarName(eight);
-                            setPlayerAvatar(ArlongImg);
+                <div className="avatar">
+                    <button 
+                        className="avatar-btn"
+                        onClick={(e) => {
+                            e.currentTarget.classList.toggle('avatar-btn-selected')
+                            avatarName(characters[7].name)
+                            setPlayerAvatar(characters[7].avatar)
                         }}
-                    />
-                    <img src={ArlongImg} alt="" className="avatarImg" />
-                </label>
-            </form>
+                    >
+                        <img 
+                            className="avatarImg" 
+                            src={characters[7].avatar} 
+                            alt={"Image of " + characters[7].name}
+                        />
+                    </button>
+                </div> */}
+            </div>
         </div>
     );
 };

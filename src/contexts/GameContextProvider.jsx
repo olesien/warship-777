@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import socketio from "socket.io-client";
 
+import MonkeyImg from "../assets/images/onepieceavatars-modified 1.png";
+
 const GameContext = createContext();
 const socket = socketio.connect(process.env.REACT_APP_SOCKET_URL);
 
@@ -9,24 +11,30 @@ export const useGameContext = () => {
 };
 
 const GameContextProvider = ({ children }) => {
+    const boats = [
+        { size: "double", direction: "right" },
+        { size: "double", direction: "right" },
+        { size: "triple", direction: "left" },
+        { size: "quadruple", direction: "left" },
+    ];
     const [chatUsername, setChatUsername] = useState();
     const [room, setRoom] = useState();
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
-    const [playerAvatar, setPlayerAvatar] = useState("");
-    const [startBoats, setStartBoats] = useState([
-        { size: "double", direction: "right" },
-        { size: "double", direction: "right" },
-        { size: "triple", direction: "left" },
-        { size: "quadruple", direction: "down" },
-    ]);
+    const [playerAvatar, setPlayerAvatar] = useState(MonkeyImg);
+    const [startBoats, setStartBoats] = useState(boats);
     const [idsTurn, setIdsTurn] = useState(null);
     const changeRoom = (newRoom) => {
         console.log("changin room");
         setRoom(newRoom);
     };
 
-    const [grid, setGrid] = useState(() => {
+    const resetShips = () => {
+        setStartBoats(boats);
+    };
+
+    const initialGrid = () => {
+        resetShips();
         const columns = 10;
         const rows = 10;
         const innerGrid = [];
@@ -44,7 +52,9 @@ const GameContextProvider = ({ children }) => {
             innerGrid.push(row);
         }
         return innerGrid;
-    });
+    };
+
+    const [grid, setGrid] = useState(initialGrid);
 
     const updateGrid = (columnIndex, rowIndex, update) => {
         setGrid((oldGrid) => {
@@ -111,6 +121,7 @@ const GameContextProvider = ({ children }) => {
         updateGrid,
         idsTurn,
         setIdsTurn,
+        initialGrid,
         startBoats,
         removeBoatFromStart,
         addBoatToStart,
