@@ -74,6 +74,7 @@ const Game = () => {
 
         const msg = {
             username: chatUsername,
+            userid: socket.id,
             room: room,
             content: message,
             timestamp: Date.now(),

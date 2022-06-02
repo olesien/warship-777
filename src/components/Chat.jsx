@@ -1,6 +1,7 @@
-import React from "react";
+import { useGameContext } from "../contexts/GameContextProvider";
 
 const Chat = ({ message, setMessage, messages, messageRef, onSubmit }) => {
+    const { socket } = useGameContext();
     return (
         <div id="chat">
             <div id="messages-wrapper">
@@ -8,8 +9,15 @@ const Chat = ({ message, setMessage, messages, messageRef, onSubmit }) => {
                     {messages.map((message, index) => {
                         return (
                             <li key={index} className="message">
-                                <span className="messageUsername">{message.username}:</span>
-                                <span className="messageContent">{message.content}</span>
+                                <span className="messageUsername">
+                                    {message.userid === socket.id
+                                        ? "You"
+                                        : "Them"}
+                                    :
+                                </span>
+                                <span className="messageContent">
+                                    {message.content}
+                                </span>
                             </li>
                         );
                     })}
