@@ -1,6 +1,9 @@
 import UserForm from "../components/userForm";
 import WaitingPlayer from "../components/WaitingPlayer";
 import React, { useState, useEffect } from "react";
+import useSound from "use-sound";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
 import MonkeyImg from "../assets/images/onepieceavatars-modified 1.png";
 import RoronoaImg from "../assets/images/onepieceavatars-modified (1) 1.png";
@@ -13,9 +16,16 @@ import ArlongImg from "../assets/images/onepieceavatars-modified (7) 1.png";
 import StartPageTheme from "../assets/sounds/MainTheme.mp3";
 import Avatars from "../components/Avatars";
 
-const Startpage = ({ onSubmit }) => {
+const Startpage = () => {
+    const playBtn = document.getElementById("playBtn")
+    const muteBtn = document.getElementById("muteBtn")
     const [username, setUsername] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false)
+    const [play, { stop }] = useSound(
+        StartPageTheme,
+        {volume: 0.4}
+    )
     const {
         socket,
         setChatUsername,
@@ -95,6 +105,20 @@ const Startpage = ({ onSubmit }) => {
         }
     };
 
+    const toggleSound = () => {
+        if (isPlaying === false) {
+            play();
+            setIsPlaying(true);
+            playBtn.classList.add("d-none")
+            muteBtn.classList.remove("d-none")
+        } else if (isPlaying === true) {
+            stop();
+            setIsPlaying(false);
+            muteBtn.classList.add("d-none")
+            playBtn.classList.remove("d-none")
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (username.length < 3) {
@@ -116,6 +140,7 @@ const Startpage = ({ onSubmit }) => {
     const startGame = () => {
         setLoading(false);
         console.log("Start game");
+        stop()
     };
 
     useEffect(() => {
@@ -137,10 +162,12 @@ const Startpage = ({ onSubmit }) => {
             changeRoom(game.room);
             startGame();
         };
+        
         socket.on("players", changePlayers);
 
         return () => {
             console.log("cleaning up");
+            // stop()
             socket.off("user:joined", (msg) => {
                 console.log(msg);
             });
@@ -157,9 +184,14 @@ const Startpage = ({ onSubmit }) => {
 
     return (
         <div className="d-flex justify-content-end" id="homePage">
-            <audio controls autoPlay loop={true} style={{ display: "none" }}>
+            {/* <audio controls autoPlay loop={true} id="normalAudio" style={{ display: "none" }}>
                 <source src={StartPageTheme} type="audio/mp3" />
-            </audio>
+            </audio> */}
+
+            <div id="musicDiv" onClick={toggleSound}>
+                <FontAwesomeIcon icon={faPlay} id="playBtn" className="" />
+                <FontAwesomeIcon icon={faVolumeXmark} id="muteBtn" className="d-none" />
+            </div>
             <div id="homePageText">
                 <h1>Battle</h1>
                 <div id="of">
@@ -203,7 +235,8 @@ const Startpage = ({ onSubmit }) => {
                         avatarName={avatarName}
                         key={index}
                     />
-                ))}
+                    ))
+                }
             </div>
         </div>
     );

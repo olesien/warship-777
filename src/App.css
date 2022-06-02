@@ -121,7 +121,7 @@ div .quadruple.down {
 
 #boat1,
 #boat2,
-#boat3,
+#boat3, 
 #boat4 {
     margin: 10px;
 }
@@ -170,10 +170,6 @@ div .quadruple.down {
     grid-template-columns: repeat(2, 1fr);
 }
 
-/* #avatarSelect > label:hover {
-    cursor: pointer;
-} */
-
 .avatar {
     padding: 15px;
 }
@@ -192,8 +188,8 @@ div .quadruple.down {
     background-color: green;
 }
 
+
 .avatarImg {
-    /* width: 115px; */
     height: 110px;
 }
 
@@ -365,8 +361,6 @@ div .quadruple.down {
 }
 
 #playFieldPosition {
-    /* position: relative;
-    right: 44px; */
     margin: auto auto;
 }
 
@@ -406,7 +400,6 @@ div .quadruple.down {
 .players img {
     max-width: 100%;
     max-height: 100%;
-    /* width: 120px; */
 }
 
 .player,
@@ -441,19 +434,14 @@ div .quadruple.down {
     border-radius: 50%;
 }
 
-/* .game-setup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-} */
-
 .boat-setup {
     display: flex;
-    /* justify-content: center; */
     margin-top: 20px;
+    margin-bottom: 10px;
     border: 2px solid #61dafb;
     flex-wrap: wrap;
     width: 250px;
+    min-height: 64px;
 }
 
 input {
@@ -500,24 +488,20 @@ input {
     font-weight: bold;
     padding-right: 5px;
 }
-
-/* .messageContent {
-
-} */
-
+  
 #messageBar {
     width: 80%;
     border-radius: 0px 0px 0px 10px;
     border-width: 0px;
 }
-
+  
 #sendMessageBtn {
     width: 20%;
     border-radius: 0px 0px 10px 0px;
     border-width: 0px;
     outline: none !important;
 }
-
+  
 .endgame-wrapper {
     width: 100vw;
     height: 100vh;
@@ -629,4 +613,29 @@ input {
 
 .hit {
     background-color: red;
+}
+
+#musicDiv {
+    position: absolute;
+    bottom: 5%;
+    right: 2%;
+    transform: translate(-50%, -50%);
+    height: 30px;
+}
+
+#playBtn {
+    height: 100%;
+}
+
+#muteBtn {
+    height: 100%;
+}
+.redirect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.redirect h3 {
+    margin-top: 50px;
 }

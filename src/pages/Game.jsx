@@ -1,5 +1,6 @@
 import Grid from "../components/Grid";
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useGameContext } from "../contexts/GameContextProvider";
@@ -10,8 +11,9 @@ import RenderOpponentGrid from "../components/RenderOpponentGrid";
 import Chat from "../components/Chat";
 import EndGame from "../components/EndGame";
 import PreviewShips from "../components/PreviewShips";
-import Hit from "../assets/sounds/Hit.mp3";
-import Miss from "../assets/sounds/Miss.mp3";
+import PlayerDisconnect from '../components/PlayerDisconnect';
+import Hit from "../assets/sounds/Hit.mp3"
+import Miss from "../assets/sounds/Miss.mp3"
 
 const Game = () => {
     //Game logic
@@ -26,6 +28,7 @@ const Game = () => {
     const [messages, setMessages] = useState([]);
     const messageRef = useRef();
     const [endGame, setEndGame] = useState(false);
+    const navigate = useNavigate()
     const { drop, allowDrop, drag } = useGameLogic();
     const {
         grid,
@@ -42,6 +45,8 @@ const Game = () => {
         initialGrid,
         startBoats,
         rotateShips,
+        playerDisconnect,
+        setPlayerDisconnect,
     } = useGameContext();
 
     const stylesReadyBtn = useCallback(() => {
@@ -109,20 +114,11 @@ const Game = () => {
             const opponent = players.find((player) => player.id !== socket.id);
             setPlayer(player);
             setOpponent(opponent);
-            // console.log(player);
-            // console.log(opponent);
-
-            // console.log(player.gameboard)
         };
+        
         //One person has readied up!
         const peopleReady = (players) => {
-            //define who player and opponent is
-            console.log(socket.id);
-
             updatePlayers(players);
-
-            //Add logic to change the ready element here! player is left side, and opponent is right side.
-            //Use player.ready which is true or false to display whether or not they are ready.
         };
 
         if (!opponent.ready) {
@@ -171,15 +167,8 @@ const Game = () => {
         };
 
         const playerStart = (data) => {
-            if (data.player === chatUsername) console.log(data.msg);
-            console.log(data.player);
-
-            // FORTSÄTT HÄR
-            // if (player.ready && opponent.ready) {
             setPlayerRound(data.player);
-            setStartingPlayer(data.msg);
-            // }
-        };
+        }
 
         //Listen for these!
         socket.on("chat:message", handleIncomingMessage);
@@ -190,6 +179,14 @@ const Game = () => {
         socket.on("game:handleHit", handleHit);
         socket.on("player:start", playerStart);
         socket.on("game:over", playerWin);
+        socket.on("game:leave", () => {
+            setPlayerDisconnect(true)
+            console.log("Opponent left the game")
+            setTimeout(() => {
+                navigate("/" - "game")
+                setPlayerDisconnect(false)
+            }, 5000)
+        })
 
         return () => {
             console.log("cleaning up");
@@ -209,6 +206,8 @@ const Game = () => {
         opponent.ready,
         setIdsTurn,
         setEndGame,
+        setPlayerDisconnect,
+        playerDisconnect,
     ]);
 
     //game started?
@@ -218,18 +217,12 @@ const Game = () => {
         } else {
             setGameStarted(false);
         }
-
-        // console.log(player);
-        // console.log(startingPlayer);
     }, [player, opponent, setGameStarted]);
 
     useEffect(() => {
-        const removeStartingPlayer = () => {
-            setStartingPlayer("");
-        };
+        setStartingPlayer("");
 
-        setTimeout(removeStartingPlayer, 5000);
-    }, [startingPlayer, setStartingPlayer]);
+    }, [setStartingPlayer]);
 
     useEffect(() => {
         messageRef.current && messageRef.current.focus();
@@ -241,7 +234,7 @@ const Game = () => {
 
     return (
         <div className="game-wrapper">
-            {!endGame && (
+            {!endGame && !playerDisconnect && (
                 <>
                     <div className="game-setup">
                         <div className="players">
@@ -397,7 +390,7 @@ const Game = () => {
                                 style={{
                                     position: "absolute",
                                     top: "55%",
-                                    right: "15%",
+                                    left: "15%",
                                 }}
                             >
                                 <div
@@ -443,15 +436,16 @@ const Game = () => {
                     ) : null}
                 </>
             )}
-            {endGame && (
-                <EndGame
-                    socket={socket}
-                    winner={winner}
-                    room={room}
-                    grid={grid}
-                    init={init}
-                />
-            )}
+            {endGame && !playerDisconnect && <EndGame 
+                socket={socket} 
+                winner={winner} 
+                room={room}
+                grid={grid}
+                init={init}
+            />}
+            {playerDisconnect && 
+                <PlayerDisconnect />
+            }
         </div>
     );
 };
