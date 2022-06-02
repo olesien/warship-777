@@ -631,3 +631,20 @@ input {
 .hit {
     background-color: red;
 }
+
+#musicDiv {
+    position: absolute;
+    bottom: 5%;
+    right: 2%;
+    transform: translate(-50%, -50%);
+    height: 50px;
+    width: 50px;
+}
+
+#playBtn {
+    height: 100%;
+}
+
+#muteBtn {
+    height: 100%;
+}
