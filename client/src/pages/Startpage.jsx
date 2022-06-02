@@ -140,6 +140,7 @@ const Startpage = () => {
     const startGame = () => {
         setLoading(false);
         console.log("Start game");
+        stop()
     };
 
     useEffect(() => {
@@ -166,6 +167,7 @@ const Startpage = () => {
 
         return () => {
             console.log("cleaning up");
+            // stop()
             socket.off("user:joined", (msg) => {
                 console.log(msg);
             });

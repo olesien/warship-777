@@ -441,6 +441,7 @@ div .quadruple.down {
     border: 2px solid #61dafb;
     flex-wrap: wrap;
     width: 250px;
+    min-height: 64px;
 }
 
 input {
