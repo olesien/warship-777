@@ -21,6 +21,7 @@ const GameContextProvider = ({ children }) => {
     const [room, setRoom] = useState();
     const [player, setPlayer] = useState({});
     const [opponent, setOpponent] = useState({});
+    const [playerDisconnect, setPlayerDisconnect] = useState(false)
     const [playerAvatar, setPlayerAvatar] = useState(MonkeyImg);
     const [startBoats, setStartBoats] = useState(boats);
     const [idsTurn, setIdsTurn] = useState(null);
@@ -126,6 +127,8 @@ const GameContextProvider = ({ children }) => {
         removeBoatFromStart,
         addBoatToStart,
         rotateShips,
+        playerDisconnect,
+        setPlayerDisconnect,
     };
 
     return (

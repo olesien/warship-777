@@ -7,7 +7,7 @@ export default function RenderGameRows({
     rowIndex,
     columnIndex,
 }) {
-    const { socket, room, updateGrid, idsTurn } = useGameContext();
+    const { socket, room, idsTurn } = useGameContext();
     const makehit = () => {
         if (idsTurn !== socket.id) {
             console.log("not our turn!");
