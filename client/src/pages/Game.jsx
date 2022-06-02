@@ -168,7 +168,6 @@ const Game = () => {
 
         const playerStart = (data) => {
             setPlayerRound(data.player);
-            setStartingPlayer(data.msg);
         }
 
         //Listen for these!
