@@ -71,14 +71,14 @@ export default function EndGame({ socket, winner, room, grid, init }) {
                 ? <h3>Sunk your ships!</h3>
                 : <h3>You sunk the enemy ships!</h3>}
             </div>
+            <button 
+              className="play-again-btn"
+              onClick={handlePlayAgain}
+            >
+              Play again!
+            </button>
           </div>
           }
-          <button 
-            className="play-again-btn"
-            onClick={handlePlayAgain}
-          >
-            Play again!
-          </button>
         </div>
     </div>
   )
