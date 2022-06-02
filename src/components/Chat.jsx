@@ -12,7 +12,7 @@ const Chat = ({ message, setMessage, messages, messageRef, onSubmit }) => {
                                 <span className="messageUsername">
                                     {message.userid === socket.id
                                         ? "You"
-                                        : "Them"}
+                                        : "Opponent"}
                                     :
                                 </span>
                                 <span className="messageContent">
